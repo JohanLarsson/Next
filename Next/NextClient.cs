@@ -41,9 +41,15 @@ namespace Next
 
         public async Task<bool> Logout()
         {
+            if (_loginResult == null)
+                return true;
             string resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
             RestRequest restRequest = new RestRequest(resource, Method.DELETE);
             IRestResponse<LoggedInStatus> response = await _restClient.ExecuteTaskAsync<LoggedInStatus>( restRequest);
+            if (response.Data.IsLoggedIn)
+                return false;
+            _loginResult = null;
+            _restClient.Authenticator = null;
             return !response.Data.IsLoggedIn;
         }
 
