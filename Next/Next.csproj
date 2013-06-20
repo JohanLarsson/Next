@@ -45,7 +45,7 @@
     <Compile Include="Dtos\ErrorMessage.cs" />
     <Compile Include="Dtos\FeedInfo.cs" />
     <Compile Include="Dtos\LoginResult.cs" />
-    <Compile Include="Dtos\LogoutResult.cs" />
+    <Compile Include="Dtos\LoggedInStatus.cs" />
     <Compile Include="NextClient.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Dtos\ServiceStatus.cs" />

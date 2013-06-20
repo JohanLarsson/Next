@@ -43,18 +43,26 @@ namespace Next
         {
             string resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
             RestRequest restRequest = new RestRequest(resource, Method.DELETE);
-            IRestResponse<LogoutResult> response = await _restClient.ExecuteTaskAsync<LogoutResult>( restRequest);
-            return !response.Data.logged_in;
+            IRestResponse<LoggedInStatus> response = await _restClient.ExecuteTaskAsync<LoggedInStatus>( restRequest);
+            return !response.Data.IsLoggedIn;
         }
 
-        private static RSAParameters _rsaParameters;
-        public static RSAParameters RsaParameters
+        public async Task<bool> Touch()
+        {
+            string resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
+            RestRequest request = new RestRequest(resource, Method.PUT);
+            IRestResponse<LoggedInStatus> response = await _restClient.ExecuteTaskAsync<LoggedInStatus>(request);
+            return response.Data.IsLoggedIn;
+        }
+
+        private static RSAParameters _publicKey;
+        public static RSAParameters PublicKey
         {
             get
             {
-                if (_rsaParameters.Equals(default(RSAParameters)))
-                    _rsaParameters = Properties.Settings.Default.PublicKey.Deserialize<RSAParameters>();
-                return _rsaParameters;
+                if (_publicKey.Equals(default(RSAParameters)))
+                    _publicKey = Properties.Settings.Default.PublicKey.Deserialize<RSAParameters>();
+                return _publicKey;
             }
         }
 
@@ -62,7 +70,7 @@ namespace Next
         {
             RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-            RSAParameters parameters = NextClient.RsaParameters;
+            RSAParameters parameters = NextClient.PublicKey;
 
             // Set the public key
             RSA.ImportParameters(parameters);
