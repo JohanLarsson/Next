@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace NextTests
         [Test]
         public async void LogoutTest()
         {
-            Assert.IsTrue(await (await LoggedInClient()).Logout());
+            Assert.IsTrue(await LoggedInClient.Logout());
         }
 
         [Test]
@@ -58,20 +59,20 @@ namespace NextTests
         }
 
         [Test]
-        public async void TouchTestTest()
+        public async void TouchTest()
         {
-            Assert.IsTrue(await (await LoggedInClient()).Touch());
+            Assert.IsTrue(await LoggedInClient.Touch());
         }
 
-        private async Task<NextClient> LoggedInClient()
+        private NextClient LoggedInClient
         {
-            //get
-            //{
+            get
+            {
                 NextClient nextClient = new NextClient();
-                var login = await nextClient.Login(Credentials.Username, Credentials.Password);
-                Assert.IsTrue(login);
+                bool isLoggedIn = nextClient.Login(Credentials.Username, Credentials.Password).Result;
+                Assert.IsTrue(isLoggedIn);
                 return nextClient;
-            //}
+            }
         }
 
         public Credentials Credentials { get { return Credentials.Load(Properties.Resources.CredentialsPath); } }
