@@ -61,7 +61,8 @@ namespace NextTests
         [Test]
         public async void TouchTest()
         {
-            Assert.IsTrue(await LoggedInClient.Touch());
+            //Assert.IsTrue(await LoggedInClient.Touch());
+            Assert.IsTrue(await (await GetLoggedInClient()).Touch());
         }
 
         private NextClient LoggedInClient
@@ -69,10 +70,16 @@ namespace NextTests
             get
             {
                 NextClient nextClient = new NextClient();
-                bool isLoggedIn = nextClient.Login(Credentials.Username, Credentials.Password).Result;
-                Assert.IsTrue(isLoggedIn);
+                Assert.IsTrue( nextClient.Login(Credentials.Username, Credentials.Password).Result);
                 return nextClient;
             }
+        }
+
+        private async Task<NextClient> GetLoggedInClient()
+        {
+            NextClient nextClient = new NextClient();
+            Assert.IsTrue(await nextClient.Login(Credentials.Username, Credentials.Password));
+            return nextClient;
         }
 
         public Credentials Credentials { get { return Credentials.Load(Properties.Resources.CredentialsPath); } }
