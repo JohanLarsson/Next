@@ -1,6 +1,6 @@
-﻿namespace Next
+﻿namespace Next.Dtos
 {
-    public class GenericMessage
+    public class ServiceStatus
     {
         public string message { get; set; }
         public bool valid_version { get; set; }

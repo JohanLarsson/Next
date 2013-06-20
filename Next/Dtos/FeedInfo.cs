@@ -1,4 +1,4 @@
-﻿namespace Next
+﻿namespace Next.Dtos
 {
     public class FeedInfo
     {

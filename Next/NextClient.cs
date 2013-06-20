@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using Next.Dtos;
 using RestSharp;
 
 namespace Next
@@ -16,28 +17,34 @@ namespace Next
         public NextClient()
         {
             _restClient = new RestClient(Properties.Settings.Default.BaseUrl + "/" + Properties.Settings.Default.Version + "/");
-            _restClient.AddDefaultHeader("Accept", "application/json");
-            _restClient.AddDefaultHeader("ContentType", "application/x-www-form-urlencoded");
+            //_restClient.AddDefaultHeader("Accept", "application/json");
+            //_restClient.AddDefaultHeader("ContentType", "application/x-www-form-urlencoded");
         }
+
         private RestClient _restClient;
         private LoginResult _loginResult;
-
-        public bool Login(string username, string password)
+        private const string _login = "login";
+        public async Task<bool> Login(string username, string password)
         {
-            RestRequest restRequest = new RestRequest("login", Method.POST);
+            RestRequest restRequest = new RestRequest(_login, Method.POST);
             restRequest.AddParameter("service", "NEXTAPI");
             restRequest.AddParameter("auth", Encrypt(username, password));
-
-            IRestResponse<LoginResult> restResponse = _restClient.Execute<LoginResult>(restRequest);
-            _loginResult = restResponse.Data;
-            return true;
+            IRestResponse<LoginResult> response = await _restClient.ExecuteTaskAsync<LoginResult>(restRequest);
+            if (response.Data.session_key != null)
+            {
+                _loginResult = response.Data;
+                _restClient.Authenticator = new HttpBasicAuthenticator(_loginResult.session_key, _loginResult.session_key);
+                return true;
+            }
+            return false;
         }
 
-        public string Logout()
+        public async Task<bool> Logout()
         {
-            RestRequest restRequest = new RestRequest(string.Format("login/{0}",_loginResult.session_key), Method.DELETE);
-            IRestResponse restResponse = _restClient.Execute(restRequest);
-            return restResponse.Content;
+            string resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
+            RestRequest restRequest = new RestRequest(resource, Method.DELETE);
+            IRestResponse<LogoutResult> response = await _restClient.ExecuteTaskAsync<LogoutResult>( restRequest);
+            return !response.Data.logged_in;
         }
 
         private static RSAParameters _rsaParameters;
