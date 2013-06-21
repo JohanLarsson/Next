@@ -17,8 +17,8 @@ namespace NextTests.Prototypes
             Assert.AreEqual(1, Prop);
             Assert.AreEqual(1, GetTaskAsync1().Result);
             Assert.AreEqual(1, GetTaskAsync2().Result);
-            Assert.IsTrue(Hang1().Result);
-            Assert.IsTrue(Hang2().Result);
+            Assert.AreEqual(1, Hang1().Result);
+            Assert.AreEqual(1, Hang2().Result);
         }
 
         private int Prop
@@ -31,16 +31,16 @@ namespace NextTests.Prototypes
             return await GetLevel2();
         }
 
-        private async Task<bool> Hang1()
+        private async Task<int> Hang1()
         {
             int result = await GetTaskAsync1();
-            return result == 1;
+            return result;
         }
 
-        private async Task<bool> Hang2()
+        private async Task<int> Hang2()
         {
             int result = await GetTaskAsync2();
-            return result == 1;
+            return result;
         }
 
         private Task<int> GetTaskAsync1()
