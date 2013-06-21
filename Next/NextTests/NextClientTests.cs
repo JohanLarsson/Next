@@ -22,11 +22,15 @@ namespace NextTests
         public void CtorTest()
         {
             int n = 10000;
-            NextClient[] nextClients = new NextClient[n];
+            RestClient[] clients = new RestClient[n];
             Stopwatch stopwatch = Stopwatch.StartNew();
             for (int i = 0; i < n; i++)
             {
-                nextClients[i] = new NextClient();
+                clients[i] = new RestClient(@"https://api.test.nordnet.se/next")
+                    {
+                        Authenticator = new HttpBasicAuthenticator("sessionkey", "sessionkey")
+                    };
+
             }
             Console.WriteLine(stopwatch.GetTimeString());
         }
@@ -75,6 +79,11 @@ namespace NextTests
             }
         }
 
+        /// <summary>
+        /// This works but produces butt ugly syntax:
+        /// Assert.IsTrue(await (await GetLoggedInClient()).Touch());
+        /// </summary>
+        /// <returns></returns>
         private async Task<NextClient> GetLoggedInClient()
         {
             NextClient nextClient = new NextClient();

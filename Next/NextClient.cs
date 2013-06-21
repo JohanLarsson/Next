@@ -16,24 +16,30 @@ namespace Next
     {
         public NextClient()
         {
-            _restClient = new RestClient(Properties.Settings.Default.BaseUrl + "/" + Properties.Settings.Default.Version + "/");
-            //_restClient.AddDefaultHeader("Accept", "application/json");
-            //_restClient.AddDefaultHeader("ContentType", "application/x-www-form-urlencoded");
+
         }
 
-        private RestClient _restClient;
+        private RestClient _restClient
+        {
+            get
+            {
+                var client = new RestClient(Properties.Settings.Default.BaseUrl + "/" + Properties.Settings.Default.Version + "/");
+                if(_loginResult!=null)
+                    client.Authenticator = new HttpBasicAuthenticator(_loginResult.session_key, _loginResult.session_key);
+                return client;
+            }
+        }
         private LoginResult _loginResult;
         private const string _login = "login";
         public async Task<bool> Login(string username, string password)
         {
-            RestRequest restRequest = new RestRequest(_login, Method.POST);
-            restRequest.AddParameter("service", "NEXTAPI");
-            restRequest.AddParameter("auth", Encrypt(username, password));
-            IRestResponse<LoginResult> response = await _restClient.ExecuteTaskAsync<LoginResult>(restRequest);
+            var request = new RestRequest(_login, Method.POST);
+            request.AddParameter("service", "NEXTAPI");
+            request.AddParameter("auth", Encrypt(username, password));
+            IRestResponse<LoginResult> response = await _restClient.ExecuteTaskAsync<LoginResult>(request);
             if (response.Data.session_key != null)
             {
                 _loginResult = response.Data;
-                _restClient.Authenticator = new HttpBasicAuthenticator(_loginResult.session_key, _loginResult.session_key);
                 return true;
             }
             return false;
@@ -43,11 +49,11 @@ namespace Next
         {
             if (_loginResult == null)
                 return true;
-            string resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
-            RestRequest restRequest = new RestRequest(resource, Method.DELETE);
+            var resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
+            var restRequest = new RestRequest(resource, Method.DELETE);
             IRestResponse<LoggedInStatus> response = await _restClient.ExecuteTaskAsync<LoggedInStatus>( restRequest);
             if (response.Data.IsLoggedIn)
-                return false;
+                return false; //This is probably an exception
             _loginResult = null;
             _restClient.Authenticator = null;
             return !response.Data.IsLoggedIn;
@@ -55,8 +61,8 @@ namespace Next
 
         public async Task<bool> Touch()
         {
-            string resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
-            RestRequest request = new RestRequest(resource, Method.PUT);
+            var resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
+            var request = new RestRequest(resource, Method.PUT);
             IRestResponse<LoggedInStatus> response = await _restClient.ExecuteTaskAsync<LoggedInStatus>(request);
             return response.Data.IsLoggedIn;
         }

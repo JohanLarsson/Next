@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using NextTests.Helpers;
 
 namespace NextTests.Prototypes
 {

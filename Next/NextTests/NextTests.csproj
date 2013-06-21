@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Credentials.cs" />
+    <Compile Include="Helpers\Credentials.cs" />
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="Helpers\StopwatchExt.cs" />
     <Compile Include="NextClientTests.cs" />
@@ -56,6 +56,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Prototypes\CreateCredentials.cs" />
+    <Compile Include="Prototypes\NestedAwaitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
