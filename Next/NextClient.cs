@@ -19,7 +19,7 @@ namespace Next
 
         }
 
-        private RestClient _restClient
+        private RestClient Client
         {
             get
             {
@@ -29,6 +29,7 @@ namespace Next
                 return client;
             }
         }
+
         private LoginResult _loginResult;
         private const string _login = "login";
         public async Task<bool> Login(string username, string password)
@@ -36,7 +37,7 @@ namespace Next
             var request = new RestRequest(_login, Method.POST);
             request.AddParameter("service", "NEXTAPI");
             request.AddParameter("auth", Encrypt(username, password));
-            IRestResponse<LoginResult> response = await _restClient.ExecuteTaskAsync<LoginResult>(request);
+            IRestResponse<LoginResult> response = await Client.ExecuteTaskAsync<LoginResult>(request);
             if (response.Data.session_key != null)
             {
                 _loginResult = response.Data;
@@ -51,11 +52,11 @@ namespace Next
                 return true;
             var resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
             var restRequest = new RestRequest(resource, Method.DELETE);
-            IRestResponse<LoggedInStatus> response = await _restClient.ExecuteTaskAsync<LoggedInStatus>( restRequest);
+            IRestResponse<LoggedInStatus> response = await Client.ExecuteTaskAsync<LoggedInStatus>( restRequest);
             if (response.Data.IsLoggedIn)
                 return false; //This is probably an exception
             _loginResult = null;
-            _restClient.Authenticator = null;
+            Client.Authenticator = null;
             return !response.Data.IsLoggedIn;
         }
 
@@ -63,7 +64,7 @@ namespace Next
         {
             var resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
             var request = new RestRequest(resource, Method.PUT);
-            IRestResponse<LoggedInStatus> response = await _restClient.ExecuteTaskAsync<LoggedInStatus>(request);
+            IRestResponse<LoggedInStatus> response = await Client.ExecuteTaskAsync<LoggedInStatus>(request);
             return response.Data.IsLoggedIn;
         }
 

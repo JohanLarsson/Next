@@ -39,7 +39,14 @@ namespace NextTests
         public async void LoginTest()
         {
             NextClient nextClient = new NextClient();
-            Assert.IsTrue(await nextClient.Login(Credentials.Username, Credentials.Password));
+            Assert.IsTrue(await nextClient.Login(Credentials.Username, Credentials.Password)); // This works
+        }
+
+        [Test]
+        public async void LoginResultTest()
+        {
+            NextClient nextClient = new NextClient();
+            Assert.IsTrue(nextClient.Login(Credentials.Username, Credentials.Password).Result); // this hangs
         }
 
         [Test]
@@ -74,7 +81,8 @@ namespace NextTests
             get
             {
                 NextClient nextClient = new NextClient();
-                Assert.IsTrue( nextClient.Login(Credentials.Username, Credentials.Password).Result);
+                Task<bool> login = nextClient.Login(Credentials.Username, Credentials.Password);
+                Assert.IsTrue( login.Result);
                 return nextClient;
             }
         }
