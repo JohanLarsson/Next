@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using NUnit.Framework;
 using Next;
+using Next.Dtos;
 using RestSharp;
 using NextTests.Helpers;
 
@@ -19,84 +20,73 @@ namespace NextTests
     public class NextClientTests
     {
         [Test]
-        public void CtorTest()
+        public async Task ServiceStatusTest()
         {
-            int n = 10000;
-            RestClient[] clients = new RestClient[n];
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            for (int i = 0; i < n; i++)
-            {
-                clients[i] = new RestClient(@"https://api.test.nordnet.se/next")
-                    {
-                        Authenticator = new HttpBasicAuthenticator("sessionkey", "sessionkey")
-                    };
-
-            }
-            Console.WriteLine(stopwatch.GetTimeString());
+            var client = new NextClient(ApiVersion.Test);
+            ServiceStatus serviceStatus =await  client.ServiceStatus();
+            Assert.IsTrue(serviceStatus.SystemRunning);
+            Assert.IsTrue(serviceStatus.ValidVersion);
         }
 
         [Test]
-        public async void LoginTest()
+        public async Task LoginTest()
         {
-            NextClient nextClient = new NextClient();
-            Assert.IsTrue(await nextClient.Login(Credentials.Username, Credentials.Password)); // This works
+            var client = new NextClient(ApiVersion.Test);
+
+            bool success = await client.Login(Credentials.Username, Credentials.Password);
+
+            Assert.IsTrue(success); 
+            Assert.IsNotNull(client.Session.SessionKey);
+            Assert.IsTrue(client.Session.ExpiresIn > 0);
+            Assert.AreEqual("test", client.Session.Environment);
+            Assert.IsNotNull(client.Session.SessionKey);
+            Assert.IsNotNull(client.Session.Country);
         }
 
         [Test]
-        public async void LoginResultTest()
+        public async Task LoginFailTest()
         {
-            NextClient nextClient = new NextClient();
-            Assert.IsTrue(nextClient.Login(Credentials.Username, Credentials.Password).Result); // this hangs
-        }
-
-        [Test]
-        public async void LoginFailTest()
-        {
-            NextClient nextClient = new NextClient();
+            var nextClient = new NextClient(ApiVersion.Test);
             Assert.IsFalse(await nextClient.Login("Incorrect", "Credentials"));
         }
 
         [Test]
-        public async void LogoutTest()
+        public async Task LogoutTest()
         {
-            Assert.IsTrue(await LoggedInClient.Logout());
+            var client = LoggedInClient;
+            Assert.IsTrue(await client.Logout());
+            Assert.IsNull(client.Session);
         }
 
         [Test]
-        public async void LogoutWhenNotLoggedInTest()
+        public async Task LogoutWhenNotLoggedInTest()
         {
-            NextClient nextClient = new NextClient();
-            Assert.IsTrue(await nextClient.Logout());
+            var client = new NextClient(ApiVersion.Test);
+            Assert.IsTrue(await client.Logout());
         }
 
         [Test]
-        public async void TouchTest()
+        public async Task TouchTest()
         {
-            //Assert.IsTrue(await LoggedInClient.Touch());
-            Assert.IsTrue(await (await GetLoggedInClient()).Touch());
+            Assert.IsTrue(await LoggedInClient.Touch());
+        }
+
+        [Test]
+        public async Task RealtimeAccessTest()
+        {
+            var markets = await LoggedInClient.RealtimeAccess();
+            Assert.IsTrue(markets.Any());
+            Assert.IsTrue(markets.All(m=>m.MarketID!=null));
         }
 
         private NextClient LoggedInClient
         {
             get
             {
-                NextClient nextClient = new NextClient();
-                Task<bool> login = nextClient.Login(Credentials.Username, Credentials.Password);
-                Assert.IsTrue( login.Result);
+                var nextClient = new NextClient(ApiVersion.Test);
+                Assert.IsTrue(nextClient.Login(Credentials.Username, Credentials.Password).Result); // this hangs
                 return nextClient;
             }
-        }
-
-        /// <summary>
-        /// This works but produces butt ugly syntax:
-        /// Assert.IsTrue(await (await GetLoggedInClient()).Touch());
-        /// </summary>
-        /// <returns></returns>
-        private async Task<NextClient> GetLoggedInClient()
-        {
-            NextClient nextClient = new NextClient();
-            Assert.IsTrue(await nextClient.Login(Credentials.Username, Credentials.Password));
-            return nextClient;
         }
 
         public Credentials Credentials { get { return Credentials.Load(Properties.Resources.CredentialsPath); } }

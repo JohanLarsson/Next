@@ -6,11 +6,11 @@ namespace Next
 {
     public static class RestClientExt
     {
-        public static async Task<IRestResponse<T>> ExecuteTaskAsync<T>(this RestClient client, IRestRequest request) where T : new()
+        public static Task<IRestResponse<T>> ExecuteTaskAsync<T>(this RestClient client, IRestRequest request) where T : new()
         {
             var tcs = new TaskCompletionSource<IRestResponse<T>>();
-            client.ExecuteAsync<T>(request, tcs.SetResult);
-            return await tcs.Task;
+            RestRequestAsyncHandle asyncHandle = client.ExecuteAsync<T>(request, tcs.SetResult);
+            return tcs.Task;
         }
 
         public static async Task<IRestResponse<T>> ExecuteTaskAsync<T>(this RestClient client, IRestRequest request, CancellationToken cancellationToken) where T : new()

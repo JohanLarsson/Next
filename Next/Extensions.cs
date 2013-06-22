@@ -24,13 +24,5 @@ namespace Next
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(s));
         }
 
-        public static T Deserialize<T>(this string xml)
-        {
-            var serializer = new XmlSerializer(typeof(T));
-            using (var reader = new XmlTextReader(new StringReader(xml)))
-            {
-                return (T)serializer.Deserialize(reader);
-            }
-        }
     }
 }

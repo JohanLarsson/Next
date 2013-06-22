@@ -12,31 +12,75 @@ namespace NextTests
     class RestClientExtTests
     {
         [Test]
-        public void TestNameTest()
+        public void ExecuteTest()
         {
             var restClient = new RestClient(@"https://api.test.nordnet.se/next/1");
             IRestResponse<DummyServiceStatus> restResponse = restClient.Execute<DummyServiceStatus>(new RestRequest(Method.GET));
             Assert.IsInstanceOf<DummyServiceStatus>(restResponse.Data);
-            Assert.IsNotNull(restResponse.Data.timestamp);
+            Assert.IsNotNull(restResponse.Data.Timestamp);
         }
 
         [Test]
-        public void TaskAsyncTest()
+        public void ExecuteTaskAsyncResultTest()
         {
             var restClient = new RestClient(@"https://api.test.nordnet.se/next/1");
             Task<IRestResponse<DummyServiceStatus>> restResponse = restClient.ExecuteTaskAsync<DummyServiceStatus>(new RestRequest(Method.GET));
             IRestResponse<DummyServiceStatus> response = restResponse.Result;
             Assert.IsInstanceOf<DummyServiceStatus>(response.Data);
-            Assert.IsNotNull(response.Data.timestamp);
+            Assert.IsNotNull(response.Data.Timestamp);
+        }
+
+        [Test]
+        public async void ExecuteTaskAsyncAwaitTest()
+        {
+            var restClient = new RestClient(@"https://api.test.nordnet.se/next/1");
+            Task<IRestResponse<DummyServiceStatus>> restResponse = restClient.ExecuteTaskAsync<DummyServiceStatus>(new RestRequest(Method.GET));
+            IRestResponse<DummyServiceStatus> response = await restResponse;
+            Assert.IsInstanceOf<DummyServiceStatus>(response.Data);
+            Assert.IsNotNull(response.Data.Timestamp);
+        }
+
+        [Test]
+        public void CheckOnceResultTest()
+        {
+            Assert.IsTrue(CheckStatus().Result);
+        }
+
+        [Test]
+        public async void CheckOnceAwaitTest()
+        {
+            Assert.IsTrue(await CheckStatus());
+        }
+
+        [Test]
+        public async void CheckStatusTwiceAwaitTest()
+        {
+            Assert.IsTrue(await CheckStatus());
+            Assert.IsTrue(await CheckStatus());
+        }
+
+        [Test]
+        public async Task CheckStatusTwiceResultTest()
+        {
+            Assert.IsTrue(CheckStatus().Result); // This hangs
+            Assert.IsTrue(await CheckStatus());
+        }
+
+        private async Task<bool> CheckStatus()
+        {
+            var restClient = new RestClient(@"https://api.test.nordnet.se/next/1");
+            Task<IRestResponse<DummyServiceStatus>> restResponse = restClient.ExecuteTaskAsync<DummyServiceStatus>(new RestRequest(Method.GET));
+            IRestResponse<DummyServiceStatus> response = await restResponse;
+            return response.Data.SystemRunning;
         }
     }
 
     public class DummyServiceStatus
     {
-        public string message { get; set; }
-        public bool valid_version { get; set; }
-        public bool system_running { get; set; }
-        public bool skip_phrase { get; set; }
-        public long timestamp { get; set; }
+        public string Message { get; set; }
+        public bool ValidVersion { get; set; }
+        public bool SystemRunning { get; set; }
+        public bool SkipPhrase { get; set; }
+        public long Timestamp { get; set; }
     }
 }

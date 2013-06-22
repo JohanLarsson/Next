@@ -8,7 +8,10 @@ using NUnit.Framework;
 
 namespace NextTests.Prototypes
 {
-    class HttpClientTests
+    /// <summary>
+    /// Prototype to play around with HttpClient to see if thrid party is needed
+    /// </summary>
+    public class HttpClientTests
     {
         [Test]
         public async void TestNameTest()

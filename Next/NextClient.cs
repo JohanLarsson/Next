@@ -14,79 +14,87 @@ namespace Next
 {
     public class NextClient
     {
-        public NextClient()
+        public NextClient(ApiVersion apiVersion)
         {
-
+            if (apiVersion == ApiVersion.Test)          
+                _apiInfo = Properties.Settings.Default.TestApiInfo;
+            else
+                throw new NotImplementedException("message");
         }
+
+        private ApiInfo _apiInfo;
 
         private RestClient Client
         {
             get
             {
-                var client = new RestClient(Properties.Settings.Default.BaseUrl + "/" + Properties.Settings.Default.Version + "/");
-                if(_loginResult!=null)
-                    client.Authenticator = new HttpBasicAuthenticator(_loginResult.session_key, _loginResult.session_key);
+                var client = new RestClient(_apiInfo.BaseUrl);
+                if (Session != null)
+                    client.Authenticator = new HttpBasicAuthenticator(Session.SessionKey, Session.SessionKey);
                 return client;
             }
         }
 
-        private LoginResult _loginResult;
+        public async Task<ServiceStatus> ServiceStatus()
+        {
+            IRestResponse<ServiceStatus> response = await Client.ExecuteTaskAsync<ServiceStatus>(new RestRequest(Method.GET));
+            return response.Data;
+        } 
+
+        public SessionInfo Session { get; set; }
         private const string _login = "login";
         public async Task<bool> Login(string username, string password)
         {
             var request = new RestRequest(_login, Method.POST);
             request.AddParameter("service", "NEXTAPI");
             request.AddParameter("auth", Encrypt(username, password));
-            IRestResponse<LoginResult> response = await Client.ExecuteTaskAsync<LoginResult>(request);
-            if (response.Data.session_key != null)
+            IRestResponse<SessionInfo> response = await Client.ExecuteTaskAsync<SessionInfo>(request);
+            if (response.Data.SessionKey == null)
             {
-                _loginResult = response.Data;
-                return true;
+                Session = null;
+                return false;
             }
-            return false;
+            Session = response.Data;
+            return true;
         }
 
         public async Task<bool> Logout()
         {
-            if (_loginResult == null)
-                return true;
-            var resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
+            if (Session == null)
+                return true; // Exception?
+            var resource = string.Format("{0}/{1}", _login, Session.SessionKey);
             var restRequest = new RestRequest(resource, Method.DELETE);
-            IRestResponse<LoggedInStatus> response = await Client.ExecuteTaskAsync<LoggedInStatus>( restRequest);
+            IRestResponse<LoggedInStatus> response = await Client.ExecuteTaskAsync<LoggedInStatus>(restRequest);
             if (response.Data.IsLoggedIn)
                 return false; //This is probably an exception
-            _loginResult = null;
+            Session = null;
             Client.Authenticator = null;
             return !response.Data.IsLoggedIn;
         }
 
         public async Task<bool> Touch()
         {
-            var resource = string.Format("{0}/{1}", _login, _loginResult.session_key);
+            var resource = string.Format("{0}/{1}", _login, Session.SessionKey);
             var request = new RestRequest(resource, Method.PUT);
             IRestResponse<LoggedInStatus> response = await Client.ExecuteTaskAsync<LoggedInStatus>(request);
             return response.Data.IsLoggedIn;
         }
 
-        private static RSAParameters _publicKey;
-        public static RSAParameters PublicKey
+        public async Task<List<RealtimeAccesMarket>> RealtimeAccess()
         {
-            get
-            {
-                if (_publicKey.Equals(default(RSAParameters)))
-                    _publicKey = Properties.Settings.Default.PublicKey.Deserialize<RSAParameters>();
-                return _publicKey;
-            }
+            var request = new RestRequest("realtime_access", Method.GET);
+            IRestResponse<List<RealtimeAccesMarket>> response = await Client.ExecuteTaskAsync<List<RealtimeAccesMarket>>(request);
+            return response.Data;
         }
 
         public string Encrypt(string username, string password)
         {
             RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
 
-            RSAParameters parameters = NextClient.PublicKey;
+            //RSAParameters parameters = NextClient.PublicKey;
 
             // Set the public key
-            RSA.ImportParameters(parameters);
+            RSA.ImportParameters(_apiInfo.PublicKey);
 
             // Create timestamp (Unix timestamp in milliseconds)
             string timestamp = DateTime.UtcNow.ToUnixTimeStamp().ToString();

@@ -57,9 +57,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Prototypes\CreateCredentials.cs" />
+    <Compile Include="Prototypes\DumpXml.cs" />
     <Compile Include="Prototypes\HttpClientTests.cs" />
     <Compile Include="Prototypes\NestedAwaitTests.cs" />
+    <Compile Include="Prototypes\TimingStuff.cs" />
     <Compile Include="RestClientExtTests.cs" />
   </ItemGroup>
   <ItemGroup>
