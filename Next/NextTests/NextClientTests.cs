@@ -92,6 +92,7 @@ namespace NextTests
         {
             string news = LoggedInClient.SearchNews();
             Console.WriteLine(news);
+            Assert.Inconclusive("Not sure this is working with test think code is ok");
         }
 
         [Test]
@@ -99,6 +100,51 @@ namespace NextTests
         {
             string s = LoggedInClient.NewsItem("4711");
             Console.WriteLine(s);
+            Assert.Inconclusive("Not sure this is working with test think code is ok");
+        }
+
+        [Test]
+        public async Task AccountsTest()
+        {
+            var accounts = await LoggedInClient.Accounts();
+            Assert.IsTrue(accounts.Any());
+            Assert.IsTrue(accounts.All(a=>a.Id!=null));
+        }
+
+        [Test]
+        public async Task AccountSummaryTest()
+        {
+            AccountSummary summary = await LoggedInClient.AccountSummary(Accounts.First());
+            Assert.IsFalse(string.IsNullOrEmpty( summary.AccountCurrency));
+        }
+
+        [Test]
+        public async Task AccountLedgersItemTest()
+        {
+            List<Ledger> ledgers = await LoggedInClient.AccountLedgers(Accounts.First());
+            Assert.Inconclusive("how to test this?");
+        }
+
+        [Test]
+        public async Task AccountPositionsTest()
+        {
+            List<Position> positions = await LoggedInClient.AccountPositions(Accounts.First());
+            Assert.Inconclusive("how to test this?");
+        }
+
+        [Test]
+        public async Task AccountOrdersTest()
+        {
+            List<Order> orders = await LoggedInClient.AccountOrders(Accounts.First());
+            Assert.Fail("Probably need to place an order before fetching this Order class is empty shell lacking json");
+            Assert.Inconclusive("how to test this?");
+        }
+
+        [Test]
+        public async Task AccountTradesTest()
+        {
+            List<Trade> trades = await LoggedInClient.AccountTrades(Accounts.First());
+            Assert.Inconclusive("how to test this?");
         }
 
         private NextClient LoggedInClient
@@ -110,6 +156,15 @@ namespace NextTests
                 return nextClient;
             }
         }
+
+        private List<Account> Accounts
+        {
+            get
+            {
+                List<Account> accounts = LoggedInClient.Accounts().Result;
+                return accounts;
+            }
+        } 
 
         public Credentials Credentials { get { return Credentials.Load(Properties.Resources.CredentialsPath); } }
 

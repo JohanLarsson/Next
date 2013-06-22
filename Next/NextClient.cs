@@ -174,5 +174,76 @@ namespace Next
             IRestResponse restResponse = Client.Execute(request);
             return restResponse.Content;
         }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-accounts
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Account>> Accounts()
+        {
+            var request = new RestRequest("accounts", Method.GET);
+            IRestResponse<List<Account>> executeTaskAsync = await Client.ExecuteTaskAsync<List<Account>>(request);
+            return executeTaskAsync.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-account-summary
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public async Task<AccountSummary> AccountSummary(Account account)
+        {
+            var request = new RestRequest("accounts/" + account.Id, Method.GET);
+            IRestResponse<AccountSummary> response = await Client.ExecuteTaskAsync<AccountSummary>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-account-ledgers
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public async Task<List<Ledger>> AccountLedgers(Account account)
+        {
+            var request = new RestRequest(string.Format("accounts/{0}/ledgers", account.Id), Method.GET);
+            IRestResponse<List<Ledger>> response = await Client.ExecuteTaskAsync<List<Ledger>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-account-positions
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public async Task<List<Position>> AccountPositions(Account account)
+        {
+            var request = new RestRequest(string.Format("accounts/{0}/positions", account.Id), Method.GET);
+            IRestResponse<List<Position>> response = await Client.ExecuteTaskAsync<List<Position>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Exchange-orders
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public async Task<List<Order>> AccountOrders(Account account)
+        {
+            var request = new RestRequest(string.Format("accounts/{0}/orders", account.Id), Method.GET);
+            IRestResponse<List<Order>> response = await Client.ExecuteTaskAsync<List<Order>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Exchange-trades
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        public async Task<List<Trade>> AccountTrades(Account account)
+        {
+            var request = new RestRequest(string.Format("accounts/{0}/trades", account.Id), Method.GET);
+            IRestResponse<List<Trade>> response = await Client.ExecuteTaskAsync<List<Trade>>(request);
+            return response.Data;
+        }
     }
 }

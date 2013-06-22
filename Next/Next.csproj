@@ -44,12 +44,19 @@
   <ItemGroup>
     <Compile Include="ApiInfo.cs" />
     <Compile Include="ApiVersion.cs" />
+    <Compile Include="Dtos\Account.cs" />
+    <Compile Include="Dtos\Ledger.cs" />
+    <Compile Include="Dtos\Order.cs" />
+    <Compile Include="Dtos\Position.cs" />
+    <Compile Include="Dtos\AccountSummary.cs" />
+    <Compile Include="Dtos\Instrument.cs" />
     <Compile Include="Dtos\NewsSource.cs" />
     <Compile Include="Dtos\RealtimeAccesMarket.cs" />
     <Compile Include="Dtos\ErrorMessage.cs" />
     <Compile Include="Dtos\FeedInfo.cs" />
     <Compile Include="Dtos\SessionInfo.cs" />
     <Compile Include="Dtos\LoggedInStatus.cs" />
+    <Compile Include="Dtos\Trade.cs" />
     <Compile Include="NextClient.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Dtos\ServiceStatus.cs" />
