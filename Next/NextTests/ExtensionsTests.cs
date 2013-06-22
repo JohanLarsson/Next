@@ -10,14 +10,20 @@ namespace NextTests
 {
     public class ExtensionsTests
     {
+        private static readonly DateTime _dateTime = new DateTime(2013, 06, 20);
+        private const long _unixTimeStamp = 1371679200000;
+
         [Test]
         public void ToUnixTimeStampTest()
         {
-            DateTime dateTime = new DateTime(2013, 06, 20);
-            long unixTimeStamp = dateTime.ToUnixTimeStamp();
-            Assert.AreEqual(1371679200000, unixTimeStamp);
-            DateTime time = unixTimeStamp.ToDateTime();
-            Assert.AreEqual(dateTime, time);
+            long unixTimeStamp = _dateTime.ToUnixTimeStamp();
+            Assert.AreEqual(_unixTimeStamp, unixTimeStamp);
+        }
+
+        [Test]
+        public void ToDateTimeTest()
+        {
+            Assert.AreEqual(_dateTime, _unixTimeStamp.ToDateTime());
         }
     }
 }

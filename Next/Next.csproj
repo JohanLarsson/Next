@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ApiInfo.cs" />
     <Compile Include="ApiVersion.cs" />
+    <Compile Include="Dtos\NewsSource.cs" />
     <Compile Include="Dtos\RealtimeAccesMarket.cs" />
     <Compile Include="Dtos\ErrorMessage.cs" />
     <Compile Include="Dtos\FeedInfo.cs" />

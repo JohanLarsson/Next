@@ -23,7 +23,7 @@ namespace NextTests
         public async Task ServiceStatusTest()
         {
             var client = new NextClient(ApiVersion.Test);
-            ServiceStatus serviceStatus =await  client.ServiceStatus();
+            ServiceStatus serviceStatus = await client.ServiceStatus();
             Assert.IsTrue(serviceStatus.SystemRunning);
             Assert.IsTrue(serviceStatus.ValidVersion);
         }
@@ -35,7 +35,7 @@ namespace NextTests
 
             bool success = await client.Login(Credentials.Username, Credentials.Password);
 
-            Assert.IsTrue(success); 
+            Assert.IsTrue(success);
             Assert.IsNotNull(client.Session.SessionKey);
             Assert.IsTrue(client.Session.ExpiresIn > 0);
             Assert.AreEqual("test", client.Session.Environment);
@@ -74,9 +74,31 @@ namespace NextTests
         [Test]
         public async Task RealtimeAccessTest()
         {
-            var markets = await LoggedInClient.RealtimeAccess();
+            List<RealtimeAccesMarket> markets = await LoggedInClient.RealtimeAccess();
             Assert.IsTrue(markets.Any());
-            Assert.IsTrue(markets.All(m=>m.MarketID!=null));
+            Assert.IsTrue(markets.All(m => m.MarketID != null));
+        }
+
+        [Test]
+        public async Task NewsSourcesTest()
+        {
+            List<NewsSource> newsSources = await LoggedInClient.NewsSources();
+            Assert.IsTrue(newsSources.Any());
+            Assert.IsTrue(newsSources.All(m => m.Code != null && m.Name != null && m.Sourceid != 0));
+        }
+
+        [Test]
+        public void SearchNewsTest()
+        {
+            string news = LoggedInClient.SearchNews();
+            Console.WriteLine(news);
+        }
+
+        [Test]
+        public void NewsItemTest()
+        {
+            string s = LoggedInClient.NewsItem("4711");
+            Console.WriteLine(s);
         }
 
         private NextClient LoggedInClient
