@@ -245,5 +245,60 @@ namespace Next
             IRestResponse<List<Trade>> response = await Client.ExecuteTaskAsync<List<Trade>>(request);
             return response.Data;
         }
+
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Instrument-search
+        /// </summary>
+        /// <param name="query">The search string to use. Example: ERI, VOL</param>
+        /// <param name="type">The type of the instrument. Example: A, O, WNT, FND, FUT</param>
+        /// <param name="country">The country to search in. Example: SE, DK, NO, FI, DE, US, CA</param>
+        /// <returns></returns>
+        public async Task<List<InstrumentMatch>> InstrumentSearch(string query = null, string type = null, string country = null)
+        {
+            var request = new RestRequest("instruments", Method.GET);
+            if (!string.IsNullOrEmpty(query))
+                request.AddParameter("query", query);
+            if (type != null)
+                request.AddParameter("type", type);
+            if (country!=null)
+                request.AddParameter("country", country);
+            IRestResponse<List<InstrumentMatch>> response = await Client.ExecuteTaskAsync<List<InstrumentMatch>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Instrument-lookup
+        /// </summary>
+        /// <param name="identifier">Nordnet instrument identifier, example: 101</param>
+        /// <param name="marketId">Nordnet market identifier, example: 11</param>
+        /// <returns></returns>
+        public async Task<InstrumentMatch> InstrumentSearch(string identifier, int marketId)
+        {
+            var request = new RestRequest("instruments", Method.GET);
+            request.AddParameter("identifier", identifier);
+            request.AddParameter("marketID", marketId);
+            IRestResponse<InstrumentMatch> response = await Client.ExecuteTaskAsync<InstrumentMatch>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Multiple-instrument-lookup
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<InstrumentMatch>> InstrumentSearch(InstrumentDescriptor[] descriptors)
+        {
+            var request = new RestRequest("instruments", Method.GET);
+            var sb = new StringBuilder();
+            foreach (var descriptor in descriptors)
+            {
+                sb.AppendFormat("{0},{1}", descriptor.MarketId, descriptor.Identifier);
+                if (descriptor != descriptors.Last())
+                    sb.Append(";");
+            }
+            request.AddParameter("list", sb.ToString());
+            IRestResponse<List<InstrumentMatch>> response = await Client.ExecuteTaskAsync<List<InstrumentMatch>>(request);
+            return response.Data;
+        }
     }
 }

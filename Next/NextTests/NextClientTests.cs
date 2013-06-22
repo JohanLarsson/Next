@@ -147,6 +147,42 @@ namespace NextTests
             Assert.Inconclusive("how to test this?");
         }
 
+        [Test]
+        public async Task InstrumentSearchQueryTest()
+        {
+            List<InstrumentMatch> matches = await LoggedInClient.InstrumentSearch("ERI");
+            Assert.AreEqual(4, matches.Count);
+            Assert.IsTrue(matches.All(m =>
+                                      m.Country != null &&
+                                      m.Currency != null &&
+                                      m.Identifier != null &&
+                                      m.IsinCode != null &&
+                                      m.Longname != null &&
+                                      m.MainMarketId != null &&
+                                      m.Marketname != null &&
+                                      m.Shortname != null &&
+                                      m.Type != null &&
+                                      m.marketID != null
+                              ));
+        }
+
+        [Test]
+        public async Task InstrumentSearchIdentifierTest()
+        {
+            InstrumentMatch match = await LoggedInClient.InstrumentSearch("101",11);
+        }
+
+        [Test]
+        public async Task InstrumentSearchMultiIdentifierTest()
+        {
+            List<InstrumentMatch> matches = await LoggedInClient.InstrumentSearch(new InstrumentDescriptor[]
+                {
+                    new InstrumentDescriptor(11, "101"),
+                    new InstrumentDescriptor(11, "817")
+                });
+            Assert.AreEqual(2, matches.Count);
+        }
+
         private NextClient LoggedInClient
         {
             get
