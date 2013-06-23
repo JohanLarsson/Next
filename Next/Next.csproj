@@ -52,7 +52,7 @@
     <Compile Include="Dtos\InstrumentMatch.cs" />
     <Compile Include="Dtos\Ledger.cs" />
     <Compile Include="Dtos\Market.cs" />
-    <Compile Include="Dtos\Order.cs" />
+    <Compile Include="Dtos\OrderStatus.cs" />
     <Compile Include="Dtos\OrderBuilder.cs" />
     <Compile Include="Dtos\Ordertype.cs" />
     <Compile Include="Dtos\OrderTypeEnum.cs" />
@@ -70,10 +70,12 @@
     <Compile Include="Dtos\TickSize.cs" />
     <Compile Include="Dtos\Trade.cs" />
     <Compile Include="Dtos\TradingDay.cs" />
+    <Compile Include="FeedCommands\FeedCommand.cs" />
     <Compile Include="InstrumentDescriptor.cs" />
     <Compile Include="NextClient.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Dtos\ServiceStatus.cs" />
+    <Compile Include="NextFeed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

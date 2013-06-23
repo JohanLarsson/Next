@@ -11,14 +11,14 @@ using System.Xml.Serialization;
 using NUnit.Framework;
 using Next;
 using Next.Dtos;
+using NextTests.Helpers;
 using NextTests.Prototypes;
 using RestSharp;
-using NextTests.Helpers;
 
 namespace NextTests
 {
     [Explicit]
-    public class NextClientTests
+    public class NextClientTests : NextTestsBase
     {
         [Test]
         public async Task ServiceStatusTest()
@@ -136,7 +136,7 @@ namespace NextTests
         [Test]
         public async Task AccountOrdersTest()
         {
-            List<Order> orders = await LoggedInClient.AccountOrders(Accounts.First());
+            List<OrderStatus> orders = await LoggedInClient.AccountOrders(Accounts.First());
             Assert.Fail("Probably need to place an order before fetching this Order class is empty shell lacking json");
             Assert.Inconclusive("how to test this?");
         }
@@ -322,33 +322,5 @@ namespace NextTests
             //Assert.AreEqual(2, relatedMarkets.Count);
             //Assert.IsTrue(relatedMarkets.All(u => u.Identifier != null && u.MarketID != 0));
         }
-
-
-        private NextClient LoggedInClient
-        {
-            get
-            {
-                var nextClient = new NextClient(ApiVersion.Test);
-                Assert.IsTrue(nextClient.Login(Credentials.Username, Credentials.Password).Result); // this hangs
-                return nextClient;
-            }
-        }
-
-        private List<Account> Accounts
-        {
-            get
-            {
-                List<Account> accounts = LoggedInClient.Accounts().Result;
-                return accounts;
-            }
-        }
-
-        private InstrumentMatch Ericcson
-        {
-            get { return Properties.Settings.Default.EricssonInstrumentMatch; }
-        }
-
-        public Credentials Credentials { get { return Credentials.Load(Properties.Resources.CredentialsPath); } }
-
     }
 }

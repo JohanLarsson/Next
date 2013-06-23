@@ -51,6 +51,8 @@
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="Helpers\StopwatchExt.cs" />
     <Compile Include="NextClientTests.cs" />
+    <Compile Include="NextFeedTests.cs" />
+    <Compile Include="Helpers\NextTestsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
