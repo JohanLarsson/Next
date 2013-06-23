@@ -45,6 +45,7 @@
     <Compile Include="ApiInfo.cs" />
     <Compile Include="ApiVersion.cs" />
     <Compile Include="Dtos\Account.cs" />
+    <Compile Include="Dtos\Derivative.cs" />
     <Compile Include="Dtos\Index.cs" />
     <Compile Include="Dtos\InstrumentItem.cs" />
     <Compile Include="Dtos\InstrumentList.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Dtos\RealtimeAccesMarket.cs" />
     <Compile Include="Dtos\ErrorMessage.cs" />
     <Compile Include="Dtos\FeedInfo.cs" />
+    <Compile Include="Dtos\RelatedMarket.cs" />
     <Compile Include="Dtos\SessionInfo.cs" />
     <Compile Include="Dtos\LoggedInStatus.cs" />
     <Compile Include="Dtos\Tick.cs" />

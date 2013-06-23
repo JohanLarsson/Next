@@ -381,5 +381,51 @@ namespace Next
             IRestResponse<List<TickSize>> response = await Client.ExecuteTaskAsync<List<TickSize>>(request);
             return response.Data;
         }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Derivatives
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<string>> Countries(string derivativeType)
+        {
+            var request = new RestRequest("derivatives/" + derivativeType, Method.GET);
+            IRestResponse<List<string>> response = await Client.ExecuteTaskAsync<List<string>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Derivatives
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<InstrumentItem>> Underlyings(string derivativeType, string country)
+        {
+            var request = new RestRequest(string.Format("derivatives/{0}/underlyings/{1}", derivativeType, country), Method.GET);
+            IRestResponse<List<InstrumentItem>> response = await Client.ExecuteTaskAsync<List<InstrumentItem>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Derivatives
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Derivative>> Derivatives(string derivativeType)
+        {
+            var request = new RestRequest(string.Format("derivatives/{0}/derivatives", derivativeType), Method.GET);
+            IRestResponse<List<Derivative>> response = await Client.ExecuteTaskAsync<List<Derivative>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Related-markets
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<RelatedMarket>> RelatedMarkets(int marketId, string identifier)
+        {
+            var request = new RestRequest("related_markets", Method.GET);
+            request.AddParameter("marketID", marketId);
+            request.AddParameter("identifier", identifier);
+            IRestResponse<List<RelatedMarket>> response = await Client.ExecuteTaskAsync<List<RelatedMarket>>(request);
+            return response.Data;
+        }
     }
 }

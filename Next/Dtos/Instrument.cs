@@ -6,7 +6,7 @@
         public string MainMarketPrice { get; set; }
         public string Identifier { get; set; }
         public string Currency { get; set; }
-        public string MainMarketId { get; set; }
+        public int MainMarketId { get; set; }
 
         public override string ToString()
         {
@@ -34,7 +34,7 @@
                 hashCode = (hashCode*397) ^ (MainMarketPrice != null ? MainMarketPrice.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (Identifier != null ? Identifier.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (Currency != null ? Currency.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ (MainMarketId != null ? MainMarketId.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (MainMarketId != 0 ? MainMarketId.GetHashCode() : 0);
                 return hashCode;
             }
         }

@@ -159,18 +159,18 @@ namespace NextTests
                                       m.Identifier != null &&
                                       m.IsinCode != null &&
                                       m.Longname != null &&
-                                      m.MainMarketId != null &&
                                       m.Marketname != null &&
                                       m.Shortname != null &&
                                       m.Type != null &&
-                                      m.marketID != null
+                                      m.MarketID != 0
                               ));
+            DumpXml.Dump(matches.First());
         }
 
         [Test]
         public async Task InstrumentSearchIdentifierTest()
         {
-            InstrumentMatch match = await LoggedInClient.InstrumentSearch(Ericcson.Identifier, int.Parse(Ericcson.marketID));
+            InstrumentMatch match = await LoggedInClient.InstrumentSearch(Ericcson.Identifier, Ericcson.MarketID);
             Assert.AreEqual(Ericcson, match);
         }
 
@@ -189,7 +189,7 @@ namespace NextTests
         [Test]
         public async Task ChartDataTest()
         {
-            List<Tick> ticks = await LoggedInClient.ChartData(Ericcson.Identifier, int.Parse(Ericcson.marketID));
+            List<Tick> ticks = await LoggedInClient.ChartData(Ericcson.Identifier, Ericcson.MarketID);
             Assert.Inconclusive("Guess market must be open to test this");
         }
 
@@ -258,6 +258,42 @@ namespace NextTests
         {
             List<TickSize> tickSizes = await LoggedInClient.TickSizes(Ericcson.Identifier);
             Assert.AreEqual(1, tickSizes.Count);
+        }
+
+        [Test]
+        public async Task CountriesTest()
+        {
+            List<string> countries = await LoggedInClient.Countries("O");
+            Assert.AreEqual(1, countries.Count);
+        }
+
+        [Test]
+        public async Task UnderlyingsTest()
+        {
+            List<InstrumentItem> underlyings = await LoggedInClient.Underlyings("O","SE");
+            Assert.AreEqual(4, underlyings.Count);
+            Assert.IsTrue(underlyings.All(u=>u.Identifier!=null && u.MarketID!=null && u.Shortname!=null));
+        }
+
+        [Test]
+        public async Task DerivativesTest()
+        {
+            List<Derivative> derivatives1 = await LoggedInClient.Derivatives("WNT");
+            Assert.AreEqual(0, derivatives1.Count);
+            List<Derivative> derivatives2 = await LoggedInClient.Derivatives(Ericcson.Identifier);
+            Assert.AreEqual(0, derivatives2.Count);
+            List<Derivative> derivatives3 = await LoggedInClient.Derivatives(Ericcson.MarketID.ToString());
+            Assert.AreEqual(0, derivatives3.Count);
+            Assert.Fail("Figure this out");
+            //Assert.IsTrue(underlyings.All(u => u.Identifier != null && u.MarketID != null && u.Shortname != null));
+        }
+
+        [Test]
+        public async Task RelatedMarketsTest()
+        {
+            List<RelatedMarket> relatedMarkets = await LoggedInClient.RelatedMarkets(Ericcson.MarketID,Ericcson.Identifier);
+            Assert.AreEqual(2,relatedMarkets.Count);
+            Assert.IsTrue(relatedMarkets.All(u => u.Identifier != null && u.MarketID != 0));
         }
 
         private NextClient LoggedInClient

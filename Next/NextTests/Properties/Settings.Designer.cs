@@ -25,19 +25,7 @@ namespace NextTests.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<InstrumentMatch xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <Type>A</Type>
-  <Identifier>101</Identifier>
-  <Currency>SEK</Currency>
-  <MainMarketId>11</MainMarketId>
-  <Longname>Ericsson B</Longname>
-  <marketID>11</marketID>
-  <Country>SE</Country>
-  <Shortname>ERIC B</Shortname>
-  <Marketname>OMX Stockholm</Marketname>
-  <IsinCode>SE0000108656</IsinCode>
-</InstrumentMatch>")]
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?><InstrumentMatch xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""><Type>A</Type><Identifier>100</Identifier><Currency>SEK</Currency><MainMarketId>0</MainMarketId><Longname>Ericsson A</Longname><MarketID>11</MarketID><Country>SE</Country><Shortname>ERIC A</Shortname><Marketname>OMX Stockholm</Marketname><IsinCode>SE0000108649</IsinCode></InstrumentMatch>")]
         public global::Next.Dtos.InstrumentMatch EricssonInstrumentMatch {
             get {
                 return ((global::Next.Dtos.InstrumentMatch)(this["EricssonInstrumentMatch"]));
