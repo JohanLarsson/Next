@@ -40,7 +40,7 @@ namespace NextTests.Prototypes
             Dump(testApiInfo);
         }
 
-        private static void Dump<T>(T value)
+        public static void Dump<T>(T value)
         {
             var serializer = new XmlSerializer(value.GetType());
             var sb = new StringBuilder();
@@ -52,7 +52,6 @@ namespace NextTests.Prototypes
                 Console.WriteLine(sb);
             }
         }
-
 
         public static T Deserialize<T>(string xml)
         {

@@ -11,6 +11,7 @@ using System.Xml.Serialization;
 using NUnit.Framework;
 using Next;
 using Next.Dtos;
+using NextTests.Prototypes;
 using RestSharp;
 using NextTests.Helpers;
 
@@ -108,14 +109,14 @@ namespace NextTests
         {
             var accounts = await LoggedInClient.Accounts();
             Assert.IsTrue(accounts.Any());
-            Assert.IsTrue(accounts.All(a=>a.Id!=null));
+            Assert.IsTrue(accounts.All(a => a.Id != null));
         }
 
         [Test]
         public async Task AccountSummaryTest()
         {
             AccountSummary summary = await LoggedInClient.AccountSummary(Accounts.First());
-            Assert.IsFalse(string.IsNullOrEmpty( summary.AccountCurrency));
+            Assert.IsFalse(string.IsNullOrEmpty(summary.AccountCurrency));
         }
 
         [Test]
@@ -169,7 +170,8 @@ namespace NextTests
         [Test]
         public async Task InstrumentSearchIdentifierTest()
         {
-            InstrumentMatch match = await LoggedInClient.InstrumentSearch("101",11);
+            InstrumentMatch match = await LoggedInClient.InstrumentSearch(Ericcson.Identifier, int.Parse(Ericcson.marketID));
+            Assert.AreEqual(Ericcson, match);
         }
 
         [Test]
@@ -181,6 +183,81 @@ namespace NextTests
                     new InstrumentDescriptor(11, "817")
                 });
             Assert.AreEqual(2, matches.Count);
+            Assert.AreEqual(Ericcson, matches.First());
+        }
+
+        [Test]
+        public async Task ChartDataTest()
+        {
+            List<Tick> ticks = await LoggedInClient.ChartData(Ericcson.Identifier, int.Parse(Ericcson.marketID));
+            Assert.Inconclusive("Guess market must be open to test this");
+        }
+
+        [Test]
+        public async Task InstrumentListsTest()
+        {
+            List<InstrumentList> lists = await LoggedInClient.Lists();
+            Assert.AreEqual(96, lists.Count);
+        }
+
+        [Test]
+        public async Task ListItemsTest()
+        {
+            List<InstrumentItem> items = await LoggedInClient.ListItems(8.ToString());
+            Assert.AreEqual(78, items.Count);
+            Assert.IsTrue(items.All(x =>
+                                    x.Identifier != null &&
+                                    x.MarketID != null &&
+                                    x.Shortname != null));
+        }
+
+        [Test]
+        public async Task MarketsTest()
+        {
+            List<Market> markets = await LoggedInClient.Markets();
+            Assert.AreEqual(36, markets.Count);
+            Assert.IsTrue(markets.All(x =>
+                                      x.Country != null &&
+                                      x.MarketID != null &&
+                                      x.Name != null
+                                          ));
+            Assert.IsTrue(markets.Any(x => x.Ordertypes.All(o =>
+                                 o.Text != null &&
+                                 o.Type != null
+                    )));
+        }
+
+        [Test]
+        public async Task TradingDaysTest()
+        {
+            List<TradingDay> tradingDays = await LoggedInClient.TradingDays(8);
+            Assert.AreEqual(65, tradingDays.Count);
+            Assert.IsTrue(tradingDays.All(x =>
+                                          x.Date != default(DateTime) &&
+                                          x.DisplayDate != default(DateTime)));
+
+        }
+
+        [Test]
+        public async Task IndicesTest()
+        {
+            List<Index> indices = await LoggedInClient.Indices();
+            Assert.AreEqual(59, indices.Count);
+            Assert.IsTrue(indices.All(x =>
+                                          x.Id != null &&
+                                          x.Longname != null &&
+                                          x.Source != null &&
+                                          x.Type != null
+                                          ));
+            Assert.IsTrue(indices.Any(x => x.Imageurl != null));
+            Assert.IsTrue(indices.Any(x => x.Country != null));
+        }
+
+        [Test]
+        public async Task TickSizesTest()
+        {
+            List<TickSize> tickSizes = await LoggedInClient.TickSizes(Ericcson.Identifier);
+            Assert.AreEqual(1, tickSizes.Count);
         }
 
         private NextClient LoggedInClient
@@ -200,7 +277,12 @@ namespace NextTests
                 List<Account> accounts = LoggedInClient.Accounts().Result;
                 return accounts;
             }
-        } 
+        }
+
+        private InstrumentMatch Ericcson
+        {
+            get { return Properties.Settings.Default.EricssonInstrumentMatch; }
+        }
 
         public Credentials Credentials { get { return Credentials.Load(Properties.Resources.CredentialsPath); } }
 

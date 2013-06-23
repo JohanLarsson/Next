@@ -45,9 +45,14 @@
     <Compile Include="ApiInfo.cs" />
     <Compile Include="ApiVersion.cs" />
     <Compile Include="Dtos\Account.cs" />
+    <Compile Include="Dtos\Index.cs" />
+    <Compile Include="Dtos\InstrumentItem.cs" />
+    <Compile Include="Dtos\InstrumentList.cs" />
     <Compile Include="Dtos\InstrumentMatch.cs" />
     <Compile Include="Dtos\Ledger.cs" />
+    <Compile Include="Dtos\Market.cs" />
     <Compile Include="Dtos\Order.cs" />
+    <Compile Include="Dtos\Ordertype.cs" />
     <Compile Include="Dtos\Position.cs" />
     <Compile Include="Dtos\AccountSummary.cs" />
     <Compile Include="Dtos\Instrument.cs" />
@@ -57,7 +62,10 @@
     <Compile Include="Dtos\FeedInfo.cs" />
     <Compile Include="Dtos\SessionInfo.cs" />
     <Compile Include="Dtos\LoggedInStatus.cs" />
+    <Compile Include="Dtos\Tick.cs" />
+    <Compile Include="Dtos\TickSize.cs" />
     <Compile Include="Dtos\Trade.cs" />
+    <Compile Include="Dtos\TradingDay.cs" />
     <Compile Include="InstrumentDescriptor.cs" />
     <Compile Include="NextClient.cs" />
     <Compile Include="Extensions.cs" />

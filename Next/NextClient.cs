@@ -261,7 +261,7 @@ namespace Next
                 request.AddParameter("query", query);
             if (type != null)
                 request.AddParameter("type", type);
-            if (country!=null)
+            if (country != null)
                 request.AddParameter("country", country);
             IRestResponse<List<InstrumentMatch>> response = await Client.ExecuteTaskAsync<List<InstrumentMatch>>(request);
             return response.Data;
@@ -298,6 +298,87 @@ namespace Next
             }
             request.AddParameter("list", sb.ToString());
             IRestResponse<List<InstrumentMatch>> response = await Client.ExecuteTaskAsync<List<InstrumentMatch>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Chart-data
+        /// </summary>
+        /// <param name="identifier">Nordnet instrument identifier, example: 101</param>
+        /// <param name="marketId">Nordnet market identifier, example: 11</param>
+        /// <returns></returns>
+        public async Task<List<Tick>> ChartData(string identifier, int marketId)
+        {
+            var request = new RestRequest("chart_data", Method.GET);
+            request.AddParameter("identifier", identifier);
+            request.AddParameter("marketID", marketId);
+            IRestResponse<List<Tick>> response = await Client.ExecuteTaskAsync<List<Tick>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-lists
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<InstrumentList>> Lists()
+        {
+            var request = new RestRequest("lists", Method.GET);
+            IRestResponse<List<InstrumentList>> response = await Client.ExecuteTaskAsync<List<InstrumentList>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-list-items
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<InstrumentItem>> ListItems(string listId)
+        {
+            var request = new RestRequest(string.Format("lists/{0}", listId), Method.GET);
+            IRestResponse<List<InstrumentItem>> response = await Client.ExecuteTaskAsync<List<InstrumentItem>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-markets
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Market>> Markets()
+        {
+            var request = new RestRequest("markets", Method.GET);
+            IRestResponse<List<Market>> response = await Client.ExecuteTaskAsync<List<Market>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-valid-trading-days
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<TradingDay>> TradingDays(int marketId)
+        {
+            var request = new RestRequest(string.Format("markets/{0}/trading_days", marketId), Method.GET);
+            IRestResponse<List<TradingDay>> response = await Client.ExecuteTaskAsync<List<TradingDay>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-indices
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Index>> Indices()
+        {
+            var request = new RestRequest("indices", Method.GET);
+            IRestResponse<List<Index>> response = await Client.ExecuteTaskAsync<List<Index>>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-ticksize-table
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<TickSize>> TickSizes(string instrumentId)
+        {
+            var request = new RestRequest("ticksizes/" + instrumentId, Method.GET);
+            IRestResponse<List<TickSize>> response = await Client.ExecuteTaskAsync<List<TickSize>>(request);
             return response.Data;
         }
     }

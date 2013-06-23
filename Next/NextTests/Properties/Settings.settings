@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NextTests.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="EricssonInstrumentMatch" Type="Next.Dtos.InstrumentMatch" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;InstrumentMatch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Type&gt;A&lt;/Type&gt;
+  &lt;Identifier&gt;101&lt;/Identifier&gt;
+  &lt;Currency&gt;SEK&lt;/Currency&gt;
+  &lt;MainMarketId&gt;11&lt;/MainMarketId&gt;
+  &lt;Longname&gt;Ericsson B&lt;/Longname&gt;
+  &lt;marketID&gt;11&lt;/marketID&gt;
+  &lt;Country&gt;SE&lt;/Country&gt;
+  &lt;Shortname&gt;ERIC B&lt;/Shortname&gt;
+  &lt;Marketname&gt;OMX Stockholm&lt;/Marketname&gt;
+  &lt;IsinCode&gt;SE0000108656&lt;/IsinCode&gt;
+&lt;/InstrumentMatch&gt;</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
