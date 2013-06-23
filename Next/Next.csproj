@@ -53,7 +53,9 @@
     <Compile Include="Dtos\Ledger.cs" />
     <Compile Include="Dtos\Market.cs" />
     <Compile Include="Dtos\Order.cs" />
+    <Compile Include="Dtos\OrderBuilder.cs" />
     <Compile Include="Dtos\Ordertype.cs" />
+    <Compile Include="Dtos\OrderTypeEnum.cs" />
     <Compile Include="Dtos\Position.cs" />
     <Compile Include="Dtos\AccountSummary.cs" />
     <Compile Include="Dtos\Instrument.cs" />

@@ -427,5 +427,52 @@ namespace Next
             IRestResponse<List<RelatedMarket>> response = await Client.ExecuteTaskAsync<List<RelatedMarket>>(request);
             return response.Data;
         }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Order-entry
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Order> PlaceOrder(OrderBuilder order)
+        {
+            var request = new RestRequest(string.Format("accounts/{0}/orders", order.Account.Id), Method.POST);
+            request.AddParameter("identifier", order.Instrument.Identifier);
+            request.AddParameter("marketID", order.Instrument.MainMarketId);
+            request.AddParameter("price", order.Price);
+            request.AddParameter("volume", order.Volume);
+            request.AddParameter("side", order.Side);
+            request.AddParameter("currency", order.Currency);
+            if (order.ValidUntil.HasValue && !order.SmartOrder)
+                request.AddParameter("valid_until", order.ValidUntil.Value.ToString("yyyy-MM-dd"));
+            if (order.OpenVolume != 0)
+                request.AddParameter("open_volume", order.OpenVolume);
+            request.AddParameter("smart_order", order.SmartOrder);
+
+            IRestResponse<Order> response = await Client.ExecuteTaskAsync<Order>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Order-modify
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Order> ModifyOrder(string account, string orderId, decimal newPrice, uint newVolume)
+        {
+            var request = new RestRequest(string.Format("accounts/{0}/orders/{1}", account, orderId), Method.PUT);
+            request.AddParameter("price", newPrice);
+            request.AddParameter("volume", newVolume);
+            IRestResponse<Order> response = await Client.ExecuteTaskAsync<Order>(request);
+            return response.Data;
+        }
+
+        /// <summary>
+        /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Order-delete
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Order> DeleteOrder(string account, string orderId)
+        {
+            var request = new RestRequest(string.Format("accounts/{0}/orders/{1}", account, orderId), Method.DELETE);
+            IRestResponse<Order> response = await Client.ExecuteTaskAsync<Order>(request);
+            return response.Data;
+        }
     }
 }

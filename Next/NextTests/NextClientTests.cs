@@ -296,6 +296,34 @@ namespace NextTests
             Assert.IsTrue(relatedMarkets.All(u => u.Identifier != null && u.MarketID != 0));
         }
 
+        [Test]
+        public async Task PlaceOrderTest()
+        {
+            Assert.Inconclusive("Not ideal for tests");
+            //Order relatedMarkets = await LoggedInClient.PlaceOrder()
+            //Assert.AreEqual(2, relatedMarkets.Count);
+            //Assert.IsTrue(relatedMarkets.All(u => u.Identifier != null && u.MarketID != 0));
+        }
+
+        [Test]
+        public async Task ModifyOrderTest()
+        {
+            Assert.Inconclusive("Not ideal for tests");
+            //Order relatedMarkets = await LoggedInClient.PlaceOrder()
+            //Assert.AreEqual(2, relatedMarkets.Count);
+            //Assert.IsTrue(relatedMarkets.All(u => u.Identifier != null && u.MarketID != 0));
+        }
+
+        [Test]
+        public async Task DeleteOrderTest()
+        {
+            Assert.Inconclusive("Not ideal for tests");
+            //Order relatedMarkets = await LoggedInClient.PlaceOrder()
+            //Assert.AreEqual(2, relatedMarkets.Count);
+            //Assert.IsTrue(relatedMarkets.All(u => u.Identifier != null && u.MarketID != 0));
+        }
+
+
         private NextClient LoggedInClient
         {
             get
