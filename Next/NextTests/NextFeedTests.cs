@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -32,6 +33,8 @@ namespace NextTests
             string serviceName = "NEXTAPI";
             FeedCommand<LoginArgs> loginCmd = FeedCommand.Login(serviceName, client.Session.SessionKey);
             string json = loginCmd.ToJson();
+            string response = string.Empty;
+            
             try
             {
                 using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP))
@@ -42,24 +45,20 @@ namespace NextTests
                     using (var sslStream = new SslStream(new NetworkStream(socket, true), true, ValidateRemoteCertificate))
                     {
                         sslStream.AuthenticateAsClient(feedInfo.Hostname);
-                        using (var writer = new StreamWriter(sslStream, Encoding.UTF8, socket.SendBufferSize, true))
-                        {
-                            writer.WriteLine(json);
-                            writer.Write("\n");
-                            writer.Flush();
-                        }
-                        for (int i = 0; i < 40; i++)
-                        {
-                            using (var streamReader = new StreamReader(sslStream, Encoding.UTF8, false, socket.ReceiveBufferSize, true))
-                            {
-                                string text = streamReader.ReadToEnd();
-                                Console.WriteLine("{0} {1}", i, text);
-                            }
-                            Thread.Sleep(TimeSpan.FromSeconds(1));
-                        }
 
+                        var data = Encoding.UTF8.GetBytes(json);
+                        sslStream.Write(data);
+                        sslStream.Write(Encoding.UTF8.GetBytes("\n"));
+
+                        using (var streamreader = new StreamReader(sslStream))
+                        {
+                            response = streamreader.ReadLine();
+                        }
                     }
                 }
+                Debug.WriteLine("response : {0}", response);
+
+                Assert.IsNotNullOrEmpty(response);
             }
             catch (Exception ex)
             {
@@ -82,14 +81,13 @@ namespace NextTests
             string serviceName = "NEXTAPI";
             FeedCommand<LoginArgs> loginCmd = FeedCommand.Login(serviceName, client.Session.SessionKey);
             string json = loginCmd.ToJson();
+
+            string response = string.Empty;
             try
             {
                 using (var socket = new Socket(hostAddresses.AddressFamily, SocketType.Stream, ProtocolType.Tcp))
                 {
                     socket.Connect(endPoint);
-                    //socket.NoDelay = true;
-                    //socket.SendTimeout = 2000;
-                    //socket.ReceiveTimeout = 1000;
                     if (feedInfo.Encrypted)
                     {
                         using (var sslStream = new SslStream(new NetworkStream(socket, false), true, ValidateRemoteCertificate))
@@ -98,45 +96,25 @@ namespace NextTests
                             Console.WriteLine("sslStream.CanWrite : " + sslStream.CanWrite);
                             if (sslStream.CanWrite)
                             {
-                                using (var writer = new StreamWriter(sslStream, Encoding.UTF8, socket.SendBufferSize, true))
-                                {
-                                    writer.Write(json);
-                                    writer.Write("\n");
-                                    writer.Flush();
-                                }
+                                sslStream.Write(Encoding.UTF8.GetBytes(json));
+                                sslStream.Write(Encoding.UTF8.GetBytes("\n"));
                             }
                             else
                             {
                                 throw new Exception("Cannot write to stream");
                             }
 
-                            for (int i = 0; i < 40; i++)
+                            using (var reader = new StreamReader(sslStream))
                             {
-                                if (sslStream.CanRead)
-                                {
-                                    using (var streamReader = new StreamReader(sslStream, Encoding.UTF8,true, socket.ReceiveBufferSize, true))
-                                    {
-                                        Console.Write(i +" ");
-                                        Console.Write(streamReader.Read());
-                                        while (streamReader.Peek() >= 0)
-                                        {
-                                            Console.Write((char)streamReader.Read());
-                                        }
-                                        Console.WriteLine();
-                                    }
-                                }
-                                else
-                                {
-                                    throw new Exception("Cannot read from stream");
-                                }
-
-                                Thread.Sleep(TimeSpan.FromSeconds(1));
+                                response = reader.ReadLine();
                             }
-
                         }
                     }
 
                 }
+
+                Debug.WriteLine(response);
+                Assert.IsNotNullOrEmpty(response);
             }
             catch (Exception ex)
             {
