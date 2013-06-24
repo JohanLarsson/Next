@@ -22,14 +22,10 @@ namespace NextView
         public NextVm(NextClient client)
         {
             _client = client;
-
-            InstrumentLists = new ObservableCollection<InstrumentList>();
-            Instruments = new ObservableCollection<InstrumentItem>();
-            Accounts = new ObservableCollection<Account>();
-            SelectedAccountLedgers = new ObservableCollection<Ledger>();
-            SelectedAccountOrders = new ObservableCollection<OrderStatus>();
-            SelectedAccountPositions = new ObservableCollection<Position>();
-            SelectedAccountTrades = new ObservableCollection<Trade>();
+            InstrumentLists= new ObservableCollection<InstrumentList>();
+            Instruments= new ObservableCollection<InstrumentItem>();
+            Accounts= new ObservableCollection<Account>();
+            Account= new AccountVm(_client,null);
         }
 
         public async Task Login()
@@ -59,11 +55,7 @@ namespace NextView
                 OnPropertyChanged();
                 if (_selectedInstrumentList == null)
                     return;
-                UpdateCollection(Instruments, _client.ListItems(_selectedInstrumentList.Id));
-                //Instruments.Clear();
-                //Task<List<InstrumentItem>> listItems = _client.ListItems(_selectedInstrumentList.Id);
-                //listItems.ContinueWith(items => items.Result.ForEach(Instruments.Add), TaskScheduler.FromCurrentSynchronizationContext());
-
+                Instruments.UpdateCollection( _client.ListItems(_selectedInstrumentList.Id));
             }
         }
 
@@ -79,42 +71,12 @@ namespace NextView
                 if (Equals(value, _selectedAccount)) return;
                 _selectedAccount = value;
                 OnPropertyChanged();
-                if (_selectedAccount == null)
-                    return;
-
-
-                Task<AccountSummary> accountSummary = _client.AccountSummary(_selectedAccount);
-                accountSummary.ContinueWith(ant => SelectedAccountSummary = ant.Result);
-                UpdateCollection(SelectedAccountLedgers, _client.AccountLedgers(_selectedAccount));
-                UpdateCollection(SelectedAccountTrades, _client.AccountTrades(_selectedAccount));
-                UpdateCollection(SelectedAccountPositions, _client.AccountPositions(_selectedAccount));
-                UpdateCollection(SelectedAccountOrders, _client.AccountOrders(_selectedAccount));
-
-
+                Account.Account = _selectedAccount;
             }
         }
 
-        private void UpdateCollection<T>(ObservableCollection<T> collection, Task<List<T>> task)
-        {
-            collection.Clear();
-            task.ContinueWith(ant => ant.Result.ForEach(collection.Add), TaskScheduler.FromCurrentSynchronizationContext());
-        }
+        public AccountVm Account { get; private set; }
 
-        public AccountSummary SelectedAccountSummary
-        {
-            get { return _selectedAccountSummary; }
-            set
-            {
-                if (Equals(value, _selectedAccountSummary)) return;
-                _selectedAccountSummary = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<Ledger> SelectedAccountLedgers { get; private set; }
-        public ObservableCollection<Trade> SelectedAccountTrades { get; private set; }
-        public ObservableCollection<Position> SelectedAccountPositions { get; private set; }
-        public ObservableCollection<OrderStatus> SelectedAccountOrders { get; private set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

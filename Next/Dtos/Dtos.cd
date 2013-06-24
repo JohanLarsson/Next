@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Next.Dtos.Derivative" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\Derivative.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.ErrorMessage" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\ErrorMessage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.FeedInfo" Collapsed="true">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAGAAAAAAAACAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Dtos\FeedInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.Index" Collapsed="true">
+    <Position X="5.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQAABAgAAAAAEAAAAAAAAAAIAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Dtos\Index.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.Instrument">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAEAAAAAEgAAAAAAACAAAAIAAAQAAQAAAAiA=</HashCode>
+      <FileName>Dtos\Instrument.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.InstrumentItem">
+    <Position X="2.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAIAIAAAAAAQAAAAAA=</HashCode>
+      <FileName>Dtos\InstrumentItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.InstrumentList">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAEAAAAAAQAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\InstrumentList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.InstrumentMatch">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAEgAAAAAAEAAIIAIAAAAAAAAABAiA=</HashCode>
+      <FileName>Dtos\InstrumentMatch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.Ledger" Collapsed="true">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAEAEAAAAAACAAABAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Dtos\Ledger.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.LoggedInStatus" Collapsed="true">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgA=</HashCode>
+      <FileName>Dtos\LoggedInStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.Market" Collapsed="true">
+    <Position X="7.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQAAAIIQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\Market.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.NewsSource" Collapsed="true">
+    <Position X="4.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAEAAAgAAQAAAAAQAABAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\NewsSource.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.OrderBuilder" Collapsed="true">
+    <Position X="6.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAQAAgAAAAAAAAAAACAAAAAAAEQIACAAAAEA=</HashCode>
+      <FileName>Dtos\OrderBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.OrderStatus">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABQAAIAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Dtos\OrderStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.Ordertype">
+    <Position X="13.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Dtos\Ordertype.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.Position">
+    <Position X="2.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAQAAAEiACAAAAAAAAEgAAAAAA=</HashCode>
+      <FileName>Dtos\Position.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.RealtimeAccesMarket" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAIAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\RealtimeAccesMarket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.RelatedMarket" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAIAAAAAAAAQAAAAAA=</HashCode>
+      <FileName>Dtos\RelatedMarket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.ServiceStatus" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAACAAAAAAIAUAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Dtos\ServiceStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.SessionInfo" Collapsed="true">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAQAAAAAoAAAAIAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\SessionInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.Tick" Collapsed="true">
+    <Position X="9" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\Tick.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.TickSize" Collapsed="true">
+    <Position X="9" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAEAAABAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Dtos\TickSize.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.Trade" Collapsed="true">
+    <Position X="6.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAEAQAAgEAAAAAAAAAAgAAAAAAAAAIgAAAAgAA=</HashCode>
+      <FileName>Dtos\Trade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.TradingDay" Collapsed="true">
+    <Position X="8.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAIAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\TradingDay.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.Account" Collapsed="true">
+    <Position X="12.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAIAAAAEAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\Account.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.AccountSummary" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AggAAAAAAAEACAAAQEEAECAAAgAAAAAAAAAEAAEAAAA=</HashCode>
+      <FileName>Dtos\AccountSummary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="Next.Dtos.OrderSide" Collapsed="true">
+    <Position X="3" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAABAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\OrderBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="Next.Dtos.OrderTypeEnum" Collapsed="true">
+    <Position X="4.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACIAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dtos\OrderTypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

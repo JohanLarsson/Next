@@ -50,6 +50,7 @@
     <Compile Include="Dtos\InstrumentItem.cs" />
     <Compile Include="Dtos\InstrumentList.cs" />
     <Compile Include="Dtos\InstrumentMatch.cs" />
+    <Compile Include="Dtos\IntrumentID.cs" />
     <Compile Include="Dtos\Ledger.cs" />
     <Compile Include="Dtos\Market.cs" />
     <Compile Include="Dtos\OrderStatus.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Dtos\AccountSummary.cs" />
     <Compile Include="Dtos\Instrument.cs" />
     <Compile Include="Dtos\NewsSource.cs" />
+    <Compile Include="Dtos\Price.cs" />
     <Compile Include="Dtos\RealtimeAccesMarket.cs" />
     <Compile Include="Dtos\ErrorMessage.cs" />
     <Compile Include="Dtos\FeedInfo.cs" />
@@ -86,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Dtos\Dtos.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

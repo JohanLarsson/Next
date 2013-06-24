@@ -67,7 +67,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="142*"/>
                         </Grid.RowDefinitions>
-                        <Grid DataContext="{Binding SelectedAccountSummary}">
+                        <Grid DataContext="{Binding Account.Summary}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -111,7 +111,7 @@
                             <Label Grid.Row="11">TradingPower</Label>
                             <TextBlock Grid.Row="11" Grid.Column="1" Text="{Binding TradingPower}"/>
                         </Grid>
-                        <ListView Grid.Row="1" ItemsSource="{Binding SelectedAccountLedgers}" >
+                        <ListView Grid.Row="1" ItemsSource="{Binding Account.Ledgers}" >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding AccIntCred}" Header="AccIntCred"/>
@@ -122,7 +122,7 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <ListView Grid.Row="2" ItemsSource="{Binding SelectedAccountOrders}" >
+                        <ListView Grid.Row="2" ItemsSource="{Binding Account.Orders}" >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding ActionState}" Header="ActionState"/>
@@ -133,7 +133,7 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <ListView Grid.Row="3" ItemsSource="{Binding SelectedAccountPositions}" >
+                        <ListView Grid.Row="3" ItemsSource="{Binding Account.Positions}" >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding AcqPrice }" Header="AcqPrice"/>
@@ -147,6 +147,23 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding Instrument.Type}" Header="Type"/>
                                     <GridViewColumn DisplayMemberBinding="{Binding Instrument.MainMarketId}" Header="MainMarketId"/>
                                     <GridViewColumn DisplayMemberBinding="{Binding Instrument.MainMarketPrice}" Header="MainMarketPrice"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ListView Grid.Row="4" ItemsSource="{Binding Account.Trades}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Volume}" Header="Volume"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Accno}" Header="AccountNumber"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding IntrumentID.Identifier}" Header="Identifier"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding IntrumentID.MarketID}" Header="MarketID"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Side}" Header="Side"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding TradeID}" Header="TradeID"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Tradetime}" Header="Tradetime"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Price.Value}" Header="Value"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Price.Curr}" Header="Currency"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Counterparty}" Header="Counterparty"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding OrderID}" Header="OrderID"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
