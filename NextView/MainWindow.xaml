@@ -1,0 +1,160 @@
+﻿<Window x:Class="NextView.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:nextView="clr-namespace:NextView"
+        mc:Ignorable="d"
+        Title="MainWindow"  d:DataContext="{d:DesignInstance nextView:NextVm}">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Login" Click="LoginClick"/>
+        </Menu>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <StackPanel Orientation="Horizontal">
+                <Label VerticalAlignment="Center">Logged in:</Label>
+                <TextBlock Text="{Binding IsLoggedIn}" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+        </StatusBar>
+        <TabControl>
+            <TabItem Header="Stocks">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="235*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListView Grid.Column="0" ItemsSource="{Binding InstrumentLists}" SelectedValue="{Binding SelectedInstrumentList}" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Country}" Header="Country"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView Grid.Column="1" ItemsSource="{Binding Instruments}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Shortname}" Header="ShortName"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Identifier}" Header="Identifier"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding MarketID}" Header="MarketId"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Accounts">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <ListView x:Name="Accounts" Grid.Column="0" ItemsSource="{Binding Accounts}" SelectedValue="{Binding SelectedAccount}" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding Alias}" Header="Alias"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Default}" Header="Default"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="142*"/>
+                        </Grid.RowDefinitions>
+                        <Grid DataContext="{Binding SelectedAccountSummary}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Label >Currency</Label>
+                            <TextBlock Grid.Column="1" Text="{Binding AccountCurrency}"/>
+                            <Label Grid.Row="1">Sum</Label>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding AccountSum}"/>
+                            <Label Grid.Row="2">Collateral</Label>
+                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Collateral}"/>
+                            <Label Grid.Row="3">ForwardSum</Label>
+                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ForwardSum}"/>
+                            <Label Grid.Row="4">FullMarketvalue</Label>
+                            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding FullMarketvalue}"/>
+                            <Label Grid.Row="5">FutureSum</Label>
+                            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding FutureSum}"/>
+                            <Label Grid.Row="6">Interest</Label>
+                            <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Interest}"/>
+                            <Label Grid.Row="7">LoanLimit</Label>
+                            <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding LoanLimit}"/>
+                            <Label Grid.Row="8">OwnCapital</Label>
+                            <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding OwnCapital}"/>
+                            <Label Grid.Row="9">OwnCapitalMorning</Label>
+                            <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding OwnCapitalMorning}"/>
+                            <Label Grid.Row="10">PawnValue</Label>
+                            <TextBlock Grid.Row="10" Grid.Column="1" Text="{Binding PawnValue}"/>
+                            <Label Grid.Row="11">TradingPower</Label>
+                            <TextBlock Grid.Row="11" Grid.Column="1" Text="{Binding TradingPower}"/>
+                        </Grid>
+                        <ListView Grid.Row="1" ItemsSource="{Binding SelectedAccountLedgers}" >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding AccIntCred}" Header="AccIntCred"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding AccIntDeb}" Header="AccIntDeb"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding AccountSum}" Header="AccountSum"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding AccountSumAcc}" Header="AccountSumAcc"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Currency}" Header="Currency"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ListView Grid.Row="2" ItemsSource="{Binding SelectedAccountOrders}" >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding ActionState}" Header="ActionState"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding OrderID}" Header="OrderID"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding OrderIDType}" Header="OrderIDType"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding OrderState}" Header="OrderState"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding ResultCode}" Header="ResultCode"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <ListView Grid.Row="3" ItemsSource="{Binding SelectedAccountPositions}" >
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding AcqPrice }" Header="AcqPrice"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding AcqPriceAcc}" Header="AcqPriceAcc"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding PawnPercent}" Header="PawnPercent"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Qty}" Header="Qty"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MarketValue}" Header="MarketValue"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding MarketValueAcc}" Header="MarketValueAcc"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Instrument.Currency}" Header="Currency"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Instrument.Identifier}" Header="Identifier"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Instrument.Type}" Header="Type"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Instrument.MainMarketId}" Header="MainMarketId"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Instrument.MainMarketPrice}" Header="MainMarketPrice"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </DockPanel>
+</Window>

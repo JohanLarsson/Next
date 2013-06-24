@@ -87,9 +87,9 @@ namespace NextTests
                 using (var socket = new Socket(hostAddresses.AddressFamily, SocketType.Stream, ProtocolType.Tcp))
                 {
                     socket.Connect(endPoint);
-                    socket.NoDelay = true;
-                    socket.SendTimeout = 2000;
-                    socket.ReceiveTimeout = 1000;
+                    //socket.NoDelay = true;
+                    //socket.SendTimeout = 2000;
+                    //socket.ReceiveTimeout = 1000;
                     if (feedInfo.Encrypted)
                     {
                         using (var sslStream = new SslStream(new NetworkStream(socket, false), true, ValidateRemoteCertificate))
@@ -114,9 +114,10 @@ namespace NextTests
                             {
                                 if (sslStream.CanRead)
                                 {
-                                    using (var streamReader = new StreamReader(sslStream, Encoding.UTF8, false, socket.ReceiveBufferSize, true))
+                                    using (var streamReader = new StreamReader(sslStream, Encoding.UTF8,true, socket.ReceiveBufferSize, true))
                                     {
                                         Console.Write(i +" ");
+                                        Console.Write(streamReader.Read());
                                         while (streamReader.Peek() >= 0)
                                         {
                                             Console.Write((char)streamReader.Read());
