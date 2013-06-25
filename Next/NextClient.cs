@@ -506,7 +506,7 @@ namespace Next
             }
             else
             {
-                _touchTimer = new Timer((o)=>Touch(), null, 0, Session.ExpiresIn - 10);
+                _touchTimer = new Timer((o) => Touch(), null, TimeSpan.FromSeconds(Session.ExpiresIn - 10), TimeSpan.FromSeconds(Session.ExpiresIn - 10));
             }
         }
     }
