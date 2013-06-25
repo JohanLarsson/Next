@@ -506,13 +506,8 @@ namespace Next
             }
             else
             {
-                _touchTimer = new Timer(InternalTouch, null, 0, Session.ExpiresIn - 10);
+                _touchTimer = new Timer((o)=>Touch(), null, 0, Session.ExpiresIn - 10);
             }
-        }
-
-        private async void InternalTouch(object o)
-        {
-            Touch();
         }
     }
 }
