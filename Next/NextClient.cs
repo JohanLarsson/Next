@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -14,25 +15,35 @@ namespace Next
 {
     public class NextClient
     {
+        private const string _login = "login";
+
+        private readonly RestClient _client;
+        private readonly ApiInfo _apiInfo;
+        private SessionInfo _session;
+
         public NextClient(ApiVersion apiVersion)
         {
             if (apiVersion == ApiVersion.Test)
                 _apiInfo = Properties.Settings.Default.TestApiInfo;
             else
                 throw new NotImplementedException("message");
+
+            _client = new RestClient(_apiInfo.BaseUrl);
         }
 
-        private ApiInfo _apiInfo;
+        public SessionInfo Session
+        {
+            get { return _session; }
+            private set
+            {
+                _session = value;
+                _client.Authenticator = value == null ? null : new HttpBasicAuthenticator(value.SessionKey, value.SessionKey);
+            }
+        }
 
         private RestClient Client
         {
-            get
-            {
-                var client = new RestClient(_apiInfo.BaseUrl);
-                if (Session != null)
-                    client.Authenticator = new HttpBasicAuthenticator(Session.SessionKey, Session.SessionKey);
-                return client;
-            }
+            get { return _client; }
         }
 
         public async Task<ServiceStatus> ServiceStatus()
@@ -41,9 +52,6 @@ namespace Next
             return response.Data;
         }
 
-        public SessionInfo Session { get; set; }
-
-        private const string _login = "login";
 
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Login
@@ -93,15 +101,19 @@ namespace Next
         /// <returns></returns>
         public async Task<bool> Logout()
         {
-            if (Session == null)
-                return true; // Exception?
+            if (Session == null) {
+                Debug.WriteLine("NextClient.Logout() called with Sessoin == null.  Not logged in.");
+                return true;
+            }
+
             var resource = string.Format("{0}/{1}", _login, Session.SessionKey);
             var restRequest = new RestRequest(resource, Method.DELETE);
+            
             IRestResponse<LoggedInStatus> response = await Client.ExecuteTaskAsync<LoggedInStatus>(restRequest);
             if (response.Data.IsLoggedIn)
                 return false; //This is probably an exception
+            
             Session = null;
-            Client.Authenticator = null;
             OnLoggedInChanged();
             return !response.Data.IsLoggedIn;
         }
