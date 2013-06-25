@@ -26,7 +26,10 @@ namespace NextView
                     if (IsLoggedIn)
                     {
                         List<InstrumentList> instrumentLists = await _client.Lists();
-                        instrumentLists.ForEach(InstrumentLists.Add);
+                        foreach (var instrumentList in instrumentLists.OrderBy(x=>x.Name))
+                        {
+                            InstrumentLists.Add(instrumentList);
+                        }
                         List<Account> accounts = await _client.Accounts();
                         accounts.ForEach(Accounts.Add);
                     }

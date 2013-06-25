@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
@@ -52,7 +53,7 @@ namespace Next
             return response.Data;
         }
 
-
+        private Timer _touchTimer;
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Login
         /// </summary>
@@ -68,6 +69,7 @@ namespace Next
             Session = response.Data.SessionKey == null 
                 ? null 
                 : response.Data;
+
             OnLoggedInChanged();
             return Session!=null;
         }
@@ -497,6 +499,20 @@ namespace Next
         {
             EventHandler<bool> handler = LoggedInChanged;
             if (handler != null) handler(this, this.Session!=null);
+            if (Session == null && _touchTimer != null)
+            {
+                _touchTimer.Dispose();
+                _touchTimer = null;
+            }
+            else
+            {
+                _touchTimer = new Timer(InternalTouch, null, 0, Session.ExpiresIn - 10);
+            }
+        }
+
+        private async void InternalTouch(object o)
+        {
+            Touch();
         }
     }
 }
