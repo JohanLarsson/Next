@@ -22,10 +22,32 @@ namespace NextView
         public NextVm(NextClient client)
         {
             _client = client;
+            _client.LoggedInChanged += async (_, e) =>
+                {
+                    OnPropertyChanged("IsLoggedIn");
+                    if (IsLoggedIn)
+                    {
+                        List<InstrumentList> instrumentLists = await _client.Lists();
+                        instrumentLists.ForEach(InstrumentLists.Add);
+                        List<Account> accounts = await _client.Accounts();
+                        accounts.ForEach(Accounts.Add);
+                    }
+                };
             InstrumentLists= new ObservableCollection<InstrumentList>();
             Instruments= new ObservableCollection<InstrumentItem>();
             Accounts= new ObservableCollection<Account>();
+            Accounts.CollectionChanged += (o, e) =>
+                {
+                    if (Account.Account != null || Accounts.Count > 1)
+                        return;
+                    Account.Account = Accounts.First();
+                };
             Account= new AccountVm(_client,null);
+            var loginVm = new LoginVm();
+            if (loginVm.Username!=null && loginVm.Password!=null)
+            {
+                _client.Login(loginVm.Username, loginVm.Password);
+            }
         }
 
         public async Task Login()
@@ -34,11 +56,6 @@ namespace NextView
             var loginWindow = new LoginWindow(loginVm);
             bool? showDialog = loginWindow.ShowDialog();
             await _client.Login(loginVm.Username, loginVm.Password);
-            OnPropertyChanged("IsLoggedIn");
-            List<InstrumentList> instrumentLists = await _client.Lists();
-            instrumentLists.ForEach(InstrumentLists.Add);
-            List<Account> accounts = await _client.Accounts();
-            accounts.ForEach(Accounts.Add);
         }
 
         public bool IsLoggedIn { get { return _client.Session != null; } }
@@ -54,7 +71,10 @@ namespace NextView
                 _selectedInstrumentList = value;
                 OnPropertyChanged();
                 if (_selectedInstrumentList == null)
+                {
+                    Instruments.Clear();
                     return;
+                }
                 Instruments.UpdateCollection( _client.ListItems(_selectedInstrumentList.Id));
             }
         }
@@ -63,20 +83,7 @@ namespace NextView
 
         public ObservableCollection<Account> Accounts { get; private set; }
 
-        public Account SelectedAccount
-        {
-            get { return _selectedAccount; }
-            set
-            {
-                if (Equals(value, _selectedAccount)) return;
-                _selectedAccount = value;
-                OnPropertyChanged();
-                Account.Account = _selectedAccount;
-            }
-        }
-
         public AccountVm Account { get; private set; }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

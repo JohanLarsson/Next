@@ -42,6 +42,7 @@ namespace Next
         }
 
         public SessionInfo Session { get; set; }
+
         private const string _login = "login";
 
         /// <summary>
@@ -56,13 +57,11 @@ namespace Next
             request.AddParameter("service", "NEXTAPI");
             request.AddParameter("auth", Encrypt(username, password));
             IRestResponse<SessionInfo> response = await Client.ExecuteTaskAsync<SessionInfo>(request);
-            if (response.Data.SessionKey == null)
-            {
-                Session = null;
-                return false;
-            }
-            Session = response.Data;
-            return true;
+            Session = response.Data.SessionKey == null 
+                ? null 
+                : response.Data;
+            OnLoggedInChanged();
+            return Session!=null;
         }
 
         public string Encrypt(string username, string password)
@@ -103,6 +102,7 @@ namespace Next
                 return false; //This is probably an exception
             Session = null;
             Client.Authenticator = null;
+            OnLoggedInChanged();
             return !response.Data.IsLoggedIn;
         }
 
@@ -245,7 +245,6 @@ namespace Next
             IRestResponse<List<Trade>> response = await Client.ExecuteTaskAsync<List<Trade>>(request);
             return response.Data;
         }
-
 
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Instrument-search
@@ -473,6 +472,14 @@ namespace Next
             var request = new RestRequest(string.Format("accounts/{0}/orders/{1}", account, orderId), Method.DELETE);
             IRestResponse<OrderStatus> response = await Client.ExecuteTaskAsync<OrderStatus>(request);
             return response.Data;
+        }
+
+        public event EventHandler<bool> LoggedInChanged;
+
+        protected virtual void OnLoggedInChanged()
+        {
+            EventHandler<bool> handler = LoggedInChanged;
+            if (handler != null) handler(this, this.Session!=null);
         }
     }
 }

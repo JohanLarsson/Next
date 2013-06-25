@@ -50,7 +50,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="Accounts" Grid.Column="0" ItemsSource="{Binding Accounts}" SelectedValue="{Binding SelectedAccount}" >
+                    <ListView x:Name="Accounts" Grid.Column="0" ItemsSource="{Binding Accounts}" SelectedValue="{Binding Account.Account}" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding Alias}" Header="Alias"/>
