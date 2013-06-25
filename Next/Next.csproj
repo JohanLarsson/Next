@@ -53,6 +53,7 @@
     <Compile Include="Dtos\IntrumentID.cs" />
     <Compile Include="Dtos\Ledger.cs" />
     <Compile Include="Dtos\Market.cs" />
+    <Compile Include="Dtos\NewsItem.cs" />
     <Compile Include="Dtos\OrderStatus.cs" />
     <Compile Include="Dtos\OrderBuilder.cs" />
     <Compile Include="Dtos\Ordertype.cs" />

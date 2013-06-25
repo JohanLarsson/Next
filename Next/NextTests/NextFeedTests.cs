@@ -56,7 +56,7 @@ namespace NextTests
                         }
                     }
                 }
-                Debug.WriteLine("response : {0}", response);
+                Console.WriteLine("response : {0}", response);
 
                 Assert.IsNotNullOrEmpty(response);
             }
@@ -113,7 +113,7 @@ namespace NextTests
 
                 }
 
-                Debug.WriteLine(response);
+                Console.WriteLine(response);
                 Assert.IsNotNullOrEmpty(response);
             }
             catch (Exception ex)

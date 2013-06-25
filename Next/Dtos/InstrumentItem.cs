@@ -3,7 +3,7 @@
     public class InstrumentItem
     {
         public string Shortname { get; set; }
-        public string MarketID { get; set; }
+        public int MarketID { get; set; }
         public string Identifier { get; set; }
 
         public override string ToString()

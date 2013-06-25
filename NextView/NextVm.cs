@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using Next;
 using Next.Dtos;
@@ -18,7 +16,7 @@ namespace NextView
         private InstrumentList _selectedInstrumentList;
         private Account _selectedAccount;
         private AccountSummary _selectedAccountSummary;
-
+        private InstrumentItem _selectedInstrument;
         public NextVm(NextClient client)
         {
             _client = client;
@@ -81,9 +79,53 @@ namespace NextView
 
         public ObservableCollection<InstrumentItem> Instruments { get; set; }
 
+        public InstrumentItem SelectedInstrument
+        {
+            get { return _selectedInstrument; }
+            set
+            {
+                if (Equals(value, _selectedInstrument)) return;
+                _selectedInstrument = value;
+                OnPropertyChanged();
+                UpdateInstrument();
+                //if (_selectedInstrument == null)
+                //    Ticks.Clear();
+                //else
+                //{
+
+                //}
+
+            }
+        }
+
+        public async Task UpdateInstrument()
+        {
+            Instrument = SelectedInstrument == null 
+                ? null 
+                : await _client.InstrumentSearch(_selectedInstrument);
+        }
+
+        private InstrumentMatch _instrument;
+        public InstrumentMatch Instrument
+        {
+            get { return _instrument; }
+            set
+            {
+                if (Equals(value, _instrument)) return;
+                _instrument = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<Account> Accounts { get; private set; }
 
         public AccountVm Account { get; private set; }
+
+        //private readonly ObservableCollection<EodPoint> _ticks = new ObservableCollection<EodPoint>();
+        //public ObservableCollection<EodPoint> Ticks
+        //{
+        //    get { return _ticks; }
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

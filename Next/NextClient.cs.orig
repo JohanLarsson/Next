@@ -52,7 +52,13 @@ namespace Next
             return response.Data;
         }
 
+<<<<<<< HEAD
+        public SessionInfo Session { get; set; }
 
+        private const string _login = "login";
+
+=======
+>>>>>>> cccc1af0a7304533ccd98d2c04cad3d8cfb3a0bc
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Login
         /// </summary>
@@ -114,7 +120,11 @@ namespace Next
                 return false; //This is probably an exception
             
             Session = null;
+<<<<<<< HEAD
+            Client.Authenticator = null;
             OnLoggedInChanged();
+=======
+>>>>>>> cccc1af0a7304533ccd98d2c04cad3d8cfb3a0bc
             return !response.Data.IsLoggedIn;
         }
 
@@ -310,11 +320,6 @@ namespace Next
             request.AddParameter("list", sb.ToString());
             IRestResponse<List<InstrumentMatch>> response = await Client.ExecuteTaskAsync<List<InstrumentMatch>>(request);
             return response.Data;
-        }
-
-        public async Task<InstrumentMatch> InstrumentSearch(InstrumentItem instrumentItem)
-        {
-            return await InstrumentSearch(instrumentItem.Identifier, instrumentItem.MarketID);
         }
 
         /// <summary>
