@@ -74,6 +74,14 @@
     <Compile Include="Dtos\Trade.cs" />
     <Compile Include="Dtos\TradingDay.cs" />
     <Compile Include="FeedCommands\FeedCommand.cs" />
+    <Compile Include="FeedCommands\LoginArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeArgsBase.cs" />
+    <Compile Include="FeedCommands\SubscribeDepthArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeIndexArgs.cs" />
+    <Compile Include="FeedCommands\SubscribePriceArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeTradeArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeTradingStatusArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeType.cs" />
     <Compile Include="InstrumentDescriptor.cs" />
     <Compile Include="NextClient.cs" />
     <Compile Include="Extensions.cs" />
@@ -85,6 +93,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="PublicFeed.cs" />
     <Compile Include="RestClientExt.cs" />
   </ItemGroup>
   <ItemGroup>

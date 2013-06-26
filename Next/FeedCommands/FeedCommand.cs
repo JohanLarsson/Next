@@ -1,4 +1,6 @@
-﻿namespace Next.FeedCommands
+﻿using System.Collections.Generic;
+
+namespace Next.FeedCommands
 {
     public class FeedCommand
     {
@@ -13,7 +15,41 @@
                     session_key = sessionKey
                 }
             };
-        } 
+        }
+
+        private const string _subscribe = "subscribe";
+        public static FeedCommand<SubscribeArgsBase>[] Subscribe(InstrumentDescriptor instrument)
+        {
+            return new[]
+                {
+                    new FeedCommand<SubscribeArgsBase>
+                        {
+                            cmd = _subscribe,
+                            args = new SubscribePriceArgs(instrument)
+                        },
+
+                    new FeedCommand<SubscribeArgsBase>
+                        {
+                            cmd = _subscribe,
+                            args = new SubscribeDepthArgs(instrument)
+                        },
+                    new FeedCommand<SubscribeArgsBase>
+                        {
+                            cmd = _subscribe,
+                            args = new SubscribeTradeArgs(instrument)
+                        },
+                    new FeedCommand<SubscribeArgsBase>
+                        {
+                            cmd = _subscribe,
+                            args = new SubscribeIndexArgs(instrument)
+                        },
+                    new FeedCommand<SubscribeArgsBase>
+                        {
+                            cmd = _subscribe,
+                            args = new SubscribeTradingStatusArgs(instrument)
+                        },
+                };
+        }
     }
 
     public class FeedCommand<T> : FeedCommand
@@ -30,17 +66,6 @@
         public override string ToString()
         {
             return string.Format("cmd: {0}, args: {{{1}}}", cmd, args);
-        }
-    }
-
-    public class LoginArgs
-    {
-        public string session_key { get; set; }
-        public string service { get; set; }
-
-        public override string ToString()
-        {
-            return string.Format("session_key: {0}, service: {1}", session_key, service);
         }
     }
 }

@@ -31,12 +31,12 @@ namespace Next
 
             _client = new RestClient(_apiInfo.BaseUrl);
             PrivateFeed = new NextFeed(this, c => c.Session.PrivateFeed);
-            PublicFeed = new NextFeed(this, c => c.Session.PublicFeed);
+            PublicFeed = new PublicFeed(this, c => c.Session.PublicFeed);
         }
 
         public NextFeed PrivateFeed { get; private set; }
 
-        public NextFeed PublicFeed { get; private set; }
+        public PublicFeed PublicFeed { get; private set; }
 
         public SessionInfo Session
         {

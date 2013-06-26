@@ -25,6 +25,7 @@ namespace NextTests
                 c=>c.Session.PublicFeed,
                 c=>c.Session.PrivateFeed
             };
+
         [Test,Explicit,TestCaseSource("FeedInfos")]
         public async Task LoginTest(Func<NextClient, FeedInfo> feedInfo)
         {
@@ -48,6 +49,29 @@ namespace NextTests
             }
             Assert.IsTrue(data.Count > 0);
             //data.ForEach(Console.WriteLine);
+        }
+
+        [TestCase("41647", 19,30,"Microsoft"),Explicit]
+        public async Task SubscribeTest(string identifier, int market, int secondsToRun,string dummy)
+        {
+            using (NextClient loggedInClient = LoggedInClient)
+            {
+                //Probably need to wait for Feed to finish logging in
+                var data = new List<string>();
+                loggedInClient.PublicFeed.ReceivedSomething += (o, e) =>
+                    {
+                        Console.WriteLine(e);
+                        data.Add(e);
+                    };
+
+                await loggedInClient.PublicFeed.Subscribe(new InstrumentDescriptor(market, identifier));
+                for (int i = 0; i < secondsToRun; i++)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    Console.WriteLine(i);
+                }
+            }
+
         }
 
         /// <summary>
