@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Next;
 using Next.Dtos;
 using NextView.Annotations;
@@ -14,12 +15,12 @@ namespace NextView
     {
         private readonly NextClient _client;
         private InstrumentList _selectedInstrumentList;
-        private Account _selectedAccount;
-        private AccountSummary _selectedAccountSummary;
         private InstrumentItem _selectedInstrument;
         public NextVm(NextClient client)
         {
             _client = client;
+            PublicFeed= new FeedVm(_client.PublicFeed);
+            PrivateFeed= new FeedVm(_client.PrivateFeed);
             _client.LoggedInChanged += async (_, e) =>
                 {
                     OnPropertyChanged("IsLoggedIn");
@@ -34,9 +35,6 @@ namespace NextView
                         accounts.ForEach(Accounts.Add);
                     }
                 };
-            InstrumentLists= new ObservableCollection<InstrumentList>();
-            Instruments= new ObservableCollection<InstrumentItem>();
-            Accounts= new ObservableCollection<Account>();
             Accounts.CollectionChanged += (o, e) =>
                 {
                     if (Account.Account != null || Accounts.Count > 1)
@@ -51,6 +49,10 @@ namespace NextView
             }
         }
 
+        public FeedVm PrivateFeed { get; private set; }
+
+        public FeedVm PublicFeed { get; private set; }
+
         public async Task Login()
         {
             var loginVm = new LoginVm();
@@ -61,7 +63,11 @@ namespace NextView
 
         public bool IsLoggedIn { get { return _client.Session != null; } }
 
-        public ObservableCollection<InstrumentList> InstrumentLists { get; private set; }
+        private readonly ObservableCollection<InstrumentList> _instrumentLists = new ObservableCollection<InstrumentList>();
+        public ObservableCollection<InstrumentList> InstrumentLists
+        {
+            get { return _instrumentLists; }
+        }
 
         public InstrumentList SelectedInstrumentList
         {
@@ -80,7 +86,11 @@ namespace NextView
             }
         }
 
-        public ObservableCollection<InstrumentItem> Instruments { get; set; }
+        private readonly ObservableCollection<InstrumentItem> _instruments = new ObservableCollection<InstrumentItem>();
+        public ObservableCollection<InstrumentItem> Instruments
+        {
+            get { return _instruments; }
+        }
 
         public InstrumentItem SelectedInstrument
         {
@@ -109,6 +119,7 @@ namespace NextView
         }
 
         private InstrumentMatch _instrument;
+
         public InstrumentMatch Instrument
         {
             get { return _instrument; }
@@ -120,7 +131,11 @@ namespace NextView
             }
         }
 
-        public ObservableCollection<Account> Accounts { get; private set; }
+        private readonly ObservableCollection<Account> _accounts = new ObservableCollection<Account>();
+        public ObservableCollection<Account> Accounts
+        {
+            get { return _accounts; }
+        }
 
         public AccountVm Account { get; private set; }
 

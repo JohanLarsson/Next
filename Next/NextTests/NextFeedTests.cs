@@ -20,6 +20,36 @@ namespace NextTests
 {
     public class NextFeedTests : NextTestsBase
     {
+        private static readonly Func<NextClient, FeedInfo>[] FeedInfos =
+            {
+                c=>c.Session.PublicFeed,
+                c=>c.Session.PrivateFeed
+            };
+        [Test,Explicit,TestCaseSource("FeedInfos")]
+        public async Task LoginTest(Func<NextClient, FeedInfo> feedInfo)
+        {
+            NextClient loggedInClient = LoggedInClient;
+            Console.WriteLine(feedInfo(loggedInClient));
+            var data = new List<string>();
+            using (var feed = new NextFeed(loggedInClient, feedInfo))
+            {
+                feed.ReceivedSomething += (o, e) =>
+                    {
+                        Console.WriteLine(e);
+                        data.Add(e);
+                    };
+                feed.Login();
+                for (int i = 0; i < 11; i++)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    Console.WriteLine(i);
+                }
+
+            }
+            Assert.IsTrue(data.Count > 0);
+            //data.ForEach(Console.WriteLine);
+        }
+
         /// <summary>
         /// Prototype to get started
         /// </summary>
@@ -34,7 +64,7 @@ namespace NextTests
             FeedCommand<LoginArgs> loginCmd = FeedCommand.Login(serviceName, client.Session.SessionKey);
             string json = loginCmd.ToJson();
             string response = string.Empty;
-            
+
             try
             {
                 using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP))

@@ -10,7 +10,7 @@ using Next.Dtos;
 
 namespace NextTests.Helpers
 {
-    public class CreatePropertyGrid
+    public class DumpXaml
     {
         /// <summary>
         /// Generates the Xaml for showing all properties of a class
@@ -52,6 +52,26 @@ namespace NextTests.Helpers
                 grid.Add(textBox);
             }
             Console.Write(grid.ToString());
+        }
+
+        [TestCase(typeof(InstrumentMatch), "StatsProp")]
+        public void CreateListView(Type type, string bindingPopertyName)
+        {
+            PropertyInfo[] propertyInfos = type.GetProperties();
+            var listView = new XElement("ListView");
+            listView.Add(new XAttribute("ItemsSource", string.Format(@"{{Binding {0}}}", bindingPopertyName)));
+            var view = new XElement("ListView.View");
+            var gridView = new XElement("GridView");
+            foreach (var propertyInfo in propertyInfos)
+            {
+                var column = new XElement("GridViewColumn");
+                column.Add(new XAttribute("Header", propertyInfo.Name));
+                column.Add(new XAttribute("DisplayMemberBinding", string.Format(@"{{Binding {0}}}", propertyInfo.Name)));
+                gridView.Add(column);
+            }
+            view.Add(gridView);
+            listView.Add(view);
+            Console.Write(listView.ToString());
         }
     }
 }

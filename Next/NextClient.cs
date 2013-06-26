@@ -14,7 +14,7 @@ using RestSharp;
 
 namespace Next
 {
-    public class NextClient
+    public class NextClient : IDisposable
     {
         private const string _login = "login";
 
@@ -30,7 +30,13 @@ namespace Next
                 throw new NotImplementedException("message");
 
             _client = new RestClient(_apiInfo.BaseUrl);
+            PrivateFeed = new NextFeed(this, c => c.Session.PrivateFeed);
+            PublicFeed = new NextFeed(this, c => c.Session.PublicFeed);
         }
+
+        public NextFeed PrivateFeed { get; private set; }
+
+        public NextFeed PublicFeed { get; private set; }
 
         public SessionInfo Session
         {
@@ -66,12 +72,19 @@ namespace Next
             request.AddParameter("service", "NEXTAPI");
             request.AddParameter("auth", Encrypt(username, password));
             IRestResponse<SessionInfo> response = await Client.ExecuteTaskAsync<SessionInfo>(request);
-            Session = response.Data.SessionKey == null 
-                ? null 
-                : response.Data;
+            if (response.Data.SessionKey != null)
+            {
+                Session = response.Data;
+                PublicFeed.Login();
+                PrivateFeed.Login();
+            }
+            else
+            {
+                Session = null;
+            } 
 
             OnLoggedInChanged();
-            return Session!=null;
+            return Session != null;
         }
 
         public string Encrypt(string username, string password)
@@ -103,18 +116,19 @@ namespace Next
         /// <returns></returns>
         public async Task<bool> Logout()
         {
-            if (Session == null) {
+            if (Session == null)
+            {
                 Debug.WriteLine("NextClient.Logout() called with Sessoin == null.  Not logged in.");
                 return true;
             }
 
             var resource = string.Format("{0}/{1}", _login, Session.SessionKey);
             var restRequest = new RestRequest(resource, Method.DELETE);
-            
+
             IRestResponse<LoggedInStatus> response = await Client.ExecuteTaskAsync<LoggedInStatus>(restRequest);
             if (response.Data.IsLoggedIn)
                 return false; //This is probably an exception
-            
+
             Session = null;
             OnLoggedInChanged();
             return !response.Data.IsLoggedIn;
@@ -498,7 +512,7 @@ namespace Next
         protected virtual void OnLoggedInChanged()
         {
             EventHandler<bool> handler = LoggedInChanged;
-            if (handler != null) handler(this, this.Session!=null);
+            if (handler != null) handler(this, this.Session != null);
             if (Session == null && _touchTimer != null)
             {
                 _touchTimer.Dispose();
@@ -508,6 +522,15 @@ namespace Next
             {
                 _touchTimer = new Timer((o) => Touch(), null, TimeSpan.FromSeconds(Session.ExpiresIn - 10), TimeSpan.FromSeconds(Session.ExpiresIn - 10));
             }
+        }
+
+        public void Dispose()
+        {
+            if (PrivateFeed != null)
+                PrivateFeed.Dispose();
+            if (PublicFeed != null)
+                PublicFeed.Dispose();
+            Logout();
         }
     }
 }

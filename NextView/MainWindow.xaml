@@ -213,6 +213,20 @@
 
                 </Grid>
             </TabItem>
+            <TabItem Header="Feeds">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Header="Private Feed">
+                        <ListBox  ItemsSource="{Binding PrivateFeed.Messages}"/>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Header="Public Feed">
+                        <ListBox  ItemsSource="{Binding PublicFeed.Messages}"/>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
         </TabControl>
 
     </DockPanel>

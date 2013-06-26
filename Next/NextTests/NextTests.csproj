@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\CreatePropertyGrid.cs" />
+    <Compile Include="Helpers\DumpXaml.cs" />
     <Compile Include="Helpers\Credentials.cs" />
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="Helpers\StopwatchExt.cs" />
@@ -68,6 +68,7 @@
     <Compile Include="Prototypes\DumpXml.cs" />
     <Compile Include="Prototypes\HttpClientTests.cs" />
     <Compile Include="Prototypes\NestedAwaitTests.cs" />
+    <Compile Include="Prototypes\StreamDummyTests.cs" />
     <Compile Include="Prototypes\TimingStuff.cs" />
     <Compile Include="RestClientExtTests.cs" />
   </ItemGroup>
