@@ -48,6 +48,7 @@
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="NextClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Prototypes\ProxyPlayground.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
