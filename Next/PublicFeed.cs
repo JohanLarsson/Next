@@ -13,7 +13,7 @@ namespace Next
 
         public async Task Subscribe(InstrumentDescriptor instrument)
         {
-            FeedCommand<SubscribeArgsBase>[] feedCommands = FeedCommand.Subscribe(instrument);
+            FeedCommand<SubscribeInstrumentArgsBase>[] feedCommands = FeedCommand.SubscribeAll(instrument);
             foreach (var subscribeCmd in feedCommands)
             {
                 await Write(subscribeCmd);

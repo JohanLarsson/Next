@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
+using Next.Dtos;
 
 namespace Next.FeedCommands
 {
+    /// <summary>
+    /// https://api.test.nordnet.se/projects/api/wiki/Feed_API_documentation#Subgroup-Subscribe-request
+    /// </summary>
     public class FeedCommand
     {
         public static FeedCommand<LoginArgs> Login(string service, string sessionKey)
@@ -18,37 +22,76 @@ namespace Next.FeedCommands
         }
 
         private const string _subscribe = "subscribe";
-        public static FeedCommand<SubscribeArgsBase>[] Subscribe(InstrumentDescriptor instrument)
+        /// <summary>
+        /// Returns an array of commands to subscribe everything for instrument
+        /// https://api.test.nordnet.se/projects/api/wiki/Feed_API_documentation#The-public-trade-and-price-feed
+        /// </summary>
+        /// <param name="instrument"></param>
+        /// <returns></returns>
+        public static FeedCommand<SubscribeInstrumentArgsBase>[] SubscribeAll(InstrumentDescriptor instrument)
         {
             return new[]
                 {
-                    new FeedCommand<SubscribeArgsBase>
-                        {
-                            cmd = _subscribe,
-                            args = new SubscribePriceArgs(instrument)
-                        },
-
-                    new FeedCommand<SubscribeArgsBase>
-                        {
-                            cmd = _subscribe,
-                            args = new SubscribeDepthArgs(instrument)
-                        },
-                    new FeedCommand<SubscribeArgsBase>
-                        {
-                            cmd = _subscribe,
-                            args = new SubscribeTradeArgs(instrument)
-                        },
-                    new FeedCommand<SubscribeArgsBase>
-                        {
-                            cmd = _subscribe,
-                            args = new SubscribeIndexArgs(instrument)
-                        },
-                    new FeedCommand<SubscribeArgsBase>
-                        {
-                            cmd = _subscribe,
-                            args = new SubscribeTradingStatusArgs(instrument)
-                        },
+                    SubscribePrice(instrument),
+                    SubscribeDepth(instrument),
+                    SubscribeTrade(instrument),
+                    SubscribeIndex(instrument),
+                    SubscribeTradingStatus(instrument),
                 };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> SubscribeTradingStatus(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+                {
+                    cmd = _subscribe,
+                    args = new SubscribeTradingStatusArgs(instrument)
+                };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> SubscribeIndex(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+                {
+                    cmd = _subscribe,
+                    args = new SubscribeIndexArgs(instrument)
+                };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> SubscribeTrade(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+                {
+                    cmd = _subscribe,
+                    args = new SubscribeTradeArgs(instrument)
+                };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> SubscribeDepth(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+                {
+                    cmd = _subscribe,
+                    args = new SubscribeDepthArgs(instrument)
+                };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> SubscribePrice(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+                {
+                    cmd = _subscribe,
+                    args = new SubscribePriceArgs(instrument)
+                };
+        }
+
+        public static FeedCommand<SubscribeNewsArgs> SubscribeNews(NewsSource newsSource, bool delay = false)
+        {
+            return new FeedCommand<SubscribeNewsArgs>
+            {
+                cmd = _subscribe,
+                args = new SubscribeNewsArgs(newsSource, delay)
+            };
         }
     }
 

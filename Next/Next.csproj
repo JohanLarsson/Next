@@ -75,9 +75,10 @@
     <Compile Include="Dtos\TradingDay.cs" />
     <Compile Include="FeedCommands\FeedCommand.cs" />
     <Compile Include="FeedCommands\LoginArgs.cs" />
-    <Compile Include="FeedCommands\SubscribeArgsBase.cs" />
+    <Compile Include="FeedCommands\SubscribeInstrumentArgsBase.cs" />
     <Compile Include="FeedCommands\SubscribeDepthArgs.cs" />
     <Compile Include="FeedCommands\SubscribeIndexArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeNewsArgs.cs" />
     <Compile Include="FeedCommands\SubscribePriceArgs.cs" />
     <Compile Include="FeedCommands\SubscribeTradeArgs.cs" />
     <Compile Include="FeedCommands\SubscribeTradingStatusArgs.cs" />

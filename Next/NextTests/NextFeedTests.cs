@@ -18,6 +18,7 @@ using NextTests.Helpers;
 
 namespace NextTests
 {
+    [Explicit]
     public class NextFeedTests : NextTestsBase
     {
         private static readonly Func<NextClient, FeedInfo>[] FeedInfos =

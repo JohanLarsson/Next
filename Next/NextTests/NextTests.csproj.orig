@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeedCommandTests.cs" />
     <Compile Include="Helpers\DumpXaml.cs" />
     <Compile Include="Helpers\Credentials.cs" />
     <Compile Include="ExtensionsTests.cs" />
@@ -56,7 +55,9 @@
     <Compile Include="NextFeedTests.cs" />
     <Compile Include="Helpers\NextTestsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
     <Compile Include="Prototypes\ProxyPlayground.cs" />
+=======
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -73,6 +74,7 @@
     <Compile Include="Prototypes\StreamDummyTests.cs" />
     <Compile Include="Prototypes\TimingStuff.cs" />
     <Compile Include="RestClientExtTests.cs" />
+>>>>>>> ab049eb93eba7b69f8a379bde39f49079ac49e89
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

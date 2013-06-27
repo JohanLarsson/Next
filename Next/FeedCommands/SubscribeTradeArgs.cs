@@ -1,6 +1,6 @@
 ﻿namespace Next.FeedCommands
 {
-    public class SubscribeTradeArgs : SubscribeArgsBase
+    public class SubscribeTradeArgs : SubscribeInstrumentArgsBase
     {
         public SubscribeTradeArgs(InstrumentDescriptor instrument) : base(instrument, SubscribeType.Trade)
         {

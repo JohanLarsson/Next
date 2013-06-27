@@ -9,10 +9,11 @@ using RestSharp;
 
 namespace NextTests.Prototypes
 {
+    [Explicit]
     class ProxyPlayground
     {
         [Test]
-        public void TestNameTest()
+        public void ConnectThroughProxy()
         {
             var client = new RestClient(@"https://api.test.nordnet.se/next/");
             IWebProxy proxy = WebRequest.DefaultWebProxy;
