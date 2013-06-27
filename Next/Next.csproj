@@ -42,30 +42,70 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ErrorMessage.cs" />
-    <Compile Include="FeedInfo.cs" />
-    <Compile Include="LoginResult.cs" />
+    <Compile Include="ApiInfo.cs" />
+    <Compile Include="ApiVersion.cs" />
+    <Compile Include="Dtos\Account.cs" />
+    <Compile Include="Dtos\Derivative.cs" />
+    <Compile Include="Dtos\Index.cs" />
+    <Compile Include="Dtos\InstrumentItem.cs" />
+    <Compile Include="Dtos\InstrumentList.cs" />
+    <Compile Include="Dtos\InstrumentMatch.cs" />
+    <Compile Include="Dtos\IntrumentID.cs" />
+    <Compile Include="Dtos\Ledger.cs" />
+    <Compile Include="Dtos\Market.cs" />
+    <Compile Include="Dtos\NewsItem.cs" />
+    <Compile Include="Dtos\OrderStatus.cs" />
+    <Compile Include="Dtos\OrderBuilder.cs" />
+    <Compile Include="Dtos\Ordertype.cs" />
+    <Compile Include="Dtos\OrderTypeEnum.cs" />
+    <Compile Include="Dtos\Position.cs" />
+    <Compile Include="Dtos\AccountSummary.cs" />
+    <Compile Include="Dtos\Instrument.cs" />
+    <Compile Include="Dtos\NewsSource.cs" />
+    <Compile Include="Dtos\Price.cs" />
+    <Compile Include="Dtos\RealtimeAccesMarket.cs" />
+    <Compile Include="Dtos\ErrorMessage.cs" />
+    <Compile Include="Dtos\FeedInfo.cs" />
+    <Compile Include="Dtos\RelatedMarket.cs" />
+    <Compile Include="Dtos\SessionInfo.cs" />
+    <Compile Include="Dtos\LoggedInStatus.cs" />
+    <Compile Include="Dtos\Tick.cs" />
+    <Compile Include="Dtos\TickSize.cs" />
+    <Compile Include="Dtos\Trade.cs" />
+    <Compile Include="Dtos\TradingDay.cs" />
+    <Compile Include="FeedCommands\FeedCommand.cs" />
+    <Compile Include="FeedCommands\LoginArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeArgsBase.cs" />
+    <Compile Include="FeedCommands\SubscribeDepthArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeIndexArgs.cs" />
+    <Compile Include="FeedCommands\SubscribePriceArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeTradeArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeTradingStatusArgs.cs" />
+    <Compile Include="FeedCommands\SubscribeType.cs" />
+    <Compile Include="InstrumentDescriptor.cs" />
     <Compile Include="NextClient.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="GenericMessage.cs" />
+    <Compile Include="Dtos\ServiceStatus.cs" />
+    <Compile Include="NextFeed.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="PublicFeed.cs" />
+    <Compile Include="RestClientExt.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Dtos\Dtos.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Files\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

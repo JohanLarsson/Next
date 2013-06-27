@@ -38,6 +38,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,19 +47,51 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\DumpXaml.cs" />
+    <Compile Include="Helpers\Credentials.cs" />
     <Compile Include="ExtensionsTests.cs" />
+    <Compile Include="Helpers\StopwatchExt.cs" />
     <Compile Include="NextClientTests.cs" />
+    <Compile Include="NextFeedTests.cs" />
+    <Compile Include="Helpers\NextTestsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prototypes\ProxyPlayground.cs" />
+     <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Prototypes\DumpXml.cs" />
+    <Compile Include="Prototypes\HttpClientTests.cs" />
+    <Compile Include="Prototypes\NestedAwaitTests.cs" />
+    <Compile Include="Prototypes\StreamDummyTests.cs" />
+    <Compile Include="Prototypes\TimingStuff.cs" />
+    <Compile Include="RestClientExtTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Next.csproj">
       <Project>{3A7FF02B-D4A0-4E02-9488-249B89DDFCBD}</Project>
       <Name>Next</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,14 +8,16 @@ namespace Next
 {
     public static class Extensions
     {
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0).ToUniversalTime();
+
         public static long ToUnixTimeStamp(this DateTime dateTime)
         {
-            return (long)(dateTime.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0)).TotalMilliseconds;
+            return (long)(dateTime.ToUniversalTime() - Epoch).TotalMilliseconds;
         }
 
         public static DateTime ToDateTime(this long unixTimeStamp)
         {
-            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0) + TimeSpan.FromMilliseconds(unixTimeStamp);
+            DateTime dateTime = Epoch.AddMilliseconds(unixTimeStamp);
             return new DateTime(dateTime.Ticks,DateTimeKind.Utc).ToLocalTime();
         }
 
@@ -24,13 +26,5 @@ namespace Next
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(s));
         }
 
-        public static T Deserialize<T>(this string xml)
-        {
-            var serializer = new XmlSerializer(typeof(T));
-            using (var reader = new XmlTextReader(new StringReader(xml)))
-            {
-                return (T)serializer.Deserialize(reader);
-            }
-        }
     }
 }
