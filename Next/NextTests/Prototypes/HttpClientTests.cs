@@ -13,7 +13,7 @@ namespace NextTests.Prototypes
     /// </summary>
     public class HttpClientTests
     {
-        [Test]
+        [Test, Explicit]
         public async void TestNameTest()
         {
             var client = new HttpClient();

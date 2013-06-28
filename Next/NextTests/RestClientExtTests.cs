@@ -53,7 +53,7 @@ namespace NextTests
         }
 
         [Test]
-        public async void CheckStatusTwiceAwaitTest()
+        public async Task CheckStatusTwiceAwaitTest()
         {
             Assert.IsTrue(await CheckStatus());
             Assert.IsTrue(await CheckStatus());

@@ -69,7 +69,6 @@
     </Compile>
     <Compile Include="Prototypes\DumpXml.cs" />
     <Compile Include="Prototypes\HttpClientTests.cs" />
-    <Compile Include="Prototypes\NestedAwaitTests.cs" />
     <Compile Include="Prototypes\StreamDummyTests.cs" />
     <Compile Include="Prototypes\TimingStuff.cs" />
     <Compile Include="RestClientExtTests.cs" />

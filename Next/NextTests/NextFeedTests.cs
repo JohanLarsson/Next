@@ -48,23 +48,39 @@ namespace NextTests
                 }
 
             }
+
+
             Assert.IsTrue(data.Count > 0);
             //data.ForEach(Console.WriteLine);
         }
 
-        [TestCase("41647", 19,30,"Microsoft"),Explicit]
+        [Explicit]
+        [TestCase("41647", 19, 30, "Microsoft") ]
+        [TestCase(null,null , 120, "Microsoft")]
         public async Task SubscribeTest(string identifier, int market, int secondsToRun,string dummy)
         {
+            if (identifier == null)
+            {
+                identifier = Ericcson.Identifier;
+                market = Ericcson.MarketID;
+            }
+
+            var data = new List<string>();
             using (NextClient loggedInClient = LoggedInClient)
             {
                 //Probably need to wait for Feed to finish logging in
-                var data = new List<string>();
+
                 loggedInClient.PublicFeed.ReceivedSomething += (o, e) =>
                     {
                         Console.WriteLine(e);
                         data.Add(e);
                     };
-
+                for (int i = 0; i < 30; i++)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    if(data.Count>0)
+                        break;
+                }
                 await loggedInClient.PublicFeed.Subscribe(new InstrumentDescriptor(market, identifier));
                 for (int i = 0; i < secondsToRun; i++)
                 {
@@ -72,7 +88,10 @@ namespace NextTests
                     Console.WriteLine(i);
                 }
             }
-
+            foreach (var message in data)
+            {
+                Console.WriteLine(message);
+            }
         }
 
         /// <summary>
