@@ -176,7 +176,7 @@ namespace Next
         /// <param name="count">Max number of items in the result</param>
         /// <param name="after">Specify a starting point for the search. If empty only news from today will be included in the search.</param>
         /// <returns></returns>
-        public string SearchNews(string query = null, string[] sourceIds = null, int count = int.MaxValue, DateTime? after = null)
+        public async Task<List<NewsItem>> SearchNews(string query = null, string[] sourceIds = null, int count = int.MaxValue, DateTime? after = null)
         {
             var request = new RestRequest("news_items", Method.GET);
             if (!string.IsNullOrEmpty(query))
@@ -187,8 +187,8 @@ namespace Next
                 request.AddParameter("count", count);
             if (after != null)
                 request.AddParameter("after", after.ToString());
-            IRestResponse restResponse = Client.Execute(request);
-            return restResponse.Content;
+            IRestResponse<List<NewsItem>> response =await Client.ExecuteTaskAsync<List<NewsItem>>(request);
+            return response.Data;
         }
 
         /// <summary>
@@ -196,11 +196,11 @@ namespace Next
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public string NewsItem(string id)
+        public async Task<NewsItem> NewsItem(string id)
         {
             var request = new RestRequest("news_items/" + id, Method.GET);
-            IRestResponse restResponse = Client.Execute(request);
-            return restResponse.Content;
+            IRestResponse<NewsItem> restResponse =await Client.ExecuteTaskAsync<NewsItem>(request);
+            return restResponse.Data;
         }
 
         /// <summary>
@@ -348,14 +348,18 @@ namespace Next
             return response.Data;
         }
 
+        private static CachedSearch<List<InstrumentList>> _cachedLists= new CachedSearch<List<InstrumentList>>(); 
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-lists
         /// </summary>
         /// <returns></returns>
         public async Task<List<InstrumentList>> Lists()
         {
+            if (_cachedLists.IsCached)
+                return _cachedLists.Cache;
             var request = new RestRequest("lists", Method.GET);
             IRestResponse<List<InstrumentList>> response = await Client.ExecuteTaskAsync<List<InstrumentList>>(request);
+            _cachedLists.Cache = response.Data;
             return response.Data;
         }
 

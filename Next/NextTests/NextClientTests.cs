@@ -89,17 +89,17 @@ namespace NextTests
         }
 
         [Test]
-        public void SearchNewsTest()
+        public async Task SearchNewsTest()
         {
-            string news = LoggedInClient.SearchNews();
+            List<NewsItem> news =await LoggedInClient.SearchNews();
             Console.WriteLine(news);
             Assert.Inconclusive("Not sure this is working with test think code is ok");
         }
 
         [Test]
-        public void NewsItemTest()
+        public async Task NewsItemTest()
         {
-            string s = LoggedInClient.NewsItem("4711");
+            NewsItem s = await LoggedInClient.NewsItem("4711");
             Console.WriteLine(s);
             Assert.Inconclusive("Not sure this is working with test think code is ok");
         }

@@ -36,7 +36,7 @@ namespace Next
             IPAddress[] ipAddresses = await Dns.GetHostAddressesAsync(feedInfo.Hostname);
             IPAddress hostAddresses = ipAddresses.Single(x => x.AddressFamily == AddressFamily.InterNetwork);
             var endPoint = new IPEndPoint(hostAddresses, feedInfo.Port);
-            await Task.Factory.FromAsync(_socket.BeginConnect, _socket.EndConnect, endPoint, _socket);
+            await Task.Factory.FromAsync(_socket.BeginConnect, _socket.EndConnect, endPoint, null);
             _socket.SendTimeout = 10000;
             _socket.ReceiveTimeout = 10000;
             _sslStream = new SslStream(new NetworkStream(_socket, true), true, ValidateRemoteCertificate);
@@ -56,7 +56,9 @@ namespace Next
             //    writer.Flush();
             //}
             byte[] buffer = Encoding.UTF8.GetBytes(json + endMarker);
+
             await _sslStream.WriteAsync(buffer, 0, buffer.Length);
+            OnWroteSomething(json);
             //_sslStream.Write(Encoding.UTF8.GetBytes(endMarker));
         }
 
@@ -77,6 +79,14 @@ namespace Next
         protected virtual void OnReceivedSomething(string e)
         {
             EventHandler<string> handler = ReceivedSomething;
+            if (handler != null) handler(this, e);
+        }
+
+        public event EventHandler<string> WroteSomething;
+
+        protected virtual void OnWroteSomething(string e)
+        {
+            EventHandler<string> handler = WroteSomething;
             if (handler != null) handler(this, e);
         }
 
