@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ApiInfo.cs" />
     <Compile Include="ApiVersion.cs" />
+    <Compile Include="CachedSearch.cs" />
     <Compile Include="Dtos\Account.cs" />
     <Compile Include="Dtos\Derivative.cs" />
     <Compile Include="Dtos\Index.cs" />

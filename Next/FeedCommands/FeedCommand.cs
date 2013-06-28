@@ -12,7 +12,7 @@ namespace Next.FeedCommands
         {
             return new FeedCommand<LoginArgs>()
             {
-                cmd = "login",
+                cmd = LoginCommandParameter,
                 args = new LoginArgs
                 {
                     service = service,
@@ -21,7 +21,10 @@ namespace Next.FeedCommands
             };
         }
 
-        private const string _subscribe = "subscribe";
+        public const string SubscribeCommandParameter = "subscribe";
+        public const string UnSubscribeCommandParameter = "unsubscribe";
+        public const string LoginCommandParameter = "login";
+
         /// <summary>
         /// Returns an array of commands to subscribe everything for instrument
         /// https://api.test.nordnet.se/projects/api/wiki/Feed_API_documentation#The-public-trade-and-price-feed
@@ -44,7 +47,7 @@ namespace Next.FeedCommands
         {
             return new FeedCommand<SubscribeInstrumentArgsBase>
                 {
-                    cmd = _subscribe,
+                    cmd = SubscribeCommandParameter,
                     args = new SubscribeTradingStatusArgs(instrument)
                 };
         }
@@ -53,7 +56,7 @@ namespace Next.FeedCommands
         {
             return new FeedCommand<SubscribeInstrumentArgsBase>
                 {
-                    cmd = _subscribe,
+                    cmd = SubscribeCommandParameter,
                     args = new SubscribeIndexArgs(instrument)
                 };
         }
@@ -62,7 +65,7 @@ namespace Next.FeedCommands
         {
             return new FeedCommand<SubscribeInstrumentArgsBase>
                 {
-                    cmd = _subscribe,
+                    cmd = SubscribeCommandParameter,
                     args = new SubscribeTradeArgs(instrument)
                 };
         }
@@ -71,7 +74,7 @@ namespace Next.FeedCommands
         {
             return new FeedCommand<SubscribeInstrumentArgsBase>
                 {
-                    cmd = _subscribe,
+                    cmd = SubscribeCommandParameter,
                     args = new SubscribeDepthArgs(instrument)
                 };
         }
@@ -80,7 +83,7 @@ namespace Next.FeedCommands
         {
             return new FeedCommand<SubscribeInstrumentArgsBase>
                 {
-                    cmd = _subscribe,
+                    cmd = SubscribeCommandParameter,
                     args = new SubscribePriceArgs(instrument)
                 };
         }
@@ -89,7 +92,79 @@ namespace Next.FeedCommands
         {
             return new FeedCommand<SubscribeNewsArgs>
             {
-                cmd = _subscribe,
+                cmd = SubscribeCommandParameter,
+                args = new SubscribeNewsArgs(newsSource, delay)
+            };
+        }
+
+        /// <summary>
+        /// Returns an array of commands to subscribe everything for instrument
+        /// https://api.test.nordnet.se/projects/api/wiki/Feed_API_documentation#The-public-trade-and-price-feed
+        /// </summary>
+        /// <param name="instrument"></param>
+        /// <returns></returns>
+        public static FeedCommand<SubscribeInstrumentArgsBase>[] UnSubscribeAll(InstrumentDescriptor instrument)
+        {
+            return new[]
+                {
+                   UnSubscribePrice(instrument),
+                   UnSubscribeDepth(instrument),
+                   UnSubscribeTrade(instrument),
+                   UnSubscribeIndex(instrument),
+                   UnSubscribeTradingStatus(instrument),
+                };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> UnSubscribeTradingStatus(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+            {
+                cmd = UnSubscribeCommandParameter,
+                args = new SubscribeTradingStatusArgs(instrument)
+            };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> UnSubscribeIndex(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+            {
+                cmd = UnSubscribeCommandParameter,
+                args = new SubscribeIndexArgs(instrument)
+            };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> UnSubscribeTrade(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+            {
+                cmd = UnSubscribeCommandParameter,
+                args = new SubscribeTradeArgs(instrument)
+            };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> UnSubscribeDepth(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+            {
+                cmd = UnSubscribeCommandParameter,
+                args = new SubscribeDepthArgs(instrument)
+            };
+        }
+
+        public static FeedCommand<SubscribeInstrumentArgsBase> UnSubscribePrice(InstrumentDescriptor instrument)
+        {
+            return new FeedCommand<SubscribeInstrumentArgsBase>
+            {
+                cmd = UnSubscribeCommandParameter,
+                args = new SubscribePriceArgs(instrument)
+            };
+        }
+
+        public static FeedCommand<SubscribeNewsArgs> UnSubscribeNews(NewsSource newsSource, bool delay = false)
+        {
+            return new FeedCommand<SubscribeNewsArgs>
+            {
+                cmd = UnSubscribeCommandParameter,
                 args = new SubscribeNewsArgs(newsSource, delay)
             };
         }

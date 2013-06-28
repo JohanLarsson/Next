@@ -52,18 +52,33 @@ namespace NextTests
             //data.ForEach(Console.WriteLine);
         }
 
-        [TestCase("41647", 19,30,"Microsoft"),Explicit]
+        [Explicit]
+        [TestCase("41647", 19, 30, "Microsoft")]
+        [TestCase(null, null, 300, "Ericsson")]
         public async Task SubscribeTest(string identifier, int market, int secondsToRun,string dummy)
         {
+            if (identifier == null)
+            {
+                identifier = Ericcson.Identifier;
+                market = Ericcson.MarketID;
+            }
             using (NextClient loggedInClient = LoggedInClient)
             {
                 //Probably need to wait for Feed to finish logging in
                 var data = new List<string>();
                 loggedInClient.PublicFeed.ReceivedSomething += (o, e) =>
                     {
-                        Console.WriteLine(e);
+                        Console.WriteLine("read: " + e);
                         data.Add(e);
                     };
+                var login = new ManualResetEvent(false);
+                loggedInClient.PublicFeed.WroteSomething += (o, e) =>
+                    {
+                        if (e.Contains(FeedCommand.LoginCommandParameter))
+                            login.Set();
+                        Console.WriteLine("wrote: " + e);
+                    };
+                login.WaitOne();
 
                 await loggedInClient.PublicFeed.Subscribe(new InstrumentDescriptor(market, identifier));
                 for (int i = 0; i < secondsToRun; i++)
