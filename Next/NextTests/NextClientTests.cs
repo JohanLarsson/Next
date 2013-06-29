@@ -198,6 +198,9 @@ namespace NextTests
         {
             List<InstrumentList> lists = await LoggedInClient.Lists();
             Assert.AreEqual(96, lists.Count);
+            //Testing twice to check cache
+            lists = await LoggedInClient.Lists();
+            Assert.AreEqual(96, lists.Count);
         }
 
         [Test]
@@ -209,6 +212,9 @@ namespace NextTests
                                     x.Identifier != null &&
                                     x.MarketID != null &&
                                     x.Shortname != null));
+            //Testing twice to check cache
+             items = await LoggedInClient.ListItems(8.ToString());
+            Assert.AreEqual(78, items.Count);
         }
 
         [Test]

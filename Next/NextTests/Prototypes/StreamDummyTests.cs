@@ -71,7 +71,7 @@ namespace NextTests.Prototypes
         private string Read(Stream stream, bool lookForByteOrderMark)
         {
             stream.Position = 0;
-            using (var reader = new StreamReader(stream, Encoding.UTF8, lookForByteOrderMark, 256, true))
+            using (var reader = new StreamReader(stream, new UTF8Encoding(lookForByteOrderMark,true), lookForByteOrderMark, 256, true))
             {
                 string line = reader.ReadToEnd();
                 return line;

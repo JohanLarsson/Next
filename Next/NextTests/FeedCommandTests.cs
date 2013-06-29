@@ -15,7 +15,7 @@ namespace NextTests
         [Test]
         public void LoginTest()
         {
-            string cmd = "login";
+            string cmd = FeedCommand.LoginCommandParameter;
             const string service = "service";
             const string sessionKey = "key";
             FeedCommand<LoginArgs> loginCommand = FeedCommand.Login(service, sessionKey);
@@ -30,7 +30,7 @@ namespace NextTests
         [Test]
         public void SubscribeAllTest()
         {
-            string cmd = "subscribe";
+            string cmd = FeedCommand.SubscribeCommandParameter;
             int marketId = 1;
             string identifier = "id";
 
@@ -46,6 +46,31 @@ namespace NextTests
                 };
 
             Assert.IsTrue(expected.SequenceEqual(feedCommands.Select(x=>x.ToJson())));
+            foreach (var feedCommand in feedCommands)
+            {
+                Console.WriteLine(feedCommand.ToJson());
+            }
+        }
+
+        [Test]
+        public void UnSubscribeAllTest()
+        {
+            string cmd = FeedCommand.UnSubscribeCommandParameter;
+            int marketId = 1;
+            string identifier = "id";
+
+            FeedCommand<SubscribeInstrumentArgsBase>[] feedCommands = FeedCommand.UnSubscribeAll(new InstrumentDescriptor(marketId, identifier));
+
+            var expected = new[]
+                {
+                    string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "price", identifier, marketId),
+                    string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "depth", identifier, marketId),
+                    string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "trade", identifier, marketId),
+                    string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "index", identifier, marketId),
+                    string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "trading_status", identifier, marketId),
+                };
+
+            Assert.IsTrue(expected.SequenceEqual(feedCommands.Select(x => x.ToJson())));
             foreach (var feedCommand in feedCommands)
             {
                 Console.WriteLine(feedCommand.ToJson());

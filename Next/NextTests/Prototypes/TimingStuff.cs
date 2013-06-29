@@ -10,7 +10,8 @@ using RestSharp;
 
 namespace NextTests.Prototypes
 {
-    class TimingStuff
+    [Explicit]
+    public class TimingStuff
     {
         [TestCase(100)]
         [TestCase(1000)]

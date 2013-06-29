@@ -81,7 +81,7 @@ namespace Next
             else
             {
                 Session = null;
-            } 
+            }
 
             OnLoggedInChanged();
             return Session != null;
@@ -187,7 +187,7 @@ namespace Next
                 request.AddParameter("count", count);
             if (after != null)
                 request.AddParameter("after", after.ToString());
-            IRestResponse<List<NewsItem>> response =await Client.ExecuteTaskAsync<List<NewsItem>>(request);
+            IRestResponse<List<NewsItem>> response = await Client.ExecuteTaskAsync<List<NewsItem>>(request);
             return response.Data;
         }
 
@@ -199,7 +199,7 @@ namespace Next
         public async Task<NewsItem> NewsItem(string id)
         {
             var request = new RestRequest("news_items/" + id, Method.GET);
-            IRestResponse<NewsItem> restResponse =await Client.ExecuteTaskAsync<NewsItem>(request);
+            IRestResponse<NewsItem> restResponse = await Client.ExecuteTaskAsync<NewsItem>(request);
             return restResponse.Data;
         }
 
@@ -348,7 +348,7 @@ namespace Next
             return response.Data;
         }
 
-        private static CachedSearch<List<InstrumentList>> _cachedLists= new CachedSearch<List<InstrumentList>>(); 
+        private static readonly CachedSearch<List<InstrumentList>> _cachedLists = new CachedSearch<List<InstrumentList>>();
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-lists
         /// </summary>
@@ -363,25 +363,33 @@ namespace Next
             return response.Data;
         }
 
+        private static readonly CachedSearch<string, List<InstrumentItem>> _cachedListsItems = new CachedSearch<string, List<InstrumentItem>>();
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-list-items
         /// </summary>
         /// <returns></returns>
         public async Task<List<InstrumentItem>> ListItems(string listId)
         {
+            if (_cachedListsItems.IsCached(listId))
+                return _cachedListsItems[listId];
             var request = new RestRequest(string.Format("lists/{0}", listId), Method.GET);
             IRestResponse<List<InstrumentItem>> response = await Client.ExecuteTaskAsync<List<InstrumentItem>>(request);
+            _cachedListsItems[listId] = response.Data;
             return response.Data;
         }
 
+        private static readonly CachedSearch<List<Market>> _cachedMarkets = new CachedSearch<List<Market>>();
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-markets
         /// </summary>
         /// <returns></returns>
         public async Task<List<Market>> Markets()
         {
+            if (_cachedMarkets.IsCached)
+                return _cachedMarkets.Cache;
             var request = new RestRequest("markets", Method.GET);
             IRestResponse<List<Market>> response = await Client.ExecuteTaskAsync<List<Market>>(request);
+            _cachedMarkets.Cache = response.Data;
             return response.Data;
         }
 
@@ -396,25 +404,33 @@ namespace Next
             return response.Data;
         }
 
+        private static readonly CachedSearch<List<Index>> _cachedIndices = new CachedSearch<List<Index>>();
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-indices
         /// </summary>
         /// <returns></returns>
         public async Task<List<Index>> Indices()
         {
+            if (_cachedIndices.IsCached)
+                return _cachedIndices.Cache;
             var request = new RestRequest("indices", Method.GET);
             IRestResponse<List<Index>> response = await Client.ExecuteTaskAsync<List<Index>>(request);
+            _cachedIndices.Cache = response.Data;
             return response.Data;
         }
 
+        private static readonly CachedSearch<List<TickSize>> _cachedTickSizes = new CachedSearch<List<TickSize>>();
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-ticksize-table
         /// </summary>
         /// <returns></returns>
         public async Task<List<TickSize>> TickSizes(string instrumentId)
         {
+            if (_cachedTickSizes.IsCached)
+                return _cachedTickSizes.Cache;
             var request = new RestRequest("ticksizes/" + instrumentId, Method.GET);
             IRestResponse<List<TickSize>> response = await Client.ExecuteTaskAsync<List<TickSize>>(request);
+            _cachedTickSizes.Cache = response.Data;
             return response.Data;
         }
 

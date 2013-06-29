@@ -9,7 +9,8 @@ using Next;
 
 namespace NextTests
 {
-    class RestClientExtTests
+    [Explicit]
+    public class RestClientExtTests
     {
         [Test]
         public void ExecuteTest()

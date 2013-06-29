@@ -27,4 +27,33 @@ namespace Next
             get { return Cache != null && CacheTime.Day == DateTime.Now.Day; }
         }
     }
+
+    public class CachedSearch<TKey,TValue> where TValue : class
+    {
+        public DateTime CacheTime { get; set; }
+
+        private static readonly Dictionary<TKey, CachedSearch<TValue>> _cache = new Dictionary<TKey, CachedSearch<TValue>>();
+        public TValue this[TKey key]
+        {
+            get
+            {
+                return _cache[key].Cache;
+            }
+            set
+            {
+                if (_cache.ContainsKey(key))
+                    _cache[key].Cache = value;
+                else
+                    _cache[key] = new CachedSearch<TValue>() {Cache = value};
+            }
+        }
+
+        public bool IsCached(TKey key)
+        {
+            if (!_cache.ContainsKey(key))
+                return false;
+            return _cache[key].IsCached;
+
+        }
+    }
 }
