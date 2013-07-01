@@ -1,4 +1,6 @@
-﻿namespace Next.FeedCommands
+﻿using Next.Dtos;
+
+namespace Next.FeedCommands
 {
     public class SubscribeTradingStatusArgs : SubscribeInstrumentArgsBase
     {

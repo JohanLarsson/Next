@@ -36,7 +36,7 @@ namespace NextTests
 
             FeedCommand<SubscribeInstrumentArgsBase>[] feedCommands = FeedCommand.SubscribeAll(new InstrumentDescriptor(marketId, identifier));
 
-            var expected = new[]
+            var expecteds = new[]
                 {
                     string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "price", identifier, marketId),
                     string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "depth", identifier, marketId),
@@ -45,7 +45,14 @@ namespace NextTests
                     string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "trading_status", identifier, marketId),
                 };
 
-            Assert.IsTrue(expected.SequenceEqual(feedCommands.Select(x=>x.ToJson())));
+            string[] serializeds = feedCommands.Select(x => x.ToJson()).ToArray();
+            for (int index = 0; index < expecteds.Length; index++)
+            {
+                var expected = expecteds[index];
+                string actual = serializeds[index];
+                Assert.AreEqual(expected,actual);
+            }
+            Assert.IsTrue(expecteds.SequenceEqual(serializeds));
             foreach (var feedCommand in feedCommands)
             {
                 Console.WriteLine(feedCommand.ToJson());
@@ -84,7 +91,7 @@ namespace NextTests
             int sourceid = 1;
 
             FeedCommand<SubscribeNewsArgs> subscribeNews = FeedCommand.SubscribeNews(new NewsSource() {Sourceid = sourceid});
-            string expected = string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""s"":{2},""delay"":{3}}}}}", cmd, "news", sourceid,"false");
+            string expected = string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""s"":{2},""delay"":{3}}}}}", cmd, SubscribeType.News, sourceid,"false");
             Assert.AreEqual(expected,subscribeNews.ToJson());
             Console.WriteLine(subscribeNews.ToJson());
         }

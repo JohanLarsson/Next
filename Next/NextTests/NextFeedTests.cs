@@ -55,7 +55,7 @@ namespace NextTests
         [Explicit]
         [TestCase("41647", 19, 30, "Microsoft")]
         [TestCase(null, null, 300, "Ericsson")]
-        public async Task SubscribeTest(string identifier, int market, int secondsToRun,string dummy)
+        public async Task SubscribeTest(string identifier, string market, int secondsToRun,string dummy)
         {
             if (identifier == null)
             {

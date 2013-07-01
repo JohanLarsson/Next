@@ -3,7 +3,7 @@
     public class InstrumentMatch : Instrument
     {
         public string Longname { get; set; }
-        public int MarketID { get; set; }
+        public string MarketID { get; set; }
         public string Country { get; set; }
         public string Shortname { get; set; }
         public string Marketname { get; set; }

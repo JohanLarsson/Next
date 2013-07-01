@@ -19,15 +19,15 @@ namespace NextView
         public NextVm(NextClient client)
         {
             _client = client;
-            PublicFeed= new FeedVm(_client.PublicFeed);
-            PrivateFeed= new FeedVm(_client.PrivateFeed);
+            PublicFeed = new FeedVm(_client.PublicFeed);
+            PrivateFeed = new FeedVm(_client.PrivateFeed);
             _client.LoggedInChanged += async (_, e) =>
                 {
                     OnPropertyChanged("IsLoggedIn");
                     if (IsLoggedIn)
                     {
                         List<InstrumentList> instrumentLists = await _client.Lists();
-                        foreach (var instrumentList in instrumentLists.OrderBy(x=>x.Name))
+                        foreach (var instrumentList in instrumentLists.OrderBy(x => x.Name))
                         {
                             InstrumentLists.Add(instrumentList);
                         }
@@ -41,9 +41,9 @@ namespace NextView
                         return;
                     Account.Account = Accounts.First();
                 };
-            Account= new AccountVm(_client,null);
+            Account = new AccountVm(_client, null);
             var loginVm = new LoginVm();
-            if (loginVm.Username!=null && loginVm.Password!=null)
+            if (loginVm.Username != null && loginVm.Password != null)
             {
                 _client.Login(loginVm.Username, loginVm.Password);
             }
@@ -82,7 +82,7 @@ namespace NextView
                     Instruments.Clear();
                     return;
                 }
-                Instruments.UpdateCollection( _client.ListItems(_selectedInstrumentList.Id));
+                Instruments.UpdateCollection(_client.ListItems(_selectedInstrumentList.Id));
             }
         }
 
@@ -113,9 +113,9 @@ namespace NextView
 
         public async Task UpdateInstrument()
         {
-            Instrument = SelectedInstrument == null 
-                ? null 
-                : await _client.InstrumentSearch(_selectedInstrument);
+            Instrument = SelectedInstrument == null
+                ? null
+                : await _client.InstrumentSearch(new InstrumentDescriptor(_selectedInstrument.MarketID, _selectedInstrument.Identifier));
         }
 
         private InstrumentMatch _instrument;

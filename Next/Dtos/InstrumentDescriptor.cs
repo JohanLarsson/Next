@@ -1,18 +1,38 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 
-namespace Next
+namespace Next.Dtos
 {
     public class InstrumentDescriptor : IEquatable<InstrumentDescriptor>
     {
-        public InstrumentDescriptor( int marketId,string identifier)
+        public InstrumentDescriptor()
+        {
+            
+        }
+        public InstrumentDescriptor(string marketId,string identifier)
         {
             Identifier = identifier;
             MarketId = marketId;
         }
 
+        public InstrumentDescriptor(int marketId, string identifier)
+        {
+            Identifier = identifier;
+            MarketId = marketId.ToString(CultureInfo.InvariantCulture);
+        }
+
         public string Identifier { get; set; }
 
-        public int MarketId {get; set; }
+        [DebuggerBrowsable(DebuggerBrowsableState.Never), EditorBrowsable(EditorBrowsableState.Never)]
+        public string MarketID
+        {
+            get { return MarketId; }
+            set { MarketId = value; }
+        }
+
+        public string MarketId {get; set; }
 
         public override string ToString()
         {
@@ -23,7 +43,7 @@ namespace Next
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return string.Equals(Identifier, other.Identifier) && MarketId == other.MarketId;
+            return string.Equals(Identifier, other.Identifier) && string.Equals(MarketId, other.MarketId);
         }
 
         public override bool Equals(object obj)
@@ -38,7 +58,7 @@ namespace Next
         {
             unchecked
             {
-                return ((Identifier != null ? Identifier.GetHashCode() : 0)*397) ^ MarketId;
+                return ((Identifier != null ? Identifier.GetHashCode() : 0)*397) ^ (MarketId != null ? MarketId.GetHashCode() : 0);
             }
         }
 

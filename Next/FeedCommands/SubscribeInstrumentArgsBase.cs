@@ -1,4 +1,5 @@
 ﻿using System;
+using Next.Dtos;
 
 namespace Next.FeedCommands
 {
@@ -12,7 +13,7 @@ namespace Next.FeedCommands
         }
         public string t { get; private set; }
         public string i { get; set; }
-        public int m { get; set; }
+        public string m { get; set; }
 
         public bool Equals(SubscribeInstrumentArgsBase other)
         {
@@ -35,7 +36,7 @@ namespace Next.FeedCommands
             {
                 int hashCode = (t != null ? t.GetHashCode() : 0);
                 hashCode = (hashCode*397) ^ (i != null ? i.GetHashCode() : 0);
-                hashCode = (hashCode*397) ^ m;
+                hashCode = (hashCode * 397) ^ (m != null ? m.GetHashCode() : 0);
                 return hashCode;
             }
         }

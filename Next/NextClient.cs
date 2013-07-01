@@ -21,9 +21,9 @@ namespace Next
         private readonly ApiInfo _apiInfo;
         private SessionInfo _session;
 
-        public NextClient(ApiInfo _apiInfo)
+        public NextClient(ApiInfo apiInfo)
         {
-            _apiInfo = _apiInfo;
+            _apiInfo = apiInfo;
             _client = new RestClient(_apiInfo.BaseUrl);
             PrivateFeed = new NextFeed(this, c => c.Session.PrivateFeed);
             PublicFeed = new PublicFeed(this, c => c.Session.PublicFeed);
@@ -295,7 +295,7 @@ namespace Next
         /// <param name="identifier">Nordnet instrument identifier, example: 101</param>
         /// <param name="marketId">Nordnet market identifier, example: 11</param>
         /// <returns></returns>
-        public async Task<InstrumentMatch> InstrumentSearch(string identifier, int marketId)
+        public async Task<InstrumentMatch> InstrumentSearch(string identifier, string marketId)
         {
             var request = new RestRequest("instruments", Method.GET);
             request.AddParameter("identifier", identifier);
@@ -334,7 +334,7 @@ namespace Next
         /// <param name="identifier">Nordnet instrument identifier, example: 101</param>
         /// <param name="marketId">Nordnet market identifier, example: 11</param>
         /// <returns></returns>
-        public async Task<List<Tick>> ChartData(string identifier, int marketId)
+        public async Task<List<Tick>> ChartData(string identifier, string marketId)
         {
             var request = new RestRequest("chart_data", Method.GET);
             request.AddParameter("identifier", identifier);
@@ -466,7 +466,7 @@ namespace Next
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Related-markets
         /// </summary>
         /// <returns></returns>
-        public async Task<List<RelatedMarket>> RelatedMarkets(int marketId, string identifier)
+        public async Task<List<RelatedMarket>> RelatedMarkets(string marketId, string identifier)
         {
             var request = new RestRequest("related_markets", Method.GET);
             request.AddParameter("marketID", marketId);

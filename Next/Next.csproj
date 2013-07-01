@@ -48,13 +48,16 @@
     <Compile Include="Dtos\Account.cs" />
     <Compile Include="Dtos\Derivative.cs" />
     <Compile Include="Dtos\Index.cs" />
+    <Compile Include="Dtos\IndexTick.cs" />
     <Compile Include="Dtos\InstrumentItem.cs" />
     <Compile Include="Dtos\InstrumentList.cs" />
     <Compile Include="Dtos\InstrumentMatch.cs" />
     <Compile Include="Dtos\IntrumentID.cs" />
+    <Compile Include="Dtos\ITick.cs" />
     <Compile Include="Dtos\Ledger.cs" />
     <Compile Include="Dtos\Market.cs" />
     <Compile Include="Dtos\NewsItem.cs" />
+    <Compile Include="Dtos\NewsTick.cs" />
     <Compile Include="Dtos\OrderStatus.cs" />
     <Compile Include="Dtos\OrderBuilder.cs" />
     <Compile Include="Dtos\Ordertype.cs" />
@@ -74,8 +77,11 @@
     <Compile Include="Dtos\TickSize.cs" />
     <Compile Include="Dtos\Trade.cs" />
     <Compile Include="Dtos\TradingDay.cs" />
+    <Compile Include="Dtos\DepthTick.cs" />
+    <Compile Include="Dtos\TradingStatusTick.cs" />
     <Compile Include="FeedCommands\FeedCommand.cs" />
     <Compile Include="FeedCommands\LoginArgs.cs" />
+    <Compile Include="Dtos\PriceTick.cs" />
     <Compile Include="FeedCommands\SubscribeInstrumentArgsBase.cs" />
     <Compile Include="FeedCommands\SubscribeDepthArgs.cs" />
     <Compile Include="FeedCommands\SubscribeIndexArgs.cs" />
@@ -84,9 +90,11 @@
     <Compile Include="FeedCommands\SubscribeTradeArgs.cs" />
     <Compile Include="FeedCommands\SubscribeTradingStatusArgs.cs" />
     <Compile Include="FeedCommands\SubscribeType.cs" />
-    <Compile Include="FeedMessageHandler.cs" />
-    <Compile Include="FeedMessage.cs" />
-    <Compile Include="InstrumentDescriptor.cs" />
+    <Compile Include="FeedCommands\FeedMessageHandler.cs" />
+    <Compile Include="FeedCommands\FeedMessage.cs" />
+    <Compile Include="Dtos\InstrumentTick.cs" />
+    <Compile Include="Dtos\TradeTick.cs" />
+    <Compile Include="Dtos\InstrumentDescriptor.cs" />
     <Compile Include="NextClient.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Dtos\ServiceStatus.cs" />
@@ -98,6 +106,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="PublicFeed.cs" />
+    <Compile Include="FeedCommands\PublicFeedMessage.cs" />
     <Compile Include="RestClientExt.cs" />
   </ItemGroup>
   <ItemGroup>

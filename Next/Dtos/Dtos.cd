@@ -21,13 +21,6 @@
       <FileName>Dtos\FeedInfo.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Next.Dtos.Index" Collapsed="true">
-    <Position X="5.5" Y="7.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACQAABAgAAAAAEAAAAAAAAAAIAAAAAAQAAAAAAAAA=</HashCode>
-      <FileName>Dtos\Index.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Next.Dtos.Instrument">
     <Position X="0.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
@@ -180,6 +173,13 @@
     <TypeIdentifier>
       <HashCode>AggAAAAAAAEACAAAQEEAECAAAgAAAAAAAAAEAAEAAAA=</HashCode>
       <FileName>Dtos\AccountSummary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Next.Dtos.IndexTick" Collapsed="true">
+    <Position X="5.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAAAgACAACAAAA=</HashCode>
+      <FileName>Dtos\IndexTick.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="Next.Dtos.OrderSide" Collapsed="true">

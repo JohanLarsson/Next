@@ -24,7 +24,7 @@ namespace Next.FeedCommands
             this.s = newsSource.Sourceid;
             this.delay = delay;
         }
-        private string _t ="news";
+        private string _t =SubscribeType.News;
         public string t
         {
             get { return _t; }
