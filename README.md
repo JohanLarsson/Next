@@ -1,8 +1,11 @@
 Next
 ====
 
-Trying to write something to consume https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation
+Trying to write something to consume [Next API](https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation)
 
+To use the dev environment create an account on the forum
+
+The username and password is used for logging in to the dev api.
 
 For running the integration tests create a file C:\temp\TempCreds.xml with contents:
 
