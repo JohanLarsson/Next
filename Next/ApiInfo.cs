@@ -10,10 +10,16 @@ namespace Next
 {
     public class ApiInfo
     {
+        public static ApiInfo TestApiInfo()
+        {
+            return Properties.Settings.Default.TestApiInfo;
+        }
         [XmlIgnore]
-        public string BaseUrl { get { return Url + "/" + Version; } }
-        public string Url { get; set; }
+        public string BaseUrl { get { return string.Format(@"{0}/{1}/{2}", Host, Path, Version); } }
+        public string Host { get; set; }
+        public string Path { get; set; }
         public string Version { get; set; }
         public RSAParameters PublicKey { get; set; }
+        
     }
 }

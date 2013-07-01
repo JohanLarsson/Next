@@ -7,11 +7,13 @@ namespace NextTests.Helpers
 {
     public class NextTestsBase
     {
+        protected readonly ApiInfo TestApiInfo = ApiInfo.TestApiInfo();
+
         protected NextClient LoggedInClient
         {
             get
             {
-                var nextClient = new NextClient(ApiVersion.Test);
+                var nextClient = new NextClient(ApiInfo.TestApiInfo());
                 Assert.IsTrue(nextClient.Login(Credentials.Username, Credentials.Password).Result); // this hangs
                 return nextClient;
             }

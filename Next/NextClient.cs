@@ -17,18 +17,13 @@ namespace Next
     public class NextClient : IDisposable
     {
         private const string _login = "login";
-
         private readonly RestClient _client;
         private readonly ApiInfo _apiInfo;
         private SessionInfo _session;
 
-        public NextClient(ApiVersion apiVersion)
+        public NextClient(ApiInfo _apiInfo)
         {
-            if (apiVersion == ApiVersion.Test)
-                _apiInfo = Properties.Settings.Default.TestApiInfo;
-            else
-                throw new NotImplementedException("message");
-
+            _apiInfo = _apiInfo;
             _client = new RestClient(_apiInfo.BaseUrl);
             PrivateFeed = new NextFeed(this, c => c.Session.PrivateFeed);
             PublicFeed = new PublicFeed(this, c => c.Session.PublicFeed);
@@ -328,9 +323,9 @@ namespace Next
             return response.Data;
         }
 
-        public async Task<InstrumentMatch> InstrumentSearch(InstrumentItem instrumentItem)
+        public async Task<InstrumentMatch> InstrumentSearch(InstrumentDescriptor instrumentItem)
         {
-            return await InstrumentSearch(instrumentItem.Identifier, instrumentItem.MarketID);
+            return await InstrumentSearch(instrumentItem.Identifier, instrumentItem.MarketId);
         }
 
         /// <summary>

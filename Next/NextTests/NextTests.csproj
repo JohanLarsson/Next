@@ -52,6 +52,7 @@
     <Compile Include="Helpers\Credentials.cs" />
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="Helpers\StopwatchExt.cs" />
+    <Compile Include="Mocks\MockService.cs" />
     <Compile Include="NextClientTests.cs" />
     <Compile Include="NextFeedTests.cs" />
     <Compile Include="Helpers\NextTestsBase.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Prototypes\HttpClientTests.cs" />
     <Compile Include="Prototypes\StreamDummyTests.cs" />
     <Compile Include="Prototypes\TimingStuff.cs" />
+    <Compile Include="PublicFeedMessageTests.cs" />
     <Compile Include="RestClientExtTests.cs" />
   </ItemGroup>
   <ItemGroup>

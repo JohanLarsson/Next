@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 using NUnit.Framework;
 using Next;
 using Next.Dtos;
 using NextTests.Helpers;
 using NextTests.Prototypes;
-using RestSharp;
 
 namespace NextTests
 {
@@ -23,7 +16,7 @@ namespace NextTests
         [Test]
         public async Task ServiceStatusTest()
         {
-            var client = new NextClient(ApiVersion.Test);
+            var client = new NextClient(TestApiInfo);
             ServiceStatus serviceStatus = await client.ServiceStatus();
             Assert.IsTrue(serviceStatus.SystemRunning);
             Assert.IsTrue(serviceStatus.ValidVersion);
@@ -32,7 +25,7 @@ namespace NextTests
         [Test]
         public async Task LoginTest()
         {
-            var client = new NextClient(ApiVersion.Test);
+            var client = new NextClient(TestApiInfo);
 
             bool success = await client.Login(Credentials.Username, Credentials.Password);
 
@@ -47,7 +40,7 @@ namespace NextTests
         [Test]
         public async Task LoginFailTest()
         {
-            var nextClient = new NextClient(ApiVersion.Test);
+            var nextClient = new NextClient(TestApiInfo);
             Assert.IsFalse(await nextClient.Login("Incorrect", "Credentials"));
         }
 
@@ -62,7 +55,7 @@ namespace NextTests
         [Test]
         public async Task LogoutWhenNotLoggedInTest()
         {
-            var client = new NextClient(ApiVersion.Test);
+            var client = new NextClient(TestApiInfo);
             Assert.IsTrue(await client.Logout());
         }
 
