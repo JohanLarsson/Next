@@ -3,7 +3,45 @@
   <Profiles />
   <Settings>
     <Setting Name="EricssonInstrumentMatch" Type="Next.Dtos.InstrumentMatch" Scope="Application">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;InstrumentMatch xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;&lt;Type&gt;A&lt;/Type&gt;&lt;Identifier&gt;100&lt;/Identifier&gt;&lt;Currency&gt;SEK&lt;/Currency&gt;&lt;MainMarketId&gt;0&lt;/MainMarketId&gt;&lt;Longname&gt;Ericsson A&lt;/Longname&gt;&lt;MarketID&gt;11&lt;/MarketID&gt;&lt;Country&gt;SE&lt;/Country&gt;&lt;Shortname&gt;ERIC A&lt;/Shortname&gt;&lt;Marketname&gt;OMX Stockholm&lt;/Marketname&gt;&lt;IsinCode&gt;SE0000108649&lt;/IsinCode&gt;&lt;/InstrumentMatch&gt;</Value>
+      <Value Profile="(Default)">
+                    &lt;InstrumentMatch xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+                        &lt;Type&gt;A&lt;/Type&gt;
+                        &lt;Identifier&gt;100&lt;/Identifier&gt;
+                        &lt;Currency&gt;SEK&lt;/Currency&gt;
+                        &lt;MainMarketId&gt;0&lt;/MainMarketId&gt;
+                        &lt;Longname&gt;Ericsson A&lt;/Longname&gt;
+                        &lt;MarketID&gt;11&lt;/MarketID&gt;
+                        &lt;Country&gt;SE&lt;/Country&gt;
+                        &lt;Shortname&gt;ERIC A&lt;/Shortname&gt;
+                        &lt;Marketname&gt;OMX Stockholm&lt;/Marketname&gt;
+                        &lt;IsinCode&gt;SE0000108649&lt;/IsinCode&gt;
+                    &lt;/InstrumentMatch&gt;
+                </Value>
+    </Setting>
+    <Setting Name="PriceTickJson" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{
+    "cmd": "price",
+    "args": {
+        "i": "1843",
+        "m": 30,
+        "t": "price",
+        "trade_timestamp": "2010-01-22 16:17:23",
+        "tick_timestamp": "2010-01-22 16:18:42",
+        "bid": "0.00",
+        "bid_volume": 0,
+        "ask": 101.00,
+        "ask_volume": 200,
+        "close": 101.00,
+        "high": 101.00,
+        "last": 101.00,
+        "last_volume": 200,
+        "lot_size": "1",
+        "low": 101.00,
+        "open": 0.00,
+        "turnover": 6605400,
+        "turnover_volume": 65400
+    }
+}</Value>
     </Setting>
   </Settings>
 </SettingsFile>

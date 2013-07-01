@@ -19,7 +19,7 @@ namespace NextTests.Prototypes
         [Test]
         public void CreateCredentials()
         {
-            Credentials credentials = new Credentials {Username = "user", Password = "pw"};
+            Credentials credentials = new Credentials { Username = "user", Password = "pw" };
             credentials.Save(Properties.Resources.CredentialsPath);
         }
 
@@ -33,7 +33,8 @@ namespace NextTests.Prototypes
 </RSAParameters>";
             var testApiInfo = new ApiInfo
                 {
-                    Url = @"https://api.test.nordnet.se/next",
+                    Host = @"https://api.test.nordnet.se",
+                    Path = @"next",
                     Version = "1",
                     PublicKey = Deserialize<RSAParameters>(testApiKey)
                 };

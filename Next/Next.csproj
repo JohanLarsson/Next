@@ -84,6 +84,8 @@
     <Compile Include="FeedCommands\SubscribeTradeArgs.cs" />
     <Compile Include="FeedCommands\SubscribeTradingStatusArgs.cs" />
     <Compile Include="FeedCommands\SubscribeType.cs" />
+    <Compile Include="FeedMessageHandler.cs" />
+    <Compile Include="FeedMessage.cs" />
     <Compile Include="InstrumentDescriptor.cs" />
     <Compile Include="NextClient.cs" />
     <Compile Include="Extensions.cs" />

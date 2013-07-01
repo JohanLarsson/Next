@@ -26,7 +26,7 @@ namespace NextView
         public MainWindow()
         {
             InitializeComponent();
-            _nextVm = new NextVm(new NextClient(ApiVersion.Test));
+            _nextVm = new NextVm(new NextClient(ApiInfo.TestApiInfo()));
             this.DataContext = _nextVm;
         }
 
