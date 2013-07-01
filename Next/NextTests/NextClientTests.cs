@@ -91,7 +91,7 @@ namespace NextTests
         [Test]
         public async Task SearchNewsTest()
         {
-            List<NewsItem> news =await LoggedInClient.SearchNews();
+            List<NewsItem> news = await LoggedInClient.SearchNews();
             Console.WriteLine(news);
             Assert.Inconclusive("Not sure this is working with test think code is ok");
         }
@@ -199,8 +199,8 @@ namespace NextTests
             List<InstrumentList> lists = await LoggedInClient.Lists();
             Assert.AreEqual(96, lists.Count);
             //Testing twice to check cache
-            lists = await LoggedInClient.Lists();
-            Assert.AreEqual(96, lists.Count);
+            List<InstrumentList> cachelists = await LoggedInClient.Lists();
+            Assert.IsTrue(lists.SequenceEqual(cachelists));
         }
 
         [Test]
@@ -213,8 +213,8 @@ namespace NextTests
                                     x.MarketID != null &&
                                     x.Shortname != null));
             //Testing twice to check cache
-             items = await LoggedInClient.ListItems(8.ToString());
-            Assert.AreEqual(78, items.Count);
+            List<InstrumentItem> cacheitems = await LoggedInClient.ListItems(8.ToString());
+            Assert.IsTrue(items.SequenceEqual(cacheitems));
         }
 
         [Test]
@@ -276,9 +276,9 @@ namespace NextTests
         [Test]
         public async Task UnderlyingsTest()
         {
-            List<InstrumentItem> underlyings = await LoggedInClient.Underlyings("O","SE");
+            List<InstrumentItem> underlyings = await LoggedInClient.Underlyings("O", "SE");
             Assert.AreEqual(4, underlyings.Count);
-            Assert.IsTrue(underlyings.All(u=>u.Identifier!=null && u.MarketID!=null && u.Shortname!=null));
+            Assert.IsTrue(underlyings.All(u => u.Identifier != null && u.MarketID != null && u.Shortname != null));
         }
 
         [Test]
@@ -297,8 +297,8 @@ namespace NextTests
         [Test]
         public async Task RelatedMarketsTest()
         {
-            List<RelatedMarket> relatedMarkets = await LoggedInClient.RelatedMarkets(Ericcson.MarketID,Ericcson.Identifier);
-            Assert.AreEqual(2,relatedMarkets.Count);
+            List<RelatedMarket> relatedMarkets = await LoggedInClient.RelatedMarkets(Ericcson.MarketID, Ericcson.Identifier);
+            Assert.AreEqual(2, relatedMarkets.Count);
             Assert.IsTrue(relatedMarkets.All(u => u.Identifier != null && u.MarketID != 0));
         }
 
