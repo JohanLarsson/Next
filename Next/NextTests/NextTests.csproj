@@ -40,6 +40,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +53,8 @@
     <Compile Include="Helpers\Credentials.cs" />
     <Compile Include="ExtensionsTests.cs" />
     <Compile Include="Helpers\StopwatchExt.cs" />
+    <Compile Include="Mocks\HttpListenerRequestExt.cs" />
+    <Compile Include="Mocks\HttpListenerResponseExt.cs" />
     <Compile Include="Mocks\MockService.cs" />
     <Compile Include="Mocks\MockServiceTests.cs" />
     <Compile Include="NextClientTests.cs" />

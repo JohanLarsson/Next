@@ -28,18 +28,19 @@ namespace NextTests.Prototypes
         }
 
         [Test]
-        public void ClientRoundtripTest()
+        public void ClientServerRoundtripTest()
         {
             string username = "username";
             string password = "password";
-            var rsaService = new RSACryptoServiceProvider(2048);
-            string encrypt = Next.NextClient.Encrypt(username, password, rsaService.ExportParameters(false));
+            RSAParameters publicKey = Properties.Settings.Default.TestApiInfoLocalHost.PublicKey;
+            
+            string encrypt = Next.NextClient.Encrypt(username, password, publicKey);
             
             // Server
-            byte[] fromBase64String = Convert.FromBase64String(encrypt);
-
-            rsaService.ImportParameters(rsaService.ExportParameters(true));
-            byte[] decrypt = rsaService.Decrypt(fromBase64String, false);
+            var rsaService = new RSACryptoServiceProvider();
+            rsaService.FromXmlString(Properties.Settings.Default.PrivateKey);
+            byte[] data = Convert.FromBase64String(encrypt);
+            byte[] decrypt = rsaService.Decrypt(data, false);
             string[] strings = Encoding.UTF8.GetString(decrypt).Split(':');
             Assert.AreEqual(username, FromBase64(strings[0]));
             Assert.AreEqual(password, FromBase64(strings[1]));

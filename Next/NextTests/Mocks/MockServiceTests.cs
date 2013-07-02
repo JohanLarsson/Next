@@ -10,6 +10,7 @@ namespace NextTests.Mocks
     /// <summary>
     /// This is kinda moot but the reason is to try to learn
     /// </summary>
+    [Explicit]
     public class MockServiceTests
     {
         private CancellationTokenSource _cts;
@@ -33,7 +34,7 @@ namespace NextTests.Mocks
         {
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri(@"http://localhost/next/1/");
+                client.BaseAddress = new Uri(Properties.Settings.Default.TestApiInfoLocalHost.BaseUrl);
                 Task<HttpResponseMessage> get = client.GetAsync("Test");
                 using (HttpResponseMessage response = get.Result)
                 {
@@ -55,7 +56,7 @@ namespace NextTests.Mocks
         }
 
         [Test]
-        public async Task NextClientTest()
+        public async Task LoginTest()
         {
             ApiInfo apiInfo = Properties.Settings.Default.TestApiInfoLocalHost;
             var nextClient = new NextClient(apiInfo);
