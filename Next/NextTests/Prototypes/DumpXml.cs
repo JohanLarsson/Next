@@ -14,7 +14,7 @@ using NextTests.Helpers;
 namespace NextTests.Prototypes
 {
     [Explicit]
-    class DumpXml
+    public class DumpXml
     {
         [Test]
         public void CreateCredentials()
@@ -39,6 +39,17 @@ namespace NextTests.Prototypes
                     PublicKey = Deserialize<RSAParameters>(testApiKey)
                 };
             Dump(testApiInfo);
+        }
+
+        [Test]
+        public void DumpKeysTest()
+        {
+            var rsaService = new RSACryptoServiceProvider(2048);
+            Console.WriteLine(rsaService.ToXmlString(false));
+            Console.WriteLine();
+            Console.WriteLine(rsaService.ToXmlString(true));
+            var rsaCryptoServiceProvider = new RSACryptoServiceProvider();
+
         }
 
         public static void Dump<T>(T value)

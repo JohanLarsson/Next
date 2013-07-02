@@ -3,16 +3,17 @@
   <Profiles />
   <Settings>
     <Setting Name="TestApiInfo" Type="Next.ApiInfo" Scope="Application">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ApiInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;Host&gt;https://api.test.nordnet.se&lt;/Host&gt;
-  &lt;Path&gt;next&lt;/Path&gt;
-  &lt;Version&gt;1&lt;/Version&gt;
-  &lt;PublicKey&gt;
-    &lt;Exponent&gt;AQAB&lt;/Exponent&gt;
-    &lt;Modulus&gt;5td/64fAicX2r8sN6RP3mfHf2bcwvTzmHrLcjJbU85gLROL+IXclrjWsluqyt5xtc/TCwMTfC/NcRVIAvfZdt+OPdDoO0rJYIY3hOGBwLQJeLRfruM8dhVD+/Kpu8yKzKOcRdne2hBb/mpkVtIl5avJPFZ6AQbICpOC8kEfI1DHrfgT18fBswt85deILBTxVUIXsXdG1ljFAQ/lJd/62J74vayQJq6l2DT663QB8nLEILUKEt/hQAJGU3VT4APSfT+5bkClfRb9+kNT7RXT/pNCctbBTKujr3tmkrdUZiQiJZdl/O7LhI99nCe6uyJ+la9jNPOuK5z6v72cXenmKZw==&lt;/Modulus&gt;
-  &lt;/PublicKey&gt;
-&lt;/ApiInfo&gt;</Value>
+      <Value Profile="(Default)">
+                    &lt;ApiInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+                        &lt;Host&gt;https://api.test.nordnet.se&lt;/Host&gt;
+                        &lt;Path&gt;next&lt;/Path&gt;
+                        &lt;Version&gt;1&lt;/Version&gt;
+                        &lt;PublicKey&gt;
+                            &lt;Exponent&gt;AQAB&lt;/Exponent&gt;
+                            &lt;Modulus&gt;5td/64fAicX2r8sN6RP3mfHf2bcwvTzmHrLcjJbU85gLROL+IXclrjWsluqyt5xtc/TCwMTfC/NcRVIAvfZdt+OPdDoO0rJYIY3hOGBwLQJeLRfruM8dhVD+/Kpu8yKzKOcRdne2hBb/mpkVtIl5avJPFZ6AQbICpOC8kEfI1DHrfgT18fBswt85deILBTxVUIXsXdG1ljFAQ/lJd/62J74vayQJq6l2DT663QB8nLEILUKEt/hQAJGU3VT4APSfT+5bkClfRb9+kNT7RXT/pNCctbBTKujr3tmkrdUZiQiJZdl/O7LhI99nCe6uyJ+la9jNPOuK5z6v72cXenmKZw==&lt;/Modulus&gt;
+                        &lt;/PublicKey&gt;
+                    &lt;/ApiInfo&gt;
+                </Value>
     </Setting>
   </Settings>
 </SettingsFile>

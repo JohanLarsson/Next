@@ -134,5 +134,27 @@
     }
 }</Value>
     </Setting>
+    <Setting Name="PrivateKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;RSAKeyValue&gt;
+	&lt;Modulus&gt;jaL6ruAY8R+7UTr489bmqbbGW5V5ULfpE8688FcfPpWo4T7EzBI1R7PZJEapTKX58hyl7SCaS7FxMKtGGCptxUNNMIkqtvhj/MoyML8D0uCROFyGncrNKZabOL5tR5eLiSg5b1sjXXgeeKkwLyTP7arjMFLr6E79vSqTkosTpA1PIBGm1HrdHp3ja8wl5C0XfSZcawonOT7lNchW8eiladlXcveagQbw38UW2GyIOi6DsvbB9ryQKkxyPSndB3kFkbPGCwV2+RD7rbhJUsGHvoQlm8Ad+Cmh5VYcNbwYbq2tdPiXl8fZ3koiC65M9w+SXgJN4lo0OSA9p6GjhQwokw==&lt;/Modulus&gt;
+	&lt;Exponent&gt;AQAB&lt;/Exponent&gt;&lt;P&gt;xvWh7MxZzwiIQlu02JehtaXgoWWbBlIE65ARnmA6VTbAvN8cx0VAWjFamf+T3NVtCYcxeHnNGt7RUgEcOsBy56ZB+Zx+8BPdPvWD5dtSME/gqtqizuoq/t5U2muasrk+y4PNZcpUthcDogti2Bn4gmweFuR7vd0qHeIvgYtmiBU=&lt;/P&gt;&lt;Q&gt;tj42I2Fwgxjv+/yNhiw3yfkA3MPySVX7jZxqwFEMRgRWGLHj63lgyj//9AodKUlG7qtd6vw20Bzym9GeDmTMkoF4sfRKzdDw9MjCEjq8yvmKTHngjUEljgTTeiD5Dlm7Ac+9I+kUvCwbKtGnA8v1kRTH1JML5206qPFvvRTwsAc=&lt;/Q&gt;
+	&lt;DP&gt;MEK68W6sRj0CmF4YYwV880v2ThAQZ5sTmHRM4cbjv3HVlLrmByw0LOyV1o8ZNdMLbOk/RcL9zovH6IVebJ3sAWbh0AN3AxM+cpwpT2NA73kgvTDllx1UKpiRqp25W6r1oXYqJ4vJupWgivkKE/NQxYomTlVD8s0n/zGzZlADIfU=&lt;/DP&gt;
+	&lt;DQ&gt;FBXhM58OnnRGJtib5HjFIU5/SNWTw39lfSMLJO0J1EGwF4Krow06nK/XDtd6hU1dMvrSHA72H5PBLWk56U40ucTpP3u0LuDjXacutIGiwyAjnPAlzouqju97O0+dA3biRH3X07hhn6egyuRWavW0t+u5ZnVab4Q7XdlWPlmreUs=&lt;/DQ&gt;
+	&lt;InverseQ&gt;NuTqJW8PyB7ZibmmZJHIxXQLG9HfJM10ynVttPjR0eK1U+IFFdzFVVTJ7oKSarLP+qNeBn8nYCE4zngUzJnAuSxvw/Ht9oGhW6e7HqbAQVEA31XjOXNJyuGX1MF46jsvCGxOxkbTKlPf0e8P7rOVNKiPzw5VtdZC/fmSvrGtBBk=&lt;/InverseQ&gt;&lt;D&gt;hrSs6skjr6BYTQdjYrXOpza4LL5apRRkznvfYk3Z33IDLka+cMAYgFtid4fk2Is6zrPEc2SAmuDmID2k6rLft68sqK6sO1y969x6I7Zn8pW2R/5n4YbR3W3pruwdjutowEfLaEcruWfWwzdWJmBCiW3vqTQUPdtypAjsVYGEao77VknnKB3b8qts9sog4nPeinzBTVNoyjCuG6FvODlkqdhAIyLqhQ7AgXs9JjFbqrrAFp05Wf9CyqD4HyqDYbMNDvrl3b8TZVumP+tfq/S8dVo/k20LfMIxouLbc9x0STkoP2MmPz4yF3f9CeFHz90lhTHLwIEFg7QzbavhPUuBMQ==&lt;/D&gt;
+&lt;/RSAKeyValue&gt;</Value>
+    </Setting>
+    <Setting Name="TestApiInfoLocalHost" Type="Next.ApiInfo" Scope="Application">
+      <Value Profile="(Default)">
+                    &lt;ApiInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+                        &lt;Host&gt;http://localhost&lt;/Host&gt;
+                        &lt;Path&gt;next&lt;/Path&gt;
+                        &lt;Version&gt;1&lt;/Version&gt;
+                        &lt;PublicKey&gt;
+                            &lt;Modulus&gt;jaL6ruAY8R+7UTr489bmqbbGW5V5ULfpE8688FcfPpWo4T7EzBI1R7PZJEapTKX58hyl7SCaS7FxMKtGGCptxUNNMIkqtvhj/MoyML8D0uCROFyGncrNKZabOL5tR5eLiSg5b1sjXXgeeKkwLyTP7arjMFLr6E79vSqTkosTpA1PIBGm1HrdHp3ja8wl5C0XfSZcawonOT7lNchW8eiladlXcveagQbw38UW2GyIOi6DsvbB9ryQKkxyPSndB3kFkbPGCwV2+RD7rbhJUsGHvoQlm8Ad+Cmh5VYcNbwYbq2tdPiXl8fZ3koiC65M9w+SXgJN4lo0OSA9p6GjhQwokw==&lt;/Modulus&gt;
+                            &lt;Exponent&gt;AQAB&lt;/Exponent&gt;
+                        &lt;/PublicKey&gt;
+                    &lt;/ApiInfo&gt;
+                </Value>
+    </Setting>
   </Settings>
 </SettingsFile>

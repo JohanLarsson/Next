@@ -65,7 +65,7 @@ namespace Next
         {
             var request = new RestRequest(_login, Method.POST);
             request.AddParameter("service", "NEXTAPI");
-            request.AddParameter("auth", Encrypt(username, password));
+            request.AddParameter("auth", Encrypt(username, password, _apiInfo.PublicKey));
             IRestResponse<SessionInfo> response = await Client.ExecuteTaskAsync<SessionInfo>(request);
             if (response.Data.SessionKey != null)
             {
@@ -82,14 +82,14 @@ namespace Next
             return Session != null;
         }
 
-        public string Encrypt(string username, string password)
+        public static string Encrypt(string username, string password, RSAParameters rsaParameters)
         {
-            RSACryptoServiceProvider RSA = new RSACryptoServiceProvider();
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
 
             //RSAParameters parameters = NextClient.PublicKey;
 
             // Set the public key
-            RSA.ImportParameters(_apiInfo.PublicKey);
+            rsa.ImportParameters(rsaParameters);
 
             // Create timestamp (Unix timestamp in milliseconds)
             string timestamp = DateTime.UtcNow.ToUnixTimeStamp().ToString();
@@ -98,7 +98,7 @@ namespace Next
             string encoded = string.Join(":", new[] { username, password, timestamp }.Select(s => s.ToBase64()));
 
             // Encrypt
-            byte[] encrypted = RSA.Encrypt(Encoding.UTF8.GetBytes(encoded), false);
+            byte[] encrypted = rsa.Encrypt(Encoding.UTF8.GetBytes(encoded), false);
 
             // Base 64 encode the blob.
             string blob = Convert.ToBase64String(encrypted);

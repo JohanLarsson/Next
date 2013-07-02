@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="NextVm.cs" />
     <Compile Include="ObservableCollectionExtensions.cs" />
+    <Compile Include="OrderBuilderVm.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
