@@ -8,7 +8,7 @@ namespace Next
 {
     public static class Extensions
     {
-        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0).ToUniversalTime();
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         public static long ToUnixTimeStamp(this DateTime dateTime)
         {
@@ -18,7 +18,7 @@ namespace Next
         public static DateTime ToDateTime(this long unixTimeStamp)
         {
             DateTime dateTime = Epoch.AddMilliseconds(unixTimeStamp);
-            return new DateTime(dateTime.Ticks,DateTimeKind.Utc).ToLocalTime();
+            return new DateTime(dateTime.Ticks, DateTimeKind.Utc).ToLocalTime();
         }
 
         public static string ToBase64(this string s)
