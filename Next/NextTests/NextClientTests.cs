@@ -13,10 +13,17 @@ namespace NextTests
     [Explicit]
     public class NextClientTests : NextTestsBase
     {
+        private NextClient client;
+
+        [SetUp]
+        public void SetUp()
+        {
+            client = NextClient.TestClient;
+        }
+
         [Test]
         public async Task ServiceStatusTest()
         {
-            var client = new NextClient(TestApiInfo);
             ServiceStatus serviceStatus = await client.ServiceStatus();
             Assert.IsTrue(serviceStatus.SystemRunning);
             Assert.IsTrue(serviceStatus.ValidVersion);
@@ -25,10 +32,7 @@ namespace NextTests
         [Test]
         public async Task LoginTest()
         {
-            var client = new NextClient(TestApiInfo);
-
             bool success = await client.Login(Credentials.Username, Credentials.Password);
-
             Assert.IsTrue(success);
             Assert.IsNotNull(client.Session.SessionKey);
             Assert.IsTrue(client.Session.ExpiresIn > 0);
@@ -40,14 +44,12 @@ namespace NextTests
         [Test]
         public async Task LoginFailTest()
         {
-            var nextClient = new NextClient(TestApiInfo);
-            Assert.IsFalse(await nextClient.Login("Incorrect", "Credentials"));
+            Assert.IsFalse(await client.Login("Incorrect", "Credentials"));
         }
 
         [Test]
         public async Task LogoutTest()
         {
-            var client = LoggedInClient;
             Assert.IsTrue(await client.Logout());
             Assert.IsNull(client.Session);
         }
@@ -55,7 +57,6 @@ namespace NextTests
         [Test]
         public async Task LogoutWhenNotLoggedInTest()
         {
-            var client = new NextClient(TestApiInfo);
             Assert.IsTrue(await client.Logout());
         }
 

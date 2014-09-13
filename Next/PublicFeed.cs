@@ -7,7 +7,8 @@ namespace Next
 {
     public class PublicFeed : NextFeed
     {
-        public PublicFeed(NextClient client, Func<NextClient, FeedInfo> feedInfo) : base(client, feedInfo)
+        internal PublicFeed(NextClient client, Func<NextClient, FeedInfo> feedInfo) 
+            : base(client, feedInfo)
         {
         }
 

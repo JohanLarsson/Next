@@ -21,7 +21,7 @@ namespace Next
         private readonly Socket _socket;
         private SslStream _sslStream;
 
-        public NextFeed(NextClient client, Func<NextClient, FeedInfo> feedInfo)
+        internal NextFeed(NextClient client, Func<NextClient, FeedInfo> feedInfo)
         {
             _client = client;
             _feedInfo = feedInfo;

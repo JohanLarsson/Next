@@ -16,6 +16,10 @@ namespace Next
 {
     public class NextClient : IDisposable
     {
+        /// <summary>
+        /// Client using the testserver
+        /// </summary>
+        public static NextClient TestClient = new NextClient(Properties.Settings.Default.TestApiInfo);
         private static readonly CachedSearch<List<InstrumentList>> _cachedLists = new CachedSearch<List<InstrumentList>>();
         private static readonly CachedSearch<string, List<InstrumentItem>> _cachedListsItems = new CachedSearch<string, List<InstrumentItem>>();
         private static readonly CachedSearch<List<Market>> _cachedMarkets = new CachedSearch<List<Market>>();
@@ -28,7 +32,7 @@ namespace Next
         private readonly ApiInfo _apiInfo;
         private SessionInfo _session;
 
-        public NextClient(ApiInfo apiInfo)
+        private NextClient(ApiInfo apiInfo)
         {
             _apiInfo = apiInfo;
             _client = new RestClient(_apiInfo.BaseUrl);
@@ -364,7 +368,6 @@ namespace Next
             ResetTouchTimer();
             return response.Data;
         }
-
 
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-lists

@@ -59,7 +59,7 @@ namespace NextTests.Mocks
         public async Task LoginTest()
         {
             ApiInfo apiInfo = Properties.Settings.Default.TestApiInfoLocalHost;
-            var nextClient = new NextClient(apiInfo);
+            var nextClient = NextClient.TestClient;
             bool login =await  nextClient.Login(MockService.UserName, MockService.Password);
         }
     }
