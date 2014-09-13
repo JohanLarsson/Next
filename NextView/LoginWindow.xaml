@@ -2,25 +2,36 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:nextView="clr-namespace:NextView"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:nextView="clr-namespace:NextView" Title="LoginWindow"
+        SizeToContent="WidthAndHeight"
+        d:DataContext="{d:DesignInstance nextView:LoginVm}"
         mc:Ignorable="d"
-        Title="LoginWindow" SizeToContent="WidthAndHeight" d:DataContext="{d:DesignInstance nextView:LoginVm}">
+        >
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="200" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label>Username: </Label>
-        <TextBox Grid.Column="1" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        <Label Grid.Row="1">Password: </Label>
-        <PasswordBox x:Name="PwBox" Grid.Row="1" Grid.Column="1"/>
-        <CheckBox x:Name="Remember" Grid.Row="2" Grid.Column="0" Content="Remember me" VerticalAlignment="Center"></CheckBox>
-        <Button Grid.Row="2" Grid.Column="1" Click="LoginClick">Login</Button>
+        <Label>Username:</Label>
+        <TextBox Grid.Column="1" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" />
+        <Label Grid.Row="1">Password:</Label>
+        <PasswordBox x:Name="PwBox" Grid.Row="1"
+                     Grid.Column="1"
+                     />
+        <CheckBox x:Name="Remember" Grid.Row="2"
+                  Grid.Column="0" VerticalAlignment="Center"
+                  Content="Remember me"
+                  IsChecked="{Binding RememberMe}"
+                  />
+        <Button Grid.Row="2" Grid.Column="1"
+                Click="LoginClick" Content="Login"
+                />
     </Grid>
 </Window>

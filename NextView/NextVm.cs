@@ -14,8 +14,14 @@ namespace NextView
     public class NextVm : INotifyPropertyChanged
     {
         private readonly NextClient _client;
+        private readonly ObservableCollection<InstrumentList> _instrumentLists = new ObservableCollection<InstrumentList>();
+        private readonly ObservableCollection<InstrumentItem> _instruments = new ObservableCollection<InstrumentItem>();
+        private readonly ObservableCollection<Account> _accounts = new ObservableCollection<Account>();
+
         private InstrumentList _selectedInstrumentList;
         private InstrumentItem _selectedInstrument;
+        private InstrumentMatch _instrument;
+
         public NextVm(NextClient client)
         {
             _client = client;
@@ -49,21 +55,14 @@ namespace NextView
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public FeedVm PrivateFeed { get; private set; }
 
         public FeedVm PublicFeed { get; private set; }
 
-        public async Task Login()
-        {
-            var loginVm = new LoginVm();
-            var loginWindow = new LoginWindow(loginVm);
-            bool? showDialog = loginWindow.ShowDialog();
-            await _client.Login(loginVm.Username, loginVm.Password);
-        }
-
         public bool IsLoggedIn { get { return _client.Session != null; } }
 
-        private readonly ObservableCollection<InstrumentList> _instrumentLists = new ObservableCollection<InstrumentList>();
         public ObservableCollection<InstrumentList> InstrumentLists
         {
             get { return _instrumentLists; }
@@ -86,7 +85,6 @@ namespace NextView
             }
         }
 
-        private readonly ObservableCollection<InstrumentItem> _instruments = new ObservableCollection<InstrumentItem>();
         public ObservableCollection<InstrumentItem> Instruments
         {
             get { return _instruments; }
@@ -118,8 +116,6 @@ namespace NextView
                 : await _client.InstrumentSearch(new InstrumentDescriptor(_selectedInstrument.MarketID, _selectedInstrument.Identifier));
         }
 
-        private InstrumentMatch _instrument;
-
         public InstrumentMatch Instrument
         {
             get { return _instrument; }
@@ -131,7 +127,6 @@ namespace NextView
             }
         }
 
-        private readonly ObservableCollection<Account> _accounts = new ObservableCollection<Account>();
         public ObservableCollection<Account> Accounts
         {
             get { return _accounts; }
@@ -139,13 +134,13 @@ namespace NextView
 
         public AccountVm Account { get; private set; }
 
-        //private readonly ObservableCollection<EodPoint> _ticks = new ObservableCollection<EodPoint>();
-        //public ObservableCollection<EodPoint> Ticks
-        //{
-        //    get { return _ticks; }
-        //}
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public async Task Login()
+        {
+            var loginVm = new LoginVm();
+            var loginWindow = new LoginWindow(loginVm);
+            loginWindow.ShowDialog();
+            await _client.Login(loginVm.Username, loginVm.Password);
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

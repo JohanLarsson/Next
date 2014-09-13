@@ -12,17 +12,30 @@ namespace NextView
 {
     public class LoginVm : INotifyPropertyChanged
     {
-        public LoginVm()
-        {
-            Username = string.IsNullOrEmpty(Properties.Settings.Default.Username)
-                           ? ""
-                           : Decrypt(Properties.Settings.Default.Username, DefaultKey);
-            Password = string.IsNullOrEmpty(Properties.Settings.Default.Password)
-                           ? ""
-                           : Decrypt(Properties.Settings.Default.Password, DefaultKey);
-        }
         private static byte[] DefaultKey = Encoding.Unicode.GetBytes("NEXTAPI");
         private string _username;
+        private string _password;
+
+        private bool rememberMe;
+
+        public LoginVm()
+        {
+            var settings = Properties.Settings.Default;
+            if (settings != null && settings.User != null)
+            {
+                var userSetting = settings.User;
+                Username = string.IsNullOrEmpty(userSetting.UserName)
+                               ? ""
+                               : Decrypt(userSetting.UserName, DefaultKey);
+                Password = string.IsNullOrEmpty(userSetting.Password)
+                               ? ""
+                               : Decrypt(userSetting.Password, DefaultKey);
+                RememberMe = userSetting.RememberMe;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public string Username
         {
             get { return _username; }
@@ -34,7 +47,6 @@ namespace NextView
             }
         }
 
-        private string _password;
         public string Password
         {
             get { return _password; }
@@ -46,7 +58,22 @@ namespace NextView
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public bool RememberMe
+        {
+            get
+            {
+                return this.rememberMe;
+            }
+            set
+            {
+                if (value.Equals(this.rememberMe))
+                {
+                    return;
+                }
+                this.rememberMe = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -57,11 +84,17 @@ namespace NextView
 
         public void Save()
         {
-            Properties.Settings.Default.Username = EncryptString(Username, DefaultKey);
-            Properties.Settings.Default.Password = EncryptString(Password, DefaultKey);
+            var userName = EncryptString(Username, DefaultKey);
+            var password = EncryptString(Password, DefaultKey);
+
+            Properties.Settings.Default.User = new UserSetting
+                                                   {
+                                                       UserName = userName,
+                                                       Password = password,
+                                                       RememberMe = rememberMe
+                                                   };
             Properties.Settings.Default.Save();
         }
-
 
         private string EncryptString(string input, byte[] salt)
         {

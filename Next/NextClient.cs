@@ -16,6 +16,13 @@ namespace Next
 {
     public class NextClient : IDisposable
     {
+        private static readonly CachedSearch<List<InstrumentList>> _cachedLists = new CachedSearch<List<InstrumentList>>();
+        private static readonly CachedSearch<string, List<InstrumentItem>> _cachedListsItems = new CachedSearch<string, List<InstrumentItem>>();
+        private static readonly CachedSearch<List<Market>> _cachedMarkets = new CachedSearch<List<Market>>();
+        private static readonly CachedSearch<List<Index>> _cachedIndices = new CachedSearch<List<Index>>();
+        private static readonly CachedSearch<List<TickSize>> _cachedTickSizes = new CachedSearch<List<TickSize>>();
+  
+        private Timer _touchTimer;
         private const string _login = "login";
         private readonly RestClient _client;
         private readonly ApiInfo _apiInfo;
@@ -28,6 +35,8 @@ namespace Next
             PrivateFeed = new NextFeed(this, c => c.Session.PrivateFeed);
             PublicFeed = new PublicFeed(this, c => c.Session.PublicFeed);
         }
+
+        public event EventHandler<bool> LoggedInChanged;
 
         public NextFeed PrivateFeed { get; private set; }
 
@@ -54,7 +63,6 @@ namespace Next
             return response.Data;
         }
 
-        private Timer _touchTimer;
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Login
         /// </summary>
@@ -149,6 +157,7 @@ namespace Next
         {
             var request = new RestRequest("realtime_access", Method.GET);
             IRestResponse<List<RealtimeAccesMarket>> response = await Client.ExecuteTaskAsync<List<RealtimeAccesMarket>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -160,6 +169,7 @@ namespace Next
         {
             var request = new RestRequest("news_sources", Method.GET);
             IRestResponse<List<NewsSource>> response = await Client.ExecuteTaskAsync<List<NewsSource>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -183,6 +193,7 @@ namespace Next
             if (after != null)
                 request.AddParameter("after", after.ToString());
             IRestResponse<List<NewsItem>> response = await Client.ExecuteTaskAsync<List<NewsItem>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -195,6 +206,7 @@ namespace Next
         {
             var request = new RestRequest("news_items/" + id, Method.GET);
             IRestResponse<NewsItem> restResponse = await Client.ExecuteTaskAsync<NewsItem>(request);
+            ResetTouchTimer();
             return restResponse.Data;
         }
 
@@ -206,6 +218,7 @@ namespace Next
         {
             var request = new RestRequest("accounts", Method.GET);
             IRestResponse<List<Account>> executeTaskAsync = await Client.ExecuteTaskAsync<List<Account>>(request);
+            ResetTouchTimer();
             return executeTaskAsync.Data;
         }
 
@@ -218,6 +231,7 @@ namespace Next
         {
             var request = new RestRequest("accounts/" + account.Id, Method.GET);
             IRestResponse<AccountSummary> response = await Client.ExecuteTaskAsync<AccountSummary>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -230,6 +244,7 @@ namespace Next
         {
             var request = new RestRequest(string.Format("accounts/{0}/ledgers", account.Id), Method.GET);
             IRestResponse<List<Ledger>> response = await Client.ExecuteTaskAsync<List<Ledger>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -242,6 +257,7 @@ namespace Next
         {
             var request = new RestRequest(string.Format("accounts/{0}/positions", account.Id), Method.GET);
             IRestResponse<List<Position>> response = await Client.ExecuteTaskAsync<List<Position>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -254,6 +270,7 @@ namespace Next
         {
             var request = new RestRequest(string.Format("accounts/{0}/orders", account.Id), Method.GET);
             IRestResponse<List<OrderStatus>> response = await Client.ExecuteTaskAsync<List<OrderStatus>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -266,6 +283,7 @@ namespace Next
         {
             var request = new RestRequest(string.Format("accounts/{0}/trades", account.Id), Method.GET);
             IRestResponse<List<Trade>> response = await Client.ExecuteTaskAsync<List<Trade>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -286,6 +304,7 @@ namespace Next
             if (country != null)
                 request.AddParameter("country", country);
             IRestResponse<List<InstrumentMatch>> response = await Client.ExecuteTaskAsync<List<InstrumentMatch>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -301,6 +320,7 @@ namespace Next
             request.AddParameter("identifier", identifier);
             request.AddParameter("marketID", marketId);
             IRestResponse<InstrumentMatch> response = await Client.ExecuteTaskAsync<InstrumentMatch>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -320,6 +340,7 @@ namespace Next
             }
             request.AddParameter("list", sb.ToString());
             IRestResponse<List<InstrumentMatch>> response = await Client.ExecuteTaskAsync<List<InstrumentMatch>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -340,10 +361,11 @@ namespace Next
             request.AddParameter("identifier", identifier);
             request.AddParameter("marketID", marketId);
             IRestResponse<List<Tick>> response = await Client.ExecuteTaskAsync<List<Tick>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
-        private static readonly CachedSearch<List<InstrumentList>> _cachedLists = new CachedSearch<List<InstrumentList>>();
+
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-lists
         /// </summary>
@@ -354,11 +376,11 @@ namespace Next
                 return _cachedLists.Cache;
             var request = new RestRequest("lists", Method.GET);
             IRestResponse<List<InstrumentList>> response = await Client.ExecuteTaskAsync<List<InstrumentList>>(request);
+            ResetTouchTimer();
             _cachedLists.Cache = response.Data;
             return response.Data;
         }
 
-        private static readonly CachedSearch<string, List<InstrumentItem>> _cachedListsItems = new CachedSearch<string, List<InstrumentItem>>();
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-list-items
         /// </summary>
@@ -369,11 +391,11 @@ namespace Next
                 return _cachedListsItems[listId];
             var request = new RestRequest(string.Format("lists/{0}", listId), Method.GET);
             IRestResponse<List<InstrumentItem>> response = await Client.ExecuteTaskAsync<List<InstrumentItem>>(request);
+            ResetTouchTimer();
             _cachedListsItems[listId] = response.Data;
             return response.Data;
         }
 
-        private static readonly CachedSearch<List<Market>> _cachedMarkets = new CachedSearch<List<Market>>();
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-markets
         /// </summary>
@@ -384,6 +406,7 @@ namespace Next
                 return _cachedMarkets.Cache;
             var request = new RestRequest("markets", Method.GET);
             IRestResponse<List<Market>> response = await Client.ExecuteTaskAsync<List<Market>>(request);
+            ResetTouchTimer();
             _cachedMarkets.Cache = response.Data;
             return response.Data;
         }
@@ -396,10 +419,10 @@ namespace Next
         {
             var request = new RestRequest(string.Format("markets/{0}/trading_days", marketId), Method.GET);
             IRestResponse<List<TradingDay>> response = await Client.ExecuteTaskAsync<List<TradingDay>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
-        private static readonly CachedSearch<List<Index>> _cachedIndices = new CachedSearch<List<Index>>();
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-indices
         /// </summary>
@@ -410,11 +433,11 @@ namespace Next
                 return _cachedIndices.Cache;
             var request = new RestRequest("indices", Method.GET);
             IRestResponse<List<Index>> response = await Client.ExecuteTaskAsync<List<Index>>(request);
+            ResetTouchTimer();
             _cachedIndices.Cache = response.Data;
             return response.Data;
         }
 
-        private static readonly CachedSearch<List<TickSize>> _cachedTickSizes = new CachedSearch<List<TickSize>>();
         /// <summary>
         /// https://api.test.nordnet.se/projects/api/wiki/REST_API_documentation#Get-ticksize-table
         /// </summary>
@@ -425,6 +448,7 @@ namespace Next
                 return _cachedTickSizes.Cache;
             var request = new RestRequest("ticksizes/" + instrumentId, Method.GET);
             IRestResponse<List<TickSize>> response = await Client.ExecuteTaskAsync<List<TickSize>>(request);
+            ResetTouchTimer();
             _cachedTickSizes.Cache = response.Data;
             return response.Data;
         }
@@ -437,6 +461,7 @@ namespace Next
         {
             var request = new RestRequest("derivatives/" + derivativeType, Method.GET);
             IRestResponse<List<string>> response = await Client.ExecuteTaskAsync<List<string>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -448,6 +473,7 @@ namespace Next
         {
             var request = new RestRequest(string.Format("derivatives/{0}/underlyings/{1}", derivativeType, country), Method.GET);
             IRestResponse<List<InstrumentItem>> response = await Client.ExecuteTaskAsync<List<InstrumentItem>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -459,6 +485,7 @@ namespace Next
         {
             var request = new RestRequest(string.Format("derivatives/{0}/derivatives", derivativeType), Method.GET);
             IRestResponse<List<Derivative>> response = await Client.ExecuteTaskAsync<List<Derivative>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -472,6 +499,7 @@ namespace Next
             request.AddParameter("marketID", marketId);
             request.AddParameter("identifier", identifier);
             IRestResponse<List<RelatedMarket>> response = await Client.ExecuteTaskAsync<List<RelatedMarket>>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -495,6 +523,7 @@ namespace Next
             request.AddParameter("smart_order", order.SmartOrder);
 
             IRestResponse<OrderStatus> response = await Client.ExecuteTaskAsync<OrderStatus>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -508,6 +537,7 @@ namespace Next
             request.AddParameter("price", newPrice);
             request.AddParameter("volume", newVolume);
             IRestResponse<OrderStatus> response = await Client.ExecuteTaskAsync<OrderStatus>(request);
+            ResetTouchTimer();
             return response.Data;
         }
 
@@ -519,10 +549,9 @@ namespace Next
         {
             var request = new RestRequest(string.Format("accounts/{0}/orders/{1}", account, orderId), Method.DELETE);
             IRestResponse<OrderStatus> response = await Client.ExecuteTaskAsync<OrderStatus>(request);
+            ResetTouchTimer();
             return response.Data;
         }
-
-        public event EventHandler<bool> LoggedInChanged;
 
         protected virtual void OnLoggedInChanged()
         {
@@ -535,7 +564,7 @@ namespace Next
             }
             else
             {
-                _touchTimer = new Timer((o) => Touch(), null, TimeSpan.FromSeconds(Session.ExpiresIn - 10), TimeSpan.FromSeconds(Session.ExpiresIn - 10));
+                ResetTouchTimer();
             }
         }
 
@@ -546,6 +575,20 @@ namespace Next
             if (PublicFeed != null)
                 PublicFeed.Dispose();
             Logout();
+        }
+
+        private void ResetTouchTimer()
+        {
+            if (_touchTimer != null)
+            {
+                _touchTimer.Dispose();
+            }
+            var time = TimeSpan.FromSeconds(Session.ExpiresIn - 10);
+            _touchTimer = new Timer(
+                _ => Touch(),
+                null,
+                time,
+                time);
         }
     }
 }

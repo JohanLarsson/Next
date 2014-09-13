@@ -2,11 +2,13 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NextView.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Username" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="Password" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="User" Type="NextView.UserSetting" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;UserSetting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;UserName /&gt;
+  &lt;Password /&gt;
+  &lt;RememberMe&gt;false&lt;/RememberMe&gt;
+&lt;/UserSetting&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

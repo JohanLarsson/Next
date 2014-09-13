@@ -34,14 +34,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OxyPlot">
-      <HintPath>..\packages\OxyPlot.Core.2013.1.51.1\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
+    <Reference Include="Ninject">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="OxyPlot.Wpf">
-      <HintPath>..\packages\OxyPlot.Wpf.2013.1.51.1\lib\NET45\OxyPlot.Wpf.dll</HintPath>
+    <Reference Include="OxyPlot, Version=2014.1.464.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\OxyPlot.Core.2014.1.464\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
     </Reference>
-    <Reference Include="OxyPlot.Xps">
-      <HintPath>..\packages\OxyPlot.Wpf.2013.1.51.1\lib\NET45\OxyPlot.Xps.dll</HintPath>
+    <Reference Include="OxyPlot.Wpf, Version=2014.1.464.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\OxyPlot.Wpf.2014.1.464\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Xps, Version=2014.1.464.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\OxyPlot.Wpf.2014.1.464\lib\net45\OxyPlot.Xps.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -63,6 +69,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserSetting.cs" />
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
