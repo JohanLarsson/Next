@@ -14,13 +14,12 @@ namespace NextView
     public class NextVm : INotifyPropertyChanged
     {
         private readonly NextClient _client;
-        private readonly ObservableCollection<InstrumentList> _instrumentLists = new ObservableCollection<InstrumentList>();
-        private readonly ObservableCollection<InstrumentItem> _instruments = new ObservableCollection<InstrumentItem>();
+        private readonly ObservableCollection<InstrumentListVm> _instrumentLists = new ObservableCollection<InstrumentListVm>();
+
         private readonly ObservableCollection<Account> _accounts = new ObservableCollection<Account>();
 
-        private InstrumentList _selectedInstrumentList;
-        private InstrumentItem _selectedInstrument;
-        private InstrumentMatch _instrument;
+        private InstrumentListVm _selectedInstrumentList;
+        private InstrumentVm _selectedInstrument;
 
         public NextVm(NextClient client)
         {
@@ -35,7 +34,7 @@ namespace NextView
                         List<InstrumentList> instrumentLists = await _client.Lists();
                         foreach (var instrumentList in instrumentLists.OrderBy(x => x.Name))
                         {
-                            InstrumentLists.Add(instrumentList);
+                            InstrumentLists.Add(new InstrumentListVm(instrumentList, _client));
                         }
                         List<Account> accounts = await _client.Accounts();
                         accounts.ForEach(Accounts.Add);
@@ -63,66 +62,37 @@ namespace NextView
 
         public bool IsLoggedIn { get { return _client.Session != null; } }
 
-        public ObservableCollection<InstrumentList> InstrumentLists
+        public ObservableCollection<InstrumentListVm> InstrumentLists
         {
             get { return _instrumentLists; }
         }
 
-        public InstrumentList SelectedInstrumentList
+        public InstrumentListVm SelectedInstrumentList
         {
             get { return _selectedInstrumentList; }
             set
             {
-                if (Equals(value, _selectedInstrumentList)) return;
-                _selectedInstrumentList = value;
-                OnPropertyChanged();
-                if (_selectedInstrumentList == null)
+                if (Equals(value, _selectedInstrumentList))
                 {
-                    Instruments.Clear();
                     return;
                 }
-                Instruments.UpdateCollection(_client.ListItems(_selectedInstrumentList.Id));
+                if (_selectedInstrumentList != null)
+                {
+                    _selectedInstrumentList.IsSelected = false;
+                }
+                _selectedInstrumentList = value;
+                _selectedInstrumentList.IsSelected = true;
+                OnPropertyChanged();
             }
         }
 
-        public ObservableCollection<InstrumentItem> Instruments
-        {
-            get { return _instruments; }
-        }
-
-        public InstrumentItem SelectedInstrument
+        public InstrumentVm SelectedInstrument
         {
             get { return _selectedInstrument; }
             set
             {
                 if (Equals(value, _selectedInstrument)) return;
                 _selectedInstrument = value;
-                OnPropertyChanged();
-                UpdateInstrument();
-                //if (_selectedInstrument == null)
-                //    Ticks.Clear();
-                //else
-                //{
-
-                //}
-
-            }
-        }
-
-        public async Task UpdateInstrument()
-        {
-            Instrument = SelectedInstrument == null
-                ? null
-                : await _client.InstrumentSearch(new InstrumentDescriptor(_selectedInstrument.MarketID, _selectedInstrument.Identifier));
-        }
-
-        public InstrumentMatch Instrument
-        {
-            get { return _instrument; }
-            set
-            {
-                if (Equals(value, _instrument)) return;
-                _instrument = value;
                 OnPropertyChanged();
             }
         }

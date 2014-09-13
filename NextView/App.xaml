@@ -1,8 +1,74 @@
 ﻿<Application x:Class="NextView.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:nextView="clr-namespace:NextView"
+             xmlns:dtos="clr-namespace:Next.Dtos;assembly=Next"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+         <DataTemplate x:Key="InstrumentInfo" DataType="{x:Type dtos:InstrumentMatch}">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0">Longname</Label>
+                <TextBox Grid.Row="0" Grid.Column="1"
+                                     Text="{Binding Longname}"
+                                     />
+                <Label Grid.Row="1" Grid.Column="0">MarketID</Label>
+                <TextBox Grid.Row="1" Grid.Column="1"
+                                     Text="{Binding MarketID}"
+                                     />
+                <Label Grid.Row="2" Grid.Column="0">Country</Label>
+                <TextBox Grid.Row="2" Grid.Column="1"
+                                     Text="{Binding Country}"
+                                     />
+                <Label Grid.Row="3" Grid.Column="0">Shortname</Label>
+                <TextBox Grid.Row="3" Grid.Column="1"
+                                     Text="{Binding Shortname}"
+                                     />
+                <Label Grid.Row="4" Grid.Column="0">Marketname</Label>
+                <TextBox Grid.Row="4" Grid.Column="1"
+                                     Text="{Binding Marketname}"
+                                     />
+                <Label Grid.Row="5" Grid.Column="0">IsinCode</Label>
+                <TextBox Grid.Row="5" Grid.Column="1"
+                                     Text="{Binding IsinCode}"
+                                     />
+                <Label Grid.Row="6" Grid.Column="0">Type</Label>
+                <TextBox Grid.Row="6" Grid.Column="1"
+                                     Text="{Binding Type}"
+                                     />
+                <Label Grid.Row="7" Grid.Column="0">MainMarketPrice</Label>
+                <TextBox Grid.Row="7" Grid.Column="1"
+                                     Text="{Binding MainMarketPrice}"
+                                     />
+                <Label Grid.Row="8" Grid.Column="0">Identifier</Label>
+                <TextBox Grid.Row="8" Grid.Column="1"
+                                     Text="{Binding Identifier}"
+                                     />
+                <Label Grid.Row="9" Grid.Column="0">Currency</Label>
+                <TextBox Grid.Row="9" Grid.Column="1"
+                                     Text="{Binding Currency}"
+                                     />
+                <Label Grid.Row="10" Grid.Column="0">MainMarketId</Label>
+                <TextBox Grid.Row="10" Grid.Column="1"
+                                     Text="{Binding MainMarketId}"
+                                     />
+            </Grid>
+        </DataTemplate>
     </Application.Resources>
 </Application>

@@ -69,7 +69,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="InstrumentListVm.cs" />
+    <Compile Include="InstrumentVm.cs" />
     <Compile Include="UserSetting.cs" />
+    <Compile Include="WpfStuff\GridViewSort.cs" />
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
