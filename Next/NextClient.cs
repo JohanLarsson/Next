@@ -36,13 +36,13 @@ namespace Next
         {
             _apiInfo = apiInfo;
             _client = new RestClient(_apiInfo.BaseUrl);
-            PrivateFeed = new NextFeed(this, c => c.Session.PrivateFeed);
+            PrivateFeed = new PrivateFeed(this, c => c.Session.PrivateFeed);
             PublicFeed = new PublicFeed(this, c => c.Session.PublicFeed);
         }
 
         public event EventHandler<bool> LoggedInChanged;
 
-        public NextFeed PrivateFeed { get; private set; }
+        public PrivateFeed PrivateFeed { get; private set; }
 
         public PublicFeed PublicFeed { get; private set; }
 

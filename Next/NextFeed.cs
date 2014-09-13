@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -13,13 +12,21 @@ using Next.FeedCommands;
 
 namespace Next
 {
-    public class NextFeed : IDisposable
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
+
+    using Next.Annotations;
+
+    public abstract class NextFeed : IDisposable, INotifyPropertyChanged
     {
         private const string _serviceName = "NEXTAPI";
         private readonly NextClient _client;
         private readonly Func<NextClient, FeedInfo> _feedInfo;
         private readonly Socket _socket;
         private SslStream _sslStream;
+        private FeedInfo _info;
+        private bool _isLoggedIn;
+        private DateTime _lastHeartBeatTime;
 
         internal NextFeed(NextClient client, Func<NextClient, FeedInfo> feedInfo)
         {
@@ -28,21 +35,95 @@ namespace Next
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         }
 
+        /// <summary>
+        /// For debugging, dumps the raw message
+        /// </summary>
+        public event EventHandler<string> WroteSomething;
+
+        /// <summary>
+        /// For debugging, dumps the raw message
+        /// </summary>
+        public event EventHandler<string> ReceivedSomething;
+
+        /// <summary>
+        /// When an error message is recieved
+        /// </summary>
+        public event EventHandler<string> ReceivedError;
+
+        /// <summary>
+        /// When an unknown message is recieved, suggested use: log it
+        /// </summary>
+        public event EventHandler<string> ReceivedUnknownMessage;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public DateTime LastHeartBeatTime
+        {
+            get
+            {
+                return _lastHeartBeatTime;
+            }
+            set
+            {
+                if (value.Equals(_lastHeartBeatTime))
+                {
+                    return;
+                }
+                _lastHeartBeatTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsLoggedIn
+        {
+            get
+            {
+                return _isLoggedIn;
+            }
+            set
+            {
+                if (value.Equals(_isLoggedIn))
+                {
+                    return;
+                }
+                _isLoggedIn = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public FeedInfo Info
+        {
+            get
+            {
+                return _info;
+            }
+            set
+            {
+                if (Equals(value, _info))
+                {
+                    return;
+                }
+                _info = value;
+                OnPropertyChanged();
+            }
+        }
+
         public async Task Login()
         {
             if (_client.Session == null)
                 return;
-            FeedInfo feedInfo = _feedInfo(_client);
-            IPAddress[] ipAddresses = await Dns.GetHostAddressesAsync(feedInfo.Hostname);
+            Info = _feedInfo(_client);
+            IPAddress[] ipAddresses = await Dns.GetHostAddressesAsync(Info.Hostname);
             IPAddress hostAddresses = ipAddresses.Single(x => x.AddressFamily == AddressFamily.InterNetwork);
-            var endPoint = new IPEndPoint(hostAddresses, feedInfo.Port);
+            var endPoint = new IPEndPoint(hostAddresses, Info.Port);
             await Task.Factory.FromAsync(_socket.BeginConnect, _socket.EndConnect, endPoint, null);
             _socket.SendTimeout = 10000;
             _socket.ReceiveTimeout = 10000;
             _sslStream = new SslStream(new NetworkStream(_socket, true), true, ValidateRemoteCertificate);
-            await _sslStream.AuthenticateAsClientAsync(feedInfo.Hostname);
+            await _sslStream.AuthenticateAsClientAsync(Info.Hostname);
             Read();
             await Write(FeedCommand.Login(_serviceName, _client.Session.SessionKey));
+            IsLoggedIn = true;
         }
 
         public async Task Write<T>(FeedCommand<T> command)
@@ -62,7 +143,13 @@ namespace Next
             //_sslStream.Write(Encoding.UTF8.GetBytes(endMarker));
         }
 
-        public async Task Read()
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public async void Read()
         {
             using (var reader = new StreamReader(_sslStream, new UTF8Encoding(false, true), false, _socket.ReceiveBufferSize, true))
             {
@@ -74,20 +161,60 @@ namespace Next
             }
         }
 
-        public event EventHandler<string> ReceivedSomething;
-
-        protected virtual void OnReceivedSomething(string e)
+        protected virtual void OnReceivedSomething(string s)
         {
             EventHandler<string> handler = ReceivedSomething;
-            if (handler != null) handler(this, e);
+            if (handler != null) handler(this, s);
         }
-
-        public event EventHandler<string> WroteSomething;
 
         protected virtual void OnWroteSomething(string e)
         {
             EventHandler<string> handler = WroteSomething;
             if (handler != null) handler(this, e);
+        }
+
+        protected virtual void OnReceivedError(string e)
+        {
+            var handler = this.ReceivedError;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnReceivedUnknownMessage(string e)
+        {
+            var handler = this.ReceivedUnknownMessage;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+        
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_sslStream != null)
+                {
+                    _sslStream.Dispose();
+                    _sslStream = null;
+                }
+                if (_socket != null)
+                {
+                    _socket.Dispose();
+                }
+            }
+        }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         private bool ValidateRemoteCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
@@ -122,12 +249,6 @@ namespace Next
             //Console.WriteLine(sslPolicyErrors.ToString());
 
             return false;
-        }
-
-        public void Dispose()
-        {
-            _sslStream.Dispose();
-            _socket.Dispose();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace NextTests
             NextClient loggedInClient = LoggedInClient;
             Console.WriteLine(feedInfo(loggedInClient));
             var data = new List<string>();
-            using (var feed = new NextFeed(loggedInClient, feedInfo))
+            using (var feed = new PublicFeed(loggedInClient, feedInfo))
             {
                 feed.ReceivedSomething += (o, e) =>
                     {

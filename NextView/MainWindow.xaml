@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:nextView="clr-namespace:NextView" xmlns:oxy="http://oxyplot.codeplex.com"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:wpfStuff="clr-namespace:NextView.WpfStuff" Title="MainWindow"
         d:DataContext="{d:DesignInstance nextView:NextVm}"
         mc:Ignorable="d"
@@ -247,10 +248,25 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Private Feed">
-                        <ListBox ItemsSource="{Binding PrivateFeed.Messages}" />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <ContentPresenter Content="{Binding PrivateFeed.Feed}" ContentTemplate="{StaticResource FeedInfoTemplate}" />
+                            <DataGrid Grid.Row="1" ItemsSource="{Binding PrivateFeed.Messages}" />
+                        </Grid>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="Public Feed">
-                        <ListBox ItemsSource="{Binding PublicFeed.Messages}" />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <ContentPresenter Content="{Binding PublicFeed.Feed}" ContentTemplate="{StaticResource FeedInfoTemplate}" />
+                            <DataGrid Grid.Row="1" ItemsSource="{Binding PublicFeed.Messages}" />
+                        </Grid>
+
                     </GroupBox>
                 </Grid>
             </TabItem>
