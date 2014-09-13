@@ -3,7 +3,7 @@ using RestSharp.Deserializers;
 
 namespace Next.Dtos
 {
-    public abstract class InstrumentTick :ITick
+    public abstract class InstrumentTick : ITick
     {
         protected InstrumentTick()
         {

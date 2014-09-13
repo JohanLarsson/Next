@@ -31,7 +31,10 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Instrument lists">
-                        <ListView ItemsSource="{Binding InstrumentLists}" SelectedValue="{Binding SelectedInstrumentList}">
+                        <ListView ItemsSource="{Binding InstrumentLists}"
+                                  SelectedValue="{Binding SelectedInstrumentList}"
+                                  SelectionMode="Single"
+                                  >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn DisplayMemberBinding="{Binding InstrumentList.Country}" Header="Country" />
@@ -45,7 +48,10 @@
                                   VerticalAlignment="Stretch"
                                   />
                     <GroupBox Grid.Column="2" Header="Instruments">
-                        <ListView ItemsSource="{Binding SelectedInstrumentList.Instruments}" SelectedItem="{Binding SelectedInstrument}">
+                        <ListView ItemsSource="{Binding SelectedInstrumentList.Instruments}"
+                                  SelectedItem="{Binding SelectedInstrument}"
+                                  SelectionMode="Single"
+                                  >
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Setter Property="IsSelected" Value="{Binding IsSelected}" />
@@ -56,6 +62,13 @@
                                     <GridViewColumn DisplayMemberBinding="{Binding Instrument.Shortname}" Header="ShortName" />
                                     <GridViewColumn DisplayMemberBinding="{Binding Instrument.Identifier}" Header="Identifier" />
                                     <GridViewColumn DisplayMemberBinding="{Binding Instrument.MarketID}" Header="MarketId" />
+                                    <GridViewColumn Header="Subscribe">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="{x:Type nextView:InstrumentVm}">
+                                                <ToggleButton Content="Subscribe" IsChecked="{Binding IsSubscribing}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
