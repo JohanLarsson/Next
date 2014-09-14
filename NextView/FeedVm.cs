@@ -19,6 +19,7 @@ namespace NextView
             Feed.WroteSomething += (o, s) => Application.Current.Dispatcher.Invoke(() => Messages.Insert(0, FeedEvent.Wrote(s)));
             Feed.ReceivedUnknownMessage += (sender, s) => Log.DebugFormat("feed:{0} unknown: {1}", sender.GetType().Name, s);
             Feed.ReceivedError += (sender, s) => Log.DebugFormat("feed:{0} error: {1}", sender.GetType().Name, s);
+            Feed.Exception += (sender, s) => Log.Error(string.Format("feed:{0} error: {1}", sender.GetType().Name, s.Message), s.Exception);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

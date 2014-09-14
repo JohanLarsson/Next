@@ -50,7 +50,7 @@ namespace Next.Dtos
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((InstrumentDescriptor) obj);
         }
 

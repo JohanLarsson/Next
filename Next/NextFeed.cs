@@ -55,6 +55,8 @@ namespace Next
         /// </summary>
         public event EventHandler<string> ReceivedUnknownMessage;
 
+        public event EventHandler<ExceptionEventArgs> Exception;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public DateTime LastHeartBeatTime
@@ -161,10 +163,10 @@ namespace Next
             }
         }
 
-        protected virtual void OnReceivedSomething(string s)
+        protected virtual void OnReceivedSomething(string message)
         {
             EventHandler<string> handler = ReceivedSomething;
-            if (handler != null) handler(this, s);
+            if (handler != null) handler(this, message);
         }
 
         protected virtual void OnWroteSomething(string e)
@@ -175,7 +177,7 @@ namespace Next
 
         protected virtual void OnReceivedError(string e)
         {
-            var handler = this.ReceivedError;
+            var handler = ReceivedError;
             if (handler != null)
             {
                 handler(this, e);
@@ -184,7 +186,16 @@ namespace Next
 
         protected virtual void OnReceivedUnknownMessage(string e)
         {
-            var handler = this.ReceivedUnknownMessage;
+            var handler = ReceivedUnknownMessage;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnException(ExceptionEventArgs e)
+        {
+            var handler = Exception;
             if (handler != null)
             {
                 handler(this, e);

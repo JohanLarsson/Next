@@ -13,15 +13,15 @@ namespace Next
         {
         }
 
-        protected override void OnReceivedSomething(string s)
+        protected override void OnReceivedSomething(string message)
         {
-            base.OnReceivedSomething(s);
-            if (s.StartsWith(cmdHeartbeat))
+            base.OnReceivedSomething(message);
+            if (message.StartsWith(cmdHeartbeat))
             {
-                this.LastHeartBeatTime = DateTime.UtcNow;
+                LastHeartBeatTime = DateTime.UtcNow;
                 return;
             }
-            OnReceivedUnknownMessage(s);
+            OnReceivedUnknownMessage(message);
         }
     }
 }

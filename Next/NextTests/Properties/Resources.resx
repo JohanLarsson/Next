@@ -120,4 +120,28 @@
   <data name="CredentialsPath" xml:space="preserve">
     <value>C:\temp\TempCreds.xml</value>
   </data>
+  <data name="PublicFeedDepthMessage" xml:space="preserve">
+    <value>{"cmd":"depth","args":{"i":"2188","m":30,"t":"depth","tick_timestamp":"2010-01-22 16:22:06","bid1":0.00,"bid_volume1":0,"ask1":120.00,"ask_volume1":200,"bid2":0.00,"bid_volume2":0,"ask2":0.00,"ask_volume2":0,"bid3":0.00,"bid_volume3":0,"ask3":0.00,"ask_volume3":0,"bid4":0.00,"bid_volume4":0,"ask4":0.00,"ask_volume4":0,"bid5":0.00,"bid_volume5":0,"ask5":0.00,"ask_volume5":0}}</value>
+  </data>
+  <data name="PublicFeedErrorMessage" xml:space="preserve">
+    <value>{"cmd":"err", "args":{"msg":"Not authorized.", "cmd":{"cmd":"subscribe","args":{"t":"trading_status","i":"998","m":"11"}}}}</value>
+  </data>
+  <data name="PublicFeedIndexMessage" xml:space="preserve">
+    <value>{"cmd":"index","args":{"i":"SIX-IDX-DJI","m":"SIX","t":"index","tick_timestamp":"2010-09-24 07:01:58","last":10662.4199,"high":10761.9404,"low":10640.9199,"close":10739.31}}</value>
+  </data>
+  <data name="PublicFeedMalformedMessage" xml:space="preserve">
+    <value>{"cmd":"price","args":{"i":"1843","m":30,"t":"price","trade_timestampBROKEN":"2010-01-22 16:17:23","tick_timestamp":"2010-01-22 16:18:42","bid":"0.00","bid_volume":0,"ask":101.00,"ask_volume":200,"close":101.00,"high":101.00,"last":101.00,"last_volume":200,"lot_size":"1","low":101.00,"open":0.00,"turnover":6605400,"turnover_volume":65400}}</value>
+  </data>
+  <data name="PublicFeedNewsMessage" xml:space="preserve">
+    <value>{"cmd":"news","args":{"itemid":40705006,"lang":"da","datetime":"2010-12-08 22:15:00","sourceid":6,"headline":"Amerikanske aktieindeks kl. 22:15","instruments":[{"identifier":"101","marketID":"11"}]}}</value>
+  </data>
+  <data name="PublicFeedPriceMessage" xml:space="preserve">
+    <value>{"cmd":"price","args":{"i":"1843","m":30,"t":"price","trade_timestamp":"2010-01-22 16:17:23","tick_timestamp":"2010-01-22 16:18:42","bid":"0.00","bid_volume":0,"ask":101.00,"ask_volume":200,"close":101.00,"high":101.00,"last":101.00,"last_volume":200,"lot_size":"1","low":101.00,"open":0.00,"turnover":6605400,"turnover_volume":65400}}</value>
+  </data>
+  <data name="PublicFeedTradeMessage" xml:space="preserve">
+    <value>{"cmd":"trade","args":{"i":"1843","m":30,"t":"trade","trade_timestamp":"2010-01-22 16:24:04","price":101.00,"volume":200,"baseprice":101.00,"broker_buying":"ZCFT","broker_selling":"ZCFT"}}</value>
+  </data>
+  <data name="PublicFeedTradingStatusMessage" xml:space="preserve">
+    <value>{"cmd":"trading_status","args":{"i":"4208","m":11,"t":"trading_status","timestamp":"2010-01-25 09:00:00","status":"C","source_status":"ContinuousTrading"}}</value>
+  </data>
 </root>

@@ -16,13 +16,13 @@ namespace Next.FeedCommands
 
         public SubscribeNewsArgs(int newsSourceId, bool delay=false)
         {
-            this.s = newsSourceId;
-            this.delay = delay;
+            s = newsSourceId;
+            delay = delay;
         }
         public SubscribeNewsArgs(NewsSource newsSource, bool delay=false)
         {
-            this.s = newsSource.Sourceid;
-            this.delay = delay;
+            s = newsSource.Sourceid;
+            delay = delay;
         }
         private string _t =SubscribeType.News;
         public string t

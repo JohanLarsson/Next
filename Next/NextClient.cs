@@ -82,8 +82,10 @@ namespace Next
             if (response.Data.SessionKey != null)
             {
                 Session = response.Data;
-                PublicFeed.Login();
-                PrivateFeed.Login();
+                var logins = new Task[2];
+                logins[0] = PublicFeed.Login();
+                logins[1] = PrivateFeed.Login();
+                await Task.WhenAll(logins);
             }
             else
             {
@@ -559,7 +561,7 @@ namespace Next
         protected virtual void OnLoggedInChanged()
         {
             EventHandler<bool> handler = LoggedInChanged;
-            if (handler != null) handler(this, this.Session != null);
+            if (handler != null) handler(this, Session != null);
             if (Session == null && _touchTimer != null)
             {
                 _touchTimer.Dispose();
