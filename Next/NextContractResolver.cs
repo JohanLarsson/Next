@@ -1,7 +1,6 @@
 ﻿namespace Next
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     using System.Reflection;
@@ -12,7 +11,7 @@
 
     public class NextContractResolver : DefaultContractResolver
     {
-        private readonly string[] _prefixable = new[] { "timestamp", "volume", "size", "buying", "selling", "status" };
+        private readonly string[] _prefixable = { "timestamp", "volume", "size", "buying", "selling", "status" };
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
             JsonProperty prop = base.CreateProperty(member, memberSerialization);
@@ -26,7 +25,7 @@
             return prop;
         }
 
-        private bool TryPrefix(string input,string prefix, out string prefixed)
+        private bool TryPrefix(string input, string prefix, out string prefixed)
         {
             if (input.IndexOf(prefix, StringComparison.OrdinalIgnoreCase) > 0)
             {

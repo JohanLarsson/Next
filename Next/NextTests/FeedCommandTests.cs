@@ -27,7 +27,7 @@ namespace NextTests
             Console.WriteLine(loginCommand.ToJson());
         }
 
-        [Test]
+        [Test, Explicit]
         public void SubscribeAllTest()
         {
             string cmd = FeedCommand.SubscribeCommandParameter;
@@ -59,7 +59,7 @@ namespace NextTests
             }
         }
 
-        [Test]
+        [Test, Explicit]
         public void UnSubscribeAllTest()
         {
             string cmd = FeedCommand.UnSubscribeCommandParameter;
