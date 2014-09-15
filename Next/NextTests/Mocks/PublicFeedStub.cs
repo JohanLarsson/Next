@@ -18,7 +18,7 @@
 
         public void ReceiveMessage(string message)
         {
-           zasdf OnReceivedSomething(message);
+            OnReceivedSomething(message);
         }
     }
 }
