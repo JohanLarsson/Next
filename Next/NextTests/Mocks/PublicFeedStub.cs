@@ -18,7 +18,7 @@
 
         public void ReceiveMessage(string message)
         {
-            this.OnReceivedSomething(message);
+            OnReceivedSomething(message);
         }
     }
 }
