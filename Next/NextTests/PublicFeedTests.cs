@@ -88,8 +88,19 @@
         {
             var args = new List<NewsTick>();
             _feed.RecievedNews += (_, e) => args.Add(e);
-            _feed.ReceiveMessage(Properties.Resources.PublicFeedNewsMessage);
+            string json = Properties.Resources.PublicFeedNewsMessage;
+            Console.WriteLine(json);
+            _feed.ReceiveMessage(json);
             Assert.AreEqual(1, args.Count);
+            var tick = args.Single();
+            Assert.AreEqual(40705006, tick.Itemid);
+            Assert.AreEqual("da", tick.Lang);
+            Assert.AreEqual(new DateTime(2010, 12, 08, 22, 15, 00), tick.Datetime);
+            Assert.AreEqual(6, tick.Sourceid);
+            Assert.AreEqual("Amerikanske aktieindeks kl. 22:15", tick.Headline);
+            var instrument = tick.Instruments.Single();
+            Assert.AreEqual(11, instrument.MarketId);
+            Assert.AreEqual("101", instrument.Identifier);
         }
 
         [Test]
@@ -97,7 +108,9 @@
         {
             var args = new List<string>();
             _feed.ReceivedError += (_, e) => args.Add(e);
-            _feed.ReceiveMessage(Properties.Resources.PublicFeedErrorMessage);
+            var json = Properties.Resources.PublicFeedErrorMessage;
+            Console.WriteLine(json);
+            _feed.ReceiveMessage(json);
             Assert.AreEqual(1, args.Count);
         }
 

@@ -50,6 +50,8 @@
     <Compile Include="ApiInfo.cs" />
     <Compile Include="ApiVersion.cs" />
     <Compile Include="CachedSearch.cs" />
+    <Compile Include="Dtos\OrderSide.cs" />
+    <Compile Include="FeedCommands\FakeResponse.cs" />
     <Compile Include="NextContractResolver.cs" />
     <Compile Include="Dtos\Account.cs" />
     <Compile Include="Dtos\Derivative.cs" />
@@ -97,8 +99,8 @@
     <Compile Include="FeedCommands\SubscribeTradeArgs.cs" />
     <Compile Include="FeedCommands\SubscribeTradingStatusArgs.cs" />
     <Compile Include="FeedCommands\SubscribeType.cs" />
-    <Compile Include="FeedCommands\FeedMessageHandler.cs" />
-    <Compile Include="FeedCommands\FeedMessage.cs" />
+    <Compile Include="FeedCommands\PublicFeedMessageHandler.cs" />
+    <Compile Include="FeedCommands\PublicFeedMessage.cs" />
     <Compile Include="Dtos\InstrumentTick.cs" />
     <Compile Include="Dtos\TradeTick.cs" />
     <Compile Include="Dtos\InstrumentDescriptor.cs" />
@@ -115,7 +117,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="PublicFeed.cs" />
-    <Compile Include="FeedCommands\PublicFeedMessage.cs" />
     <Compile Include="RestClientExt.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -178,7 +178,8 @@ namespace Next.FeedCommands
         public string ToJson()
         {
             var serializer = new RestSharp.Serializers.JsonSerializer();
-            return serializer.Serialize(this);
+            string json = serializer.Serialize(this);
+            return json;
         }
 
         public override string ToString()

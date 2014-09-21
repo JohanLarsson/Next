@@ -13,7 +13,7 @@ namespace Next.FeedCommands
         }
         public string t { get; private set; }
         public string i { get; set; }
-        public string m { get; set; }
+        public int m { get; set; }
 
         public bool Equals(SubscribeInstrumentArgsBase other)
         {

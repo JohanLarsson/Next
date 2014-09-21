@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using RestSharp;
-
-namespace Next.FeedCommands
+﻿namespace Next.FeedCommands
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using RestSharp;
+
     internal class FakeResponse : IRestResponse
     {
         public FakeResponse(string content)
@@ -27,12 +27,5 @@ namespace Next.FeedCommands
         public ResponseStatus ResponseStatus { get; set; }
         public string ErrorMessage { get; set; }
         public Exception ErrorException { get; set; }
-    }
-
-    public class PublicFeedMessage<T>
-    {
-        public string Cmd { get; set; }
-
-        public T Args { get; set; }
     }
 }

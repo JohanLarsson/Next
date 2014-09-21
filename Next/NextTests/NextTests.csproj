@@ -35,7 +35,7 @@
       <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
-      <HintPath>..\..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
+      <HintPath>..\..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mocks\DummyServiceStatus.cs" />
     <Compile Include="FeedCommandTests.cs" />
     <Compile Include="Helpers\DumpXaml.cs" />
     <Compile Include="Helpers\Credentials.cs" />
@@ -80,7 +81,6 @@
     <Compile Include="Prototypes\HttpClientTests.cs" />
     <Compile Include="Prototypes\StreamDummyTests.cs" />
     <Compile Include="Prototypes\TimingStuff.cs" />
-    <Compile Include="PublicFeedMessageTests.cs" />
     <Compile Include="PublicFeedTests.cs" />
     <Compile Include="RestClientExtTests.cs" />
   </ItemGroup>

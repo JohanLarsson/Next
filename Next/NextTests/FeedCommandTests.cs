@@ -27,7 +27,7 @@ namespace NextTests
             Console.WriteLine(loginCommand.ToJson());
         }
 
-        [Test, Explicit]
+        [Test]
         public void SubscribeAllTest()
         {
             string cmd = FeedCommand.SubscribeCommandParameter;
@@ -44,7 +44,7 @@ namespace NextTests
                     string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "index", identifier, marketId),
                     string.Format(@"{{""cmd"":""{0}"",""args"":{{""t"":""{1}"",""i"":""{2}"",""m"":{3}}}}}", cmd, "trading_status", identifier, marketId),
                 };
-            Assert.Fail("Check if market id must be int");
+
             string[] serializeds = feedCommands.Select(x => x.ToJson()).ToArray();
             for (int index = 0; index < expecteds.Length; index++)
             {

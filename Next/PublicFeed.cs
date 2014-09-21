@@ -6,6 +6,7 @@ using Next.FeedCommands;
 namespace Next
 {
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using Newtonsoft.Json.Serialization;
 
     public class PublicFeed : NextFeed
@@ -64,6 +65,10 @@ namespace Next
             base.OnReceivedSomething(message);
             try
             {
+                //var jObject = JObject.Parse(message);
+                //var jToken = o["cmd"];
+                //var token = o["args"];
+                //var price = token.ToObject<Price>();
                 if (message.StartsWith(Depth))
                 {
                     var tick = Deserialize<DepthTick>(message);

@@ -14,6 +14,8 @@ using RestSharp;
 
 namespace Next
 {
+    using System.Globalization;
+
     public class NextClient : IDisposable
     {
         /// <summary>
@@ -352,7 +354,7 @@ namespace Next
 
         public async Task<InstrumentMatch> InstrumentSearch(InstrumentDescriptor instrumentItem)
         {
-            return await InstrumentSearch(instrumentItem.Identifier, instrumentItem.MarketId);
+            return await InstrumentSearch(instrumentItem.Identifier, instrumentItem.MarketId.ToString(CultureInfo.InvariantCulture));
         }
 
         /// <summary>

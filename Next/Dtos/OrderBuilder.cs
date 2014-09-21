@@ -49,11 +49,4 @@ namespace Next.Dtos
         /// </summary>
         public bool SmartOrder { get; set; }
     }
-
-    public enum OrderSide
-    {
-        Unspecified,
-        Buy,
-        Sell
-    }
 }
