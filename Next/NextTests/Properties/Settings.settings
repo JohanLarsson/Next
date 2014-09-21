@@ -2,138 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NextTests.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="EricssonInstrumentMatch" Type="Next.Dtos.InstrumentMatch" Scope="Application">
-      <Value Profile="(Default)">
-                    &lt;InstrumentMatch xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-                        &lt;Type&gt;A&lt;/Type&gt;
-                        &lt;Identifier&gt;100&lt;/Identifier&gt;
-                        &lt;Currency&gt;SEK&lt;/Currency&gt;
-                        &lt;MainMarketId&gt;0&lt;/MainMarketId&gt;
-                        &lt;Longname&gt;Ericsson A&lt;/Longname&gt;
-                        &lt;MarketID&gt;11&lt;/MarketID&gt;
-                        &lt;Country&gt;SE&lt;/Country&gt;
-                        &lt;Shortname&gt;ERIC A&lt;/Shortname&gt;
-                        &lt;Marketname&gt;OMX Stockholm&lt;/Marketname&gt;
-                        &lt;IsinCode&gt;SE0000108649&lt;/IsinCode&gt;
-                    &lt;/InstrumentMatch&gt;
-                </Value>
-    </Setting>
-    <Setting Name="PriceTickJson" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">{
-    "cmd": "price",
-    "args": {
-        "i": "1843",
-        "m": 30,
-        "t": "price",
-        "trade_timestamp": "2010-01-22 16:17:23",
-        "tick_timestamp": "2010-01-22 16:18:42",
-        "bid": "0.00",
-        "bid_volume": 0,
-        "ask": 101.00,
-        "ask_volume": 200,
-        "close": 101.00,
-        "high": 101.00,
-        "last": 101.00,
-        "last_volume": 200,
-        "lot_size": "1",
-        "low": 101.00,
-        "open": 0.00,
-        "turnover": 6605400,
-        "turnover_volume": 65400
-    }
-}</Value>
-    </Setting>
-    <Setting Name="DepthTickJson" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">{
-    "cmd": "depth",
-    "args": {
-        "i": "2188",
-        "m": 30,
-        "t": "depth",
-        "tick_timestamp": "2010-01-22 16:22:06",
-        "bid1": 1.00,
-        "bid_volume1": 100,
-        "ask1": 1.10,
-        "ask_volume1": 110,
-        "bid2": 2.00,
-        "bid_volume2": 200,
-        "ask2": 1.20,
-        "ask_volume2": 120,
-        "bid3": 3.00,
-        "bid_volume3": 300,
-        "ask3": 1.30,
-        "ask_volume3": 130,
-        "bid4": 4.00,
-        "bid_volume4": 400,
-        "ask4": 1.40,
-        "ask_volume4": 140,
-        "bid5": 5.00,
-        "bid_volume5": 500,
-        "ask5": 1.50,
-        "ask_volume5": 150
-    }
-}</Value>
-    </Setting>
-    <Setting Name="TradeTickJson" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">{
-    "cmd": "trade",
-    "args": {
-        "i": "1843",
-        "m": 30,
-        "t": "trade",
-        "trade_timestamp": "2010-01-22 16:24:04",
-        "price": 101.00,
-        "volume": 200,
-        "baseprice": 101.00,
-        "broker_buying": "ZCFT",
-        "broker_selling": "ZCFT" 
-    }
-}</Value>
-    </Setting>
-    <Setting Name="TradingStatusTickJson" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">{
-    "cmd": "trading_status",
-    "args": {
-        "i": "4208",
-        "m": 11,
-        "t": "trading_status",
-        "timestamp": "2010-01-25 09:00:00",
-        "status": "C",
-        "source_status": "ContinuousTrading" 
-    }
-}</Value>
-    </Setting>
-    <Setting Name="IndexTickJson" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">{
-    "cmd": "index",
-    "args": {
-        "i": "SIX-IDX-DJI",
-        "m": "SIX",
-        "t": "index",
-        "tick_timestamp": "2010-09-24 07:01:58",
-        "last": 10662.4199,
-        "high": 10761.9404,
-        "low": 10640.9199,
-        "close": 10739.31
-    }
-}</Value>
-    </Setting>
-    <Setting Name="NewsTickJson" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">{
-    "cmd": "news",
-    "args": {
-        "itemid": 40705006,
-        "lang": "da",
-        "datetime": "2010-12-08 22:15:00",
-        "sourceid": 6,
-        "headline": "Amerikanske aktieindeks kl. 22:15",
-        "instruments": [{
-            "identifier": "101",
-            "marketID": "11" 
-        }]
-    }
-}</Value>
-    </Setting>
     <Setting Name="PrivateKey" Type="System.String" Scope="User">
       <Value Profile="(Default)">&lt;RSAKeyValue&gt;
 	&lt;Modulus&gt;jaL6ruAY8R+7UTr489bmqbbGW5V5ULfpE8688FcfPpWo4T7EzBI1R7PZJEapTKX58hyl7SCaS7FxMKtGGCptxUNNMIkqtvhj/MoyML8D0uCROFyGncrNKZabOL5tR5eLiSg5b1sjXXgeeKkwLyTP7arjMFLr6E79vSqTkosTpA1PIBGm1HrdHp3ja8wl5C0XfSZcawonOT7lNchW8eiladlXcveagQbw38UW2GyIOi6DsvbB9ryQKkxyPSndB3kFkbPGCwV2+RD7rbhJUsGHvoQlm8Ad+Cmh5VYcNbwYbq2tdPiXl8fZ3koiC65M9w+SXgJN4lo0OSA9p6GjhQwokw==&lt;/Modulus&gt;
@@ -143,18 +11,32 @@
 	&lt;InverseQ&gt;NuTqJW8PyB7ZibmmZJHIxXQLG9HfJM10ynVttPjR0eK1U+IFFdzFVVTJ7oKSarLP+qNeBn8nYCE4zngUzJnAuSxvw/Ht9oGhW6e7HqbAQVEA31XjOXNJyuGX1MF46jsvCGxOxkbTKlPf0e8P7rOVNKiPzw5VtdZC/fmSvrGtBBk=&lt;/InverseQ&gt;&lt;D&gt;hrSs6skjr6BYTQdjYrXOpza4LL5apRRkznvfYk3Z33IDLka+cMAYgFtid4fk2Is6zrPEc2SAmuDmID2k6rLft68sqK6sO1y969x6I7Zn8pW2R/5n4YbR3W3pruwdjutowEfLaEcruWfWwzdWJmBCiW3vqTQUPdtypAjsVYGEao77VknnKB3b8qts9sog4nPeinzBTVNoyjCuG6FvODlkqdhAIyLqhQ7AgXs9JjFbqrrAFp05Wf9CyqD4HyqDYbMNDvrl3b8TZVumP+tfq/S8dVo/k20LfMIxouLbc9x0STkoP2MmPz4yF3f9CeFHz90lhTHLwIEFg7QzbavhPUuBMQ==&lt;/D&gt;
 &lt;/RSAKeyValue&gt;</Value>
     </Setting>
+    <Setting Name="EricssonInstrumentMatch" Type="Next.Dtos.InstrumentMatch" Scope="Application">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;InstrumentMatch xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Type&gt;A&lt;/Type&gt;
+  &lt;Identifier&gt;100&lt;/Identifier&gt;
+  &lt;Currency&gt;SEK&lt;/Currency&gt;
+  &lt;MainMarketId&gt;0&lt;/MainMarketId&gt;
+  &lt;Longname&gt;Ericsson A&lt;/Longname&gt;
+  &lt;MarketID&gt;11&lt;/MarketID&gt;
+  &lt;Country&gt;SE&lt;/Country&gt;
+  &lt;Shortname&gt;ERIC A&lt;/Shortname&gt;
+  &lt;Marketname&gt;OMX Stockholm&lt;/Marketname&gt;
+  &lt;IsinCode&gt;SE0000108649&lt;/IsinCode&gt;
+&lt;/InstrumentMatch&gt;</Value>
+    </Setting>
     <Setting Name="TestApiInfoLocalHost" Type="Next.ApiInfo" Scope="Application">
-      <Value Profile="(Default)">
-                    &lt;ApiInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-                        &lt;Host&gt;http://localhost&lt;/Host&gt;
-                        &lt;Path&gt;next&lt;/Path&gt;
-                        &lt;Version&gt;1&lt;/Version&gt;
-                        &lt;PublicKey&gt;
-                            &lt;Modulus&gt;jaL6ruAY8R+7UTr489bmqbbGW5V5ULfpE8688FcfPpWo4T7EzBI1R7PZJEapTKX58hyl7SCaS7FxMKtGGCptxUNNMIkqtvhj/MoyML8D0uCROFyGncrNKZabOL5tR5eLiSg5b1sjXXgeeKkwLyTP7arjMFLr6E79vSqTkosTpA1PIBGm1HrdHp3ja8wl5C0XfSZcawonOT7lNchW8eiladlXcveagQbw38UW2GyIOi6DsvbB9ryQKkxyPSndB3kFkbPGCwV2+RD7rbhJUsGHvoQlm8Ad+Cmh5VYcNbwYbq2tdPiXl8fZ3koiC65M9w+SXgJN4lo0OSA9p6GjhQwokw==&lt;/Modulus&gt;
-                            &lt;Exponent&gt;AQAB&lt;/Exponent&gt;
-                        &lt;/PublicKey&gt;
-                    &lt;/ApiInfo&gt;
-                </Value>
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ApiInfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;Host&gt;http://localhost&lt;/Host&gt;
+  &lt;Path&gt;next&lt;/Path&gt;
+  &lt;Version&gt;1&lt;/Version&gt;
+  &lt;PublicKey&gt;
+    &lt;Exponent&gt;AQAB&lt;/Exponent&gt;
+    &lt;Modulus&gt;jaL6ruAY8R+7UTr489bmqbbGW5V5ULfpE8688FcfPpWo4T7EzBI1R7PZJEapTKX58hyl7SCaS7FxMKtGGCptxUNNMIkqtvhj/MoyML8D0uCROFyGncrNKZabOL5tR5eLiSg5b1sjXXgeeKkwLyTP7arjMFLr6E79vSqTkosTpA1PIBGm1HrdHp3ja8wl5C0XfSZcawonOT7lNchW8eiladlXcveagQbw38UW2GyIOi6DsvbB9ryQKkxyPSndB3kFkbPGCwV2+RD7rbhJUsGHvoQlm8Ad+Cmh5VYcNbwYbq2tdPiXl8fZ3koiC65M9w+SXgJN4lo0OSA9p6GjhQwokw==&lt;/Modulus&gt;
+  &lt;/PublicKey&gt;
+&lt;/ApiInfo&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>
